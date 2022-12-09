@@ -1,0 +1,11 @@
+{
+  "extends": ["react-app", "react-app/jest", "prettier"],
+  "rules": {
+    "indent": ["error", 2], // 들여쓰기 2칸만 허용
+    "no-var": "error", // // var 키워드 사용 금지
+    "require-await": "error", // async 함수 내부에 await 키워드가 없으면 오류 발생
+    "eqeqeq": "warn", // ==, != 대신에 ===, !== 사용
+    "react/prop-types": 0, // 프롭스 타입 무시
+    "no-unused-vars": "off" // 호출되지 않은 변수도 사용 가능하게 설정
+  }
+}
