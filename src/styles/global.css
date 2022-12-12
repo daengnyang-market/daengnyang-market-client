@@ -1,4 +1,9 @@
 :root {
+  font-size: 10px;
+  --fs-sm:12px
+  --fs-md:14px
+  --fs-lg:16px
+  --fs-xl:18px
   --bg-color: #f5f5f5;
   --main-bg-color: #ffffff;
   --login-bg-color: #766eeb;
@@ -13,14 +18,12 @@
   --search-bg-color: #f4f4ff;
   --alert-color: #eb5757;
 }
-
 /* 텍스트가 길어질 경우 말 줄임 */
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
 /* sr-only */
 .sr-only {
   position: absolute;
