@@ -12,8 +12,7 @@ const sizeStyles = css`
     props.size === 'L' &&
     css`
       height: 4.4rem;
-      padding-left: 14.8rem;
-      padding-right: 14.8rem;
+      width: 33.2rem;
       border-radius: 4.4rem;
       &:hover {
         background: var(--sub-color);
@@ -25,8 +24,7 @@ const sizeStyles = css`
     css`
       box-sizing: border-box;
       height: 3.4rem;
-      padding-left: 4rem;
-      padding-right: 4rem;
+      width: 12rem;
       border-radius: 3rem;
       &:hover {
         background: var(--sub-color);
@@ -42,8 +40,7 @@ ${(props) =>
     props.size === 'MS' &&
     css`
       height: 3.2rem;
-      padding-left: 3.2rem;
-      padding-right: 3.2rem;
+      width: 9rem;
       border-radius: 3.2rem;
       &:hover {
         background: var(--sub-color);
@@ -55,8 +52,7 @@ ${(props) =>
     css`
       height: 2.8rem;
       font-weight: 400;
-      padding-left: 1.1rem;
-      padding-right: 1.1rem;
+      width: 5.6rem;
       border-radius: 2.6rem;
       &:active {
         border: 1px solid var(--border-color);
@@ -70,6 +66,7 @@ const StyledButton = styled.button`
   /* 공통 스타일 */
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   outline: none;
   border: none;
   box-sizing: border-box;
