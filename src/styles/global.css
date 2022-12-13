@@ -26,7 +26,7 @@
   white-space: nowrap;
 }
 
-/* sr-only */
+/* 스크린리더 전용 */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -36,14 +36,4 @@
   border: 0;
   clip: rect(0, 0, 0, 0);
   overflow: hidden;
-}
-
-/* 스크롤바 가리기 */
-.hidden-scroll {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.hidden-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
 }

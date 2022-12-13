@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
-import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, CHAT_ICON } from '../../../styles/CommonIcons';
+import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 
 const Post = ({ profileImg, userName, userId }) => {
   const [contentImg, setContentImg] = useState(true);
@@ -33,7 +33,7 @@ const Post = ({ profileImg, userName, userId }) => {
               <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
             </LikeButton>
             <LikeSpan>0</LikeSpan>
-            <ChatImg src={CHAT_ICON} alt='채팅' />
+            <ChatImg src={REPLY_ICON} alt='채팅' />
             <ChatSpan>0</ChatSpan>
           </Div>
           <DateP>2023년 1월 6일</DateP>

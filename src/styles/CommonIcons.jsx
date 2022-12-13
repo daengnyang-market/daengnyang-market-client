@@ -21,6 +21,7 @@ import POST_ALBUM_OFF_ICON from '../assets/icons/post-album-off-icon.png';
 import POST_ALBUM_ON_ICON from '../assets/icons/post-album-on-icon.png';
 import POST_LIST_OFF_ICON from '../assets/icons/post-list-off-icon.png';
 import POST_LIST_ON_ICON from '../assets/icons/post-list-on-icon.png';
+import REPLY_ICON from '../assets/icons/reply-icon.png';
 import SEARCH_ICON from '../assets/icons/search-icon.png';
 import SHARE_ICON from '../assets/icons/share-icon.png';
 import USER_FILL_ICON from '../assets/icons/user-fill-icon.png';
@@ -50,6 +51,7 @@ export {
   POST_ALBUM_ON_ICON,
   POST_LIST_OFF_ICON,
   POST_LIST_ON_ICON,
+  REPLY_ICON,
   SEARCH_ICON,
   SHARE_ICON,
   USER_FILL_ICON,
