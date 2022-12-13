@@ -45,6 +45,7 @@ export default Input;
 const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
 `;
 
 const InputLabel = styled.label`
