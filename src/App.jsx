@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Post from './components/common/Post/Post';
 import GlobalStyle from './styles/GlobalStyle';
 
 const FrameMain = styled.main`
@@ -16,20 +15,18 @@ const ScreenContainer = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
+  padding-top: 48px;
+  padding-bottom: 61px;
 `;
 
-function App() {
+const App = () => {
   return (
     <>
       <GlobalStyle />
       <FrameMain>
-        <ScreenContainer>
-          <h1>가져도댕냥 프로젝트</h1>
-          <Post />
-        </ScreenContainer>
+        <ScreenContainer></ScreenContainer>
       </FrameMain>
     </>
   );
-}
-
+};
 export default App;
