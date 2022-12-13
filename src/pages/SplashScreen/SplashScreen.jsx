@@ -8,7 +8,7 @@ const SplashScreen = () => {
     <SplashScreenDiv>
       <SubTitleImg src={SUB_TITLE_IMAGE} alt='우리집 댕냥이를 위한 따뜻한 선물' />
       <MainLogoImg src={LOGO_IMAGE} alt='가져도댕냥 로고' />
-      <MainTitleImg src={MAIN_TITLE_IMAGE} alt='가져도 댕냥 글자 로고' />
+      <MainTitleImg src={MAIN_TITLE_IMAGE} alt='가져도댕냥' />
     </SplashScreenDiv>
   );
 };
