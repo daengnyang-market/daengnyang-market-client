@@ -1,8 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = ({ children, size }) => {
-  return <StyledButton size={size}>{children}</StyledButton>;
+const Button = ({ children, size, disabled }) => {
+  return (
+    <StyledButton disabled={disabled} size={size}>
+      {children}
+    </StyledButton>
+  );
 };
 
 export default Button;
@@ -16,6 +20,9 @@ const sizeStyles = css`
       border-radius: 4.4rem;
       &:hover {
         background: var(--sub-color);
+      }
+      && {
+        background: ${(props) => (props.disabled === true ? 'var(--sub-color)' : 'var(--login-bg-color)')};
       }
     `}
 
@@ -44,6 +51,9 @@ ${(props) =>
       border-radius: 3.2rem;
       &:hover {
         background: var(--sub-color);
+      }
+      && {
+        background: ${(props) => (props.disabled === true ? 'var(--sub-color)' : 'var(--login-bg-color)')};
       }
     `}
 
