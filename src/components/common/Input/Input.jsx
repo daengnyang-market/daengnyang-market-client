@@ -60,6 +60,10 @@ const InputText = styled.input`
   font-size: var(--fs-md);
   border-bottom: 1px solid ${(props) => (props.isShowAlert ? 'var(--main-color)' : 'var(--border-color)')};
   outline: none;
+
+  &::placeholder {
+    color: var(--border-color);
+  }
 `;
 
 const InputAlert = styled.strong`
