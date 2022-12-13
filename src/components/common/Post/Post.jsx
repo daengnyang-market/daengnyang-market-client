@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+import ProfileImage from '../ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 
-const Post = ({ profileImg, userName, userId }) => {
+const Post = ({ userName, userId }) => {
   const [contentImg, setContentImg] = useState(true);
 
   const [like, setLike] = useState(false);
@@ -15,7 +16,7 @@ const Post = ({ profileImg, userName, userId }) => {
     <>
       <WrapperDiv>
         <UserInfoWrapperDiv>
-          <ProfileImg src={profileImg} alt='프로필 이미지' />
+          <ProfileImage src={PROFILE1_IMAGE} alt='프로필 이미지' width='42' />
           <UserInfoDiv>
             <UserName>{userName}</UserName>
             <UserId>{userId}</UserId>
@@ -53,11 +54,6 @@ const WrapperDiv = styled.div`
 const UserInfoWrapperDiv = styled.div`
   display: flex;
   cursor: pointer;
-`;
-
-const ProfileImg = styled.img`
-  width: 4.2rem;
-  height: 4.2rem;
 `;
 
 const UserInfoDiv = styled.div`
