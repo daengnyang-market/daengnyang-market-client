@@ -42,15 +42,15 @@ const TabMenu = () => {
 
 export default TabMenu;
 
-const TabMenuDiv = styled.div`
+const TabMenuDiv = styled.footer`
   position: fixed;
   bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 60px;
   background-color: var(--main-bg-color);
   z-index: 1;
+  border-top: 1px solid var(--border-color);
 `;
 
 const TabMenuIconBtn = styled.button`

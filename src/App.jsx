@@ -15,8 +15,6 @@ const ScreenContainer = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
-  padding-top: 48px;
-  padding-bottom: 61px;
 `;
 
 const App = () => {

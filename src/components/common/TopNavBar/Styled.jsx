@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const TopNavBar = styled.div`
+export const TopNavBar = styled.header`
   max-width: 390px;
   position: fixed;
   width: 100%;
@@ -12,6 +12,7 @@ export const TopNavBar = styled.div`
   padding: 1.3em 1.2em 1.3em 1.6em;
   z-index: 1;
   background-color: var(--main-bg-color);
+  border-bottom: 1px solid var(--border-color);
 `;
 
 export const LeftArrow = styled.img`
