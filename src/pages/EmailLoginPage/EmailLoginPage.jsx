@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Input from '../../components/common/Input/Input';
 import Button from '../../components/common/Button/Button';
 
-const LoginMainPage = () => {
+const EmailLoginPage = () => {
   return (
     <Main>
       <Title>로그인</Title>
@@ -21,7 +21,7 @@ const LoginMainPage = () => {
   );
 };
 
-export default LoginMainPage;
+export default EmailLoginPage;
 
 const Main = styled.main`
   padding: 3rem 3.4rem 0;
