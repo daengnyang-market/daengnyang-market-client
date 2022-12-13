@@ -12,7 +12,7 @@ const sizeStyles = css`
     props.size === 'L' &&
     css`
       height: 4.4rem;
-      width: 33.2rem;
+      width: 32.2rem;
       border-radius: 4.4rem;
       &:hover {
         background: var(--sub-color);
