@@ -49,8 +49,8 @@ const TabMenuDiv = styled.div`
   justify-content: center;
   align-items: center;
   height: 60px;
-  z-index: 1;
   background-color: var(--main-bg-color);
+  z-index: 1;
 `;
 
 const TabMenuIconBtn = styled.button`
