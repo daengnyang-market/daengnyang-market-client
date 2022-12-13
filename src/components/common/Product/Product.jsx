@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Product = ({ profileImg, productName, productPrice }) => {
+const Product = ({ productImg, productName, productPrice }) => {
   return (
     <>
       <WrapperDiv>
-        <ProductImg src={profileImg} alt={`${productName} 상품 이미지`} />
+        <ProductImg src={productImg} alt={`${productName} 상품 이미지`} />
         <ProductName>{productName}</ProductName>
         <ProductPrice>{productPrice}</ProductPrice>
       </WrapperDiv>
