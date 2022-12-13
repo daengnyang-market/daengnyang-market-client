@@ -5,10 +5,9 @@ import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, CHAT_ICON } from '../../.
 
 const Post = ({ profileImg, userName, userId }) => {
   const [contentImg, setContentImg] = useState(true);
-  // console.log(PROFILE1_IMAGE);
 
   const [like, setLike] = useState(false);
-  const onClicklikeImgHandler = () => {
+  const onClickLikeButtonHandler = () => {
     setLike(!like);
   };
 
@@ -30,7 +29,7 @@ const Post = ({ profileImg, userName, userId }) => {
           </ContentText>
           {contentImg === true ? <ContentImg src={PROFILE1_IMAGE} alt='프로필 이미지' /> : <></>}
           <Div>
-            <LikeButton like={like} onClick={onClicklikeImgHandler}>
+            <LikeButton like={like} onClick={onClickLikeButtonHandler}>
               <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
             </LikeButton>
             <LikeSpan>0</LikeSpan>
