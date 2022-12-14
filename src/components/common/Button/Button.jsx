@@ -21,7 +21,7 @@ const sizeStyles = css`
       &:hover {
         background: var(--sub-color);
       }
-      && {
+      & {
         background: ${(props) => (props.disabled === true ? 'var(--sub-color)' : 'var(--login-bg-color)')};
       }
     `}
@@ -52,7 +52,7 @@ ${(props) =>
       &:hover {
         background: var(--sub-color);
       }
-      && {
+      & {
         background: ${(props) => (props.disabled === true ? 'var(--sub-color)' : 'var(--login-bg-color)')};
       }
     `}
