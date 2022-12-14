@@ -26,6 +26,8 @@ import SEARCH_ICON from '../assets/icons/search-icon.png';
 import SHARE_ICON from '../assets/icons/share-icon.png';
 import USER_FILL_ICON from '../assets/icons/user-fill-icon.png';
 import USER_ICON from '../assets/icons/user-icon.png';
+import IMG_BUTTON_ICON from '../assets/icons/img-button-icon.png';
+import UPLOAD_FILE_ICON from '../assets/icons/upload-file-icon.png';
 
 export {
   CHAT_FILL_ICON,
@@ -56,4 +58,6 @@ export {
   SHARE_ICON,
   USER_FILL_ICON,
   USER_ICON,
+  IMG_BUTTON_ICON,
+  UPLOAD_FILE_ICON,
 };
