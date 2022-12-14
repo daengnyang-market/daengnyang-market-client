@@ -48,7 +48,7 @@ export default Post;
 
 const WrapperDiv = styled.div`
   width: 35.8rem;
-  margin: 0 auto 20px;
+  margin: 0 auto 2rem;
 `;
 
 const UserInfoWrapperDiv = styled.div`
