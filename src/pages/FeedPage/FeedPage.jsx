@@ -9,25 +9,25 @@ import Post from '../../components/common/Post/Post';
 import { EMPTY_FEED_IMAGE } from '../.././styles/CommonImages';
 
 const FeedPage = () => {
-  const [isFollowingPost, setIsFollowingPost] = useState(true);
+  const [isFollowingPost, setIsFollowingPost] = useState(false);
 
   return (
     <>
       <TopMainNav title={'가져도댕냥 피드'} />
-      <ContentsLayout isTabMenu={true}>
-        {isFollowingPost ? (
+      {isFollowingPost ? (
+        <ContentsLayout>
           <MainFeedStyle>
             <Post userName='' userId='' />
             <Post userName='' userId='' />
           </MainFeedStyle>
-        ) : (
-          <EmptyFeedStyle>
-            <ErrorImg src={EMPTY_FEED_IMAGE} alt='' />
-            <span>유저를 검색해 팔로우 해보세요!</span>
-            <Button size='M'>검색하기</Button>
-          </EmptyFeedStyle>
-        )}
-      </ContentsLayout>
+        </ContentsLayout>
+      ) : (
+        <EmptyFeedStyle>
+          <ErrorImg src={EMPTY_FEED_IMAGE} alt='' />
+          <span>유저를 검색해 팔로우 해보세요!</span>
+          <Button size='M'>검색하기</Button>
+        </EmptyFeedStyle>
+      )}
       <TabMenu />
     </>
   );
