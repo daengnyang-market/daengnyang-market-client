@@ -14,7 +14,9 @@ const EmailLoginPage = () => {
         <Input labelText='비밀번호' inputType='password' id='inputPassword' placeholder='비밀번호를 입력해주세요.' />
       </LoginInputWrapper>
 
-      <Button size='L'>로그인</Button>
+      <Button size='L' disabled={true}>
+        로그인
+      </Button>
 
       <JoinLink to='#'>이메일로 회원가입</JoinLink>
     </Main>
