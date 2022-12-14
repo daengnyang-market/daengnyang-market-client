@@ -1,11 +1,9 @@
 import React from 'react';
-import TopMainNav from './../../../components/common/TopNavBar/TopMainNav';
-import ContentsLayout from './../../../components/layout/ContentsLayout/ContentsLayout';
-import TabMenu from './../../../components/common/TabMenu/TabMenu';
-import PaginationCarousel from '../../../components/carousel/PaginationCarousel/PaginationCarousel';
+import PaginationCarousel from '../../../components/carousel/PaginationCarousel/PaginationCarousel.jsx';
 import { ADVERTISING1_IMAGE, ADVERTISING2_IMAGE, ADVERTISING3_IMAGE } from './../../../styles/CommonImages';
 import CommunityMenu from '../CommunityMenu';
 import PopularPosts from './PopularPosts';
+import CommunityLayout from '../CommunityLayout';
 
 const CommunityMainPage = () => {
   const advertisingImageList = [
@@ -15,15 +13,11 @@ const CommunityMainPage = () => {
   ];
 
   return (
-    <>
-      <TopMainNav title='집사생활' />
-      <ContentsLayout padding='0 0 2rem'>
-        <CommunityMenu />
-        <PaginationCarousel itemList={advertisingImageList} />
-        <PopularPosts />
-      </ContentsLayout>
-      <TabMenu />
-    </>
+    <CommunityLayout>
+      <CommunityMenu />
+      <PaginationCarousel itemList={advertisingImageList} />
+      <PopularPosts />
+    </CommunityLayout>
   );
 };
 
