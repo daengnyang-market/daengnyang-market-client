@@ -48,16 +48,17 @@ export default Post;
 
 const WrapperDiv = styled.div`
   width: 35.8rem;
-  margin: 0 auto;
+  margin: 0 auto 20px;
 `;
 
 const UserInfoWrapperDiv = styled.div`
   display: flex;
+  position: relative;
   cursor: pointer;
 `;
 
 const UserInfoDiv = styled.div`
-  margin: 0.4rem 15rem 0 1.2rem;
+  margin: 0.4rem 0 0 1.2rem;
 `;
 
 const UserName = styled.strong`
@@ -75,6 +76,8 @@ const UserId = styled.p`
 `;
 
 const MoreSmallIcon = styled.img`
+  position: absolute;
+  right: 0;
   width: 1.8rem;
   height: 1.8rem;
   margin-top: 0.4rem;
