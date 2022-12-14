@@ -1,9 +1,24 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 
-const Button = ({ children, size, disabled }) => {
+const Button = ({
+  children,
+  size,
+  disabled,
+  backgroundColor = 'var(--login-bg-color)',
+  borderColor = 'transparent',
+  textColor = 'var(--main-bg-color)',
+  onClickHandler,
+}) => {
   return (
-    <StyledButton disabled={disabled} size={size}>
+    <StyledButton
+      disabled={disabled}
+      size={size}
+      backgroundColor={backgroundColor}
+      borderColor={borderColor}
+      textColor={textColor}
+      onClick={onClickHandler}
+    >
       {children}
     </StyledButton>
   );
@@ -80,13 +95,13 @@ const StyledButton = styled.button`
   outline: none;
   border: none;
   box-sizing: border-box;
-  border: 1px solid transparent;
-  color: var(--main-bg-color);
+  border: 1px solid ${(props) => props.borderColor};
+  color: ${(props) => props.textColor};
   font-size: 1.4rem;
   font-weight: 500;
   cursor: pointer;
   /* 크기 */
   ${sizeStyles}
   /* 색상 */
-  background: var(--login-bg-color);
+  background: ${(props) => props.backgroundColor};
 `;
