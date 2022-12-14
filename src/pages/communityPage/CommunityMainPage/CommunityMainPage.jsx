@@ -1,7 +1,6 @@
 import React from 'react';
 import PaginationCarousel from '../../../components/carousel/PaginationCarousel/PaginationCarousel.jsx';
 import { ADVERTISING1_IMAGE, ADVERTISING2_IMAGE, ADVERTISING3_IMAGE } from './../../../styles/CommonImages';
-import CommunityMenu from '../CommunityMenu';
 import PopularPosts from './PopularPosts';
 import CommunityLayout from '../CommunityLayout';
 
@@ -14,7 +13,6 @@ const CommunityMainPage = () => {
 
   return (
     <CommunityLayout>
-      <CommunityMenu />
       <PaginationCarousel itemList={advertisingImageList} />
       <PopularPosts />
     </CommunityLayout>
