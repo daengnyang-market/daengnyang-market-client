@@ -22,7 +22,7 @@ const SearchProfileViewer = styled.main`
   justify-content: flex-start;
   width: 100%;
   max-width: 39rem;
-  height: calc(100% - 108px);
+  height: calc(100% - 10.8rem);
   padding: 2rem 1.6rem;
   overflow-y: scroll;
   li {
