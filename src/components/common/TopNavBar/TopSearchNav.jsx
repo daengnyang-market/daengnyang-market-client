@@ -19,8 +19,17 @@ const TopSearchNav = () => {
 export default TopSearchNav;
 
 const SearchInput = styled.input`
-  width: 316px;
+  max-width: 316px;
+  width: 100%;
+  height: 32px;
   padding: 0.7em 1.6em;
   background-color: var(--search-bg-color);
+  font-size: var(--fs-md);
+  ::placeholder {
+    color: var(--chat-border-color);
+  }
+  :focus {
+    outline: none;
+  }
   border-radius: 32px;
 `;
