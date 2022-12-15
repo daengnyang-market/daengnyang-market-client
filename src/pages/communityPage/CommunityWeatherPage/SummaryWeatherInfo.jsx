@@ -13,7 +13,7 @@ const SummaryWeatherInfo = ({ walkLevel, walkTextList }) => {
       <div>
         <WalkImage src={walkLevel <= 50 ? WALK_ABLE_IMAGE : WALK_DISABLE_IMAGE} alt='' />
         <WalkText>
-          <WalkLevel>
+          <WalkLevel walkLevel={walkLevel}>
             산책 난이도 : <em>{walkLevel}점</em>
           </WalkLevel>
           <WalkDescription>{walkTextList[2].text}</WalkDescription>
@@ -72,7 +72,7 @@ const WalkLevel = styled.strong`
   font-weight: 500;
 
   & em {
-    color: var(--login-bg-color);
+    color: ${(props) => (props.walkLevel >= 60 ? 'var(--alert-color)' : 'var(--login-bg-color)')};
   }
 `;
 
