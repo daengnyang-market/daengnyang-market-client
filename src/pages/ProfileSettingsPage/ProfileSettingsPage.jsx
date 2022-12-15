@@ -35,11 +35,8 @@ const TitleHeadingTwo = styled.h2`
 `;
 
 const SubTitleP = styled.p`
-  font-weight: 400;
   font-size: var(--fs-md);
   line-height: 1.4rem;
   color: var(--sub-text-color);
   margin-bottom: 3rem;
 `;
-
-// ProfileImage - cursor: pointer?

@@ -38,7 +38,6 @@ export default ProfileInfo;
 const WrapperImg = styled.div`
   position: relative;
   margin-bottom: 3rem;
-  cursor: pointer;
 `;
 
 const UploadFileIconImg = styled.img`
@@ -54,5 +53,5 @@ const Form = styled.form`
   flex-direction: column;
   gap: 1.6rem;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 `;
