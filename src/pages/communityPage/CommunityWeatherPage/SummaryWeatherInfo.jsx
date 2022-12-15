@@ -11,7 +11,7 @@ const SummaryWeatherInfo = ({ walkScore, walkTextList }) => {
         <CurrentWeather>구름 많음</CurrentWeather>
       </SummaryInfo>
       <div>
-        <WalkImage src={walkScore <= 8 ? WALK_ABLE_IMAGE : WALK_DISABLE_IMAGE} alt='' />
+        <WalkImage src={walkScore >= 8 ? WALK_DISABLE_IMAGE : WALK_ABLE_IMAGE} alt='' />
         <WalkText>
           <WalkLevel walkScore={walkScore}>
             산책 난이도 : <em>{walkScore >= 8 ? '어려움' : walkScore >= 5 ? '보통' : '쉬움'}</em>
