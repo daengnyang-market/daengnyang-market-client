@@ -88,7 +88,7 @@ const GoogleButton = styled(CommonStyleButton)`
 `;
 const FacebookButton = styled(CommonStyleButton)`
   border: 1px solid #2d9cdb;
-  margin-bottom: 20px;
+  margin-bottom: 2rem;
 `;
 
 // 이미지 공통 스타일
