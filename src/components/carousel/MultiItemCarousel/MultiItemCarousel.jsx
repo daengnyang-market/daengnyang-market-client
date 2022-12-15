@@ -1,15 +1,8 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Product from '../../common/Product/Product';
-
-// Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/pagination';
-
-import './multiItemCarousel.css';
-
-// import required modules
 import { Pagination } from 'swiper';
+import './multiItemCarousel.css';
 
 export default function App() {
   return (
