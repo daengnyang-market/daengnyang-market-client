@@ -148,7 +148,7 @@ const ImgUploadButton = styled(ImgUploadTag)`
 const UploadMain = styled.main`
   display: flex;
   padding: 20px 0 20px 16px;
-  min-width: 390px;
+  min-width: 39rem;
   width: 100%;
   height: 100%;
   background-color: #fff;
@@ -173,8 +173,11 @@ const PostTextInput = styled.textarea`
   margin-left: 12px;
   word-break: break-all;
   font-weight: 400;
-  font-size: 14px;
+  font-size: var(--fs-md);
   line-height: 18px;
+  ::placeholder {
+    color: var(--chat-border-color);
+  }
   :focus {
     outline: none;
   }
