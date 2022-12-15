@@ -8,23 +8,23 @@ import ProfileHeader from './ProfileHeader/ProfileHeader';
 import ProfileProduct from './ProfileProduct/ProfileProduct';
 import ProfilePost from './ProfilePost/ProfilePost';
 
-const ProfilePage = () => {
+const MyProfilePage = () => {
   return (
-    <>
+    <div>
       <TopBasicNav />
-      <ContentsLayout padding='2rem 0 0 0'>
-        <ProfileHeader></ProfileHeader>
+      <ContentsLayout padding='2em 0 0 0'>
+        <ProfileHeader />
         <SectionBorder />
         <ProfileProduct />
         <SectionBorder />
         <ProfilePost />
       </ContentsLayout>
       <TabMenu />
-    </>
+    </div>
   );
 };
 
-export default ProfilePage;
+export default MyProfilePage;
 
 const SectionBorder = styled.div`
   height: 6px;
