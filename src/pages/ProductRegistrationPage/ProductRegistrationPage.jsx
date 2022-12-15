@@ -46,7 +46,7 @@ const Label = styled.label`
   width: 100%;
   height: 20.4rem;
   background-color: var(--bg-color);
-  border: 0.5 solid var(--border-color);
+  border: 0.5px solid var(--border-color);
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
