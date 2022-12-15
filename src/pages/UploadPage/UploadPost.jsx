@@ -100,8 +100,8 @@ const PreviewImg = styled.img`
 
 const PreviewImgItem = styled.ul`
   white-space: nowrap;
-  margin-left: 13px;
-  margin-right: -16px;
+  margin-left: 1.3rem;
+  margin-right: -1.6rem;
   overflow-x: scroll;
 `;
 
@@ -109,35 +109,35 @@ const ImgList = styled.li`
   position: relative;
   border: 0.5px solid #dbdbdb;
   border-radius: 10px;
-  height: 228px;
-  width: 304px;
+  height: 22.8rem;
+  width: 30.4rem;
 `;
 
 const MultipleImgList = styled(ImgList)`
   & {
     display: inline-block;
     margin-right: 8px;
-    width: 168px;
-    height: 126px;
+    width: 16.8rem;
+    height: 12.6rem;
   }
 `;
 
 const DeletButton = styled.button`
   position: absolute;
-  top: 6px;
-  right: 6px;
-  width: 22px;
-  height: 22px;
+  top: 0.6rem;
+  right: 0.6rem;
+  width: 2.2rem;
+  height: 2.2rem;
   background-size: cover;
   background-image: url(${CLOSE_ICON});
 `;
 
 const ImgUploadButton = styled(ImgUploadTag)`
   position: fixed;
-  margin-left: 266px;
-  bottom: 16px;
-  width: 50px;
-  height: 50px;
+  margin-left: 26.6rem;
+  bottom: 1.6rem;
+  width: 5rem;
+  height: 5rem;
   background-image: url(${UPLOAD_FILE_ICON});
   background-position: center;
   background-size: cover;
@@ -147,7 +147,7 @@ const ImgUploadButton = styled(ImgUploadTag)`
 
 const UploadMain = styled.main`
   display: flex;
-  padding: 20px 0 20px 16px;
+  padding: 2rem 0 2rem 1.6rem;
   min-width: 39rem;
   width: 100%;
   height: 100%;
@@ -156,9 +156,9 @@ const UploadMain = styled.main`
 
 const PostWrite = styled.article`
   position: relative;
-  min-width: 300px;
+  min-width: 30rem;
   width: 100%;
-  padding-right: 16px;
+  padding-right: 1.6rem;
   overflow-y: scroll;
 `;
 
@@ -169,8 +169,8 @@ const PostForm = styled.form`
 
 const PostTextInput = styled.textarea`
   width: 100%;
-  margin-top: 12px;
-  margin-left: 12px;
+  margin-top: 1.2rem;
+  margin-left: 1.2rem;
   word-break: break-all;
   font-weight: 400;
   font-size: var(--fs-md);
