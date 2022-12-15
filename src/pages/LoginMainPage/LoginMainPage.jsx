@@ -70,13 +70,13 @@ const LoginSection = styled.section`
 // 버튼 공통 스타일
 const CommonStyleButton = styled.button`
   position: relative;
-  width: 322px;
-  height: 44px;
+  width: 32.2rem;
+  height: 4.4rem;
   border-radius: 44px;
   background-color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
   font-size: var(--fs-md);
-  line-height: 18px;
+  line-height: 1.8rem;
   color: var(--sub-text-color);
 `;
 
@@ -95,7 +95,7 @@ const FacebookButton = styled(CommonStyleButton)`
 const CommonStyleImg = styled.img`
   display: block;
   position: absolute;
-  left: 14px;
+  left: 1.4rem;
   top: 50%;
   transform: translateY(-50%);
   width: 24px;
@@ -114,15 +114,15 @@ const CommonStyleImg = styled.img`
 const Ul = styled.ul`
   display: flex;
   align-items: center;
-  line-height: 15px;
-  font-size: 12px;
+  line-height: 1.5rem;
+  font-size: var(--fs-sm);
   color: var(--sub-text-color);
 `;
 
 const EmailLoginLi = styled.li`
   &::after {
     content: '|';
-    margin: 0 12px 0 11px;
+    margin: 0 1.2rem 0 1.1rem;
     color: var(--txt-light-gray);
   }
 `;
