@@ -44,21 +44,21 @@ const Label = styled.label`
   position: relative;
   display: block;
   width: 100%;
-  height: 204px;
+  height: 20.4rem;
   background-color: var(--bg-color);
   border: 0.5 solid var(--border-color);
   border-radius: 10px;
   cursor: pointer;
   overflow: hidden;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 
   &::after {
     content: '';
     position: absolute;
-    right: 12px;
-    bottom: 12px;
-    width: 36px;
-    height: 36px;
+    right: 1.2rem;
+    bottom: 1.2rem;
+    width: 3.6rem;
+    height: 3.6rem;
     background-image: url(${IMG_BUTTON_ICON});
     background-size: cover;
     border-radius: 50%;
@@ -70,5 +70,5 @@ const Form = styled.form`
   flex-direction: column;
   gap: 1.6rem;
   width: 100%;
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 `;
