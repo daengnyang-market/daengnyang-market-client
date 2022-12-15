@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { WALK_ABLE_IMAGE, WALK_DISABLE_IMAGE } from '../../../styles/CommonImages';
 
-const SummaryWeatherInfo = ({ walkLevel, walkTextList }) => {
+const SummaryWeatherInfo = ({ walkScore, walkTextList }) => {
   return (
     <SummaryInfoWrapper>
       <SummaryInfo>
@@ -11,12 +11,14 @@ const SummaryWeatherInfo = ({ walkLevel, walkTextList }) => {
         <CurrentWeather>구름 많음</CurrentWeather>
       </SummaryInfo>
       <div>
-        <WalkImage src={walkLevel <= 50 ? WALK_ABLE_IMAGE : WALK_DISABLE_IMAGE} alt='' />
+        <WalkImage src={walkScore <= 8 ? WALK_ABLE_IMAGE : WALK_DISABLE_IMAGE} alt='' />
         <WalkText>
-          <WalkLevel walkLevel={walkLevel}>
-            산책 난이도 : <em>{walkLevel}점</em>
+          <WalkLevel walkScore={walkScore}>
+            산책 난이도 : <em>{walkScore >= 8 ? '어려움' : walkScore >= 5 ? '보통' : '쉬움'}</em>
           </WalkLevel>
-          <WalkDescription>{walkTextList[2].text}</WalkDescription>
+          <WalkDescription>
+            {walkScore >= 8 ? walkTextList[2] : walkScore >= 5 ? walkTextList[1] : walkTextList[0]}
+          </WalkDescription>
         </WalkText>
       </div>
     </SummaryInfoWrapper>
@@ -72,7 +74,7 @@ const WalkLevel = styled.strong`
   font-weight: 500;
 
   & em {
-    color: ${(props) => (props.walkLevel >= 60 ? 'var(--alert-color)' : 'var(--login-bg-color)')};
+    color: ${(props) => (props.walkScore >= 8 ? '#eb5757' : props.walkScore >= 5 ? '#766eeb' : '#0280ff')};
   }
 `;
 
