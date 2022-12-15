@@ -14,9 +14,9 @@ const SummaryWeatherInfo = ({ walkLevel, walkTextList }) => {
         <WalkImage src={walkLevel <= 50 ? WALK_ABLE_IMAGE : WALK_DISABLE_IMAGE} alt='' />
         <WalkText>
           <WalkLevel>
-            산책 난이도 : <em>{walkLevel}%</em>
+            산책 난이도 : <em>{walkLevel}점</em>
           </WalkLevel>
-          <WalkDescription>{walkTextList[0].text}</WalkDescription>
+          <WalkDescription>{walkTextList[2].text}</WalkDescription>
         </WalkText>
       </div>
     </SummaryInfoWrapper>
