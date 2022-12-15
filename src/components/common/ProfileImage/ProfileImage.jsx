@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // alt : 프로필 이미지에 대한 설명 (생략시 기본값: '')
 // width : 프로필 이미지의 width size (단위는 px / 생략시 기본값: 36)
 // borderSize : 프로필 이미지의 테두리 굵기 (단위는 px / 생략시 기본값 : 0.5)
-// isPointer : 마우스 커서를 포인터로 할지, 디폴트로 할지 (생략시 기본값 : 포인터로 적용)
+// isPointer : 마우스 커서를 포인터로 할지, 디폴트로 할지 (boolean 값으로 전달해야함 / 생략시 기본값 : 포인터로 적용)
 const ProfileImage = ({ src, alt = '', width = '36', borderWeight = '0.5', isPointer = 'true' }) => {
   return <Image src={src} alt={alt} width={width} borderWeight={borderWeight} isPointer={isPointer} />;
 };
