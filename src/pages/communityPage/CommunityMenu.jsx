@@ -2,18 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CommunityMenu = () => {
+const CommunityMenu = ({ selectMenuId }) => {
+  const menuList = [
+    { id: 0, title: '홈', to: '#' },
+    { id: 1, title: '산책 난이도', to: '#' },
+    { id: 2, title: '동물병원', to: '#' },
+  ];
+
   return (
     <MenuList>
-      <MenuItem>
-        <MenuLink to='#'>홈</MenuLink>
-      </MenuItem>
-      <MenuItem>
-        <MenuLink to='#'>산책 갈까?</MenuLink>
-      </MenuItem>
-      <MenuItem>
-        <MenuLink to='#'>동물병원</MenuLink>
-      </MenuItem>
+      {menuList.map(({ id, title, to }) => (
+        <MenuItem key={id} id={id} selectMenuId={selectMenuId}>
+          <MenuLink to={to}>{title}</MenuLink>
+        </MenuItem>
+      ))}
     </MenuList>
   );
 };
@@ -28,14 +30,19 @@ const MenuList = styled.ul`
 `;
 
 const MenuItem = styled.li`
-  width: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
   font-size: var(--fs-lg);
-  text-align: center;
+  font-weight: ${(props) => (props.id === props.selectMenuId ? '500' : '400')};
+  color: ${(props) => (props.id === props.selectMenuId ? 'var(--login-bg-color)' : 'var(--text-color)')};
 `;
 
 const MenuLink = styled(Link)`
   &:hover {
-    color: var(--login-bg-color);
+    color: var(--main-color);
     transition: color 150ms;
   }
 `;
