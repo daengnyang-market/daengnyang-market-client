@@ -4,13 +4,17 @@ import styled from 'styled-components';
 import { TopNavBar, SearchBtn } from './Styled';
 import { SEARCH_ICON } from '../../../styles/CommonIcons';
 
-const TopMainNav = ({ title }) => {
+const TopMainNav = ({ title, viewSearchBtn = true }) => {
   return (
     <TopNavBar>
       <TopNavH1>{title}</TopNavH1>
-      <SearchBtn>
-        <img src={SEARCH_ICON} alt='검색하기 버튼' />
-      </SearchBtn>
+      {viewSearchBtn ? (
+        <SearchBtn>
+          <img src={SEARCH_ICON} alt='검색하기 버튼' />
+        </SearchBtn>
+      ) : (
+        <></>
+      )}
     </TopNavBar>
   );
 };
