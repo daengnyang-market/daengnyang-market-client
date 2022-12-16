@@ -4,9 +4,8 @@ import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
-const PostModal = ({ closeModal }) => {
+const PostModal = ({ closeModal, isMyPost }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
-  const [isMyPost, setIsMyPost] = useState(true);
 
   const closeAlert = () => {
     setIsOpenAlert(false);
