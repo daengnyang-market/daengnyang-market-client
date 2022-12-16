@@ -10,7 +10,7 @@ export const TopNavBar = styled.header`
   align-items: center;
   height: 48px;
   padding: 0.8em 1.2em 0.8em 1.6em;
-  z-index: 1;
+  z-index: 100;
   background-color: var(--main-bg-color);
   border-bottom: 1px solid var(--border-color);
 `;
