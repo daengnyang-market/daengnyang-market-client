@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import UserProfileBtns from './UserProfileBtns';
+import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
-import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
-import Button from '../../../components/common/Button/Button';
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ profileState, followState }) => {
+  const [isMyProfile, setIsMyProfile] = useState(false);
+
   return (
     <ProfileWrapper>
-      <h2 className="sr-only">프로필 정보</h2>
+      <h2 className='sr-only'>프로필 정보</h2>
       <Followers>
         <strong>2950</strong>
         <span>followers</span>
@@ -22,11 +24,8 @@ const ProfileHeader = () => {
         <strong>128</strong>
         <span>followings</span>
       </Followings>
-      <ProfileBtns>
-        <ProfileBtn />
-        <Button size='M'>팔로우</Button>
-        <ProfileBtn isShare={true} />
-      </ProfileBtns>
+      {/* isMyProfile에 따라 MyProfileBtns 과 UserProfileBtns 나뉘게 / */}
+      {isMyProfile == true ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
     </ProfileWrapper>
   );
 };
@@ -100,23 +99,4 @@ const Followings = styled.div`
     color: var(--sub-text-color);
     font-size: 1em;
   }
-`;
-
-const ProfileBtns = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  margin-top: 2.4em;
-  margin-bottom: 2.6em;
-`;
-
-const ProfileBtn = styled.button`
-  background: ${(props) =>
-    props.isShare ? `url(${SHARE_ICON}) no-repeat center / 15px` : `url(${CHAT_ICON}) no-repeat center / 15px`};
-  width: 34px;
-  height: 34px;
-  color: var(--sub-text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
 `;
