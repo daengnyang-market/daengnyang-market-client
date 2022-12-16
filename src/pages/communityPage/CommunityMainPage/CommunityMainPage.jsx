@@ -12,7 +12,7 @@ const CommunityMainPage = () => {
   ];
 
   return (
-    <CommunityLayout>
+    <CommunityLayout selectMenuId={0}>
       <PaginationCarousel itemList={advertisingImageList} />
       <PopularPosts />
     </CommunityLayout>
