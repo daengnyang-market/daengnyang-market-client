@@ -9,9 +9,9 @@ const CommunityLayout = ({ children, navType = 'mainNav', selectMenuId }) => {
   return (
     <>
       {navType === 'mainNav' ? (
-        <TopMainNav title='집사생활' />
+        <TopMainNav title='집사생활' viewSearchBtn={false} />
       ) : navType === 'titleNav' ? (
-        <TopTitleNav title='동물병원 상세 정보' />
+        <TopTitleNav title='동물병원 상세 정보' viewMoreBtn={false} />
       ) : (
         <></>
       )}
