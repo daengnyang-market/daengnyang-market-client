@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Product = ({ productImg, productName, productPrice }) => {
+const Product = ({ onClick, productImg, productName, productPrice }) => {
   return (
     <>
-      <WrapperDiv>
+      <WrapperDiv onClick={onClick}>
         <ProductImg src={productImg} alt={`${productName} 상품 이미지`} />
         <ProductName>{productName}</ProductName>
         <ProductPrice>{productPrice}</ProductPrice>
