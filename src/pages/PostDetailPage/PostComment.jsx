@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
 import { MORE_SMALL_ICON } from '../../styles/CommonIcons';
+import CommentModal from '../../components/common/modal/CommentModal/CommentModal';
 const PostComment = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isMyComment, setIsMyComment] = useState(false); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
+
+  const closeModal = () => {
+    setIsOpenModal(false);
+  };
+
   return (
     <>
       <CommentItem>
@@ -17,8 +25,9 @@ const PostComment = () => {
           <span>3주전</span>
         </AuthorInfo>
         <CommentText>테스트 텍스트입니다.</CommentText>
-        <MoreButton />
+        <MoreButton onClick={() => setIsOpenModal(true)} />
       </CommentItem>
+      {isOpenModal ? <CommentModal closeModal={closeModal} isMyComment={isMyComment} /> : <></>}
     </>
   );
 };

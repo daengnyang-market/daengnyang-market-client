@@ -4,9 +4,8 @@ import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
-const CommentModal = ({ closeModal }) => {
+const CommentModal = ({ closeModal, isMyComment }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
-  const [isMyComment, setIsMyComment] = useState(false);
 
   const closeAlert = () => {
     setIsOpenAlert(false);
