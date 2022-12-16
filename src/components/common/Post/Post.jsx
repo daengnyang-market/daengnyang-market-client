@@ -3,13 +3,21 @@ import styled from 'styled-components';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
+import PostModal from '../modal/PostModal/PostModal';
 
 const Post = ({ userName, userId }) => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
+
   const [contentImg, setContentImg] = useState(true);
 
   const [like, setLike] = useState(false);
   const onClickLikeButtonHandler = () => {
     setLike(!like);
+  };
+
+  const closeModal = () => {
+    setIsOpenModal(false);
   };
 
   return (
@@ -21,7 +29,9 @@ const Post = ({ userName, userId }) => {
             <UserName>{userName}</UserName>
             <UserId>{userId}</UserId>
           </UserInfoDiv>
-          <MoreSmallIcon src={MORE_SMALL_ICON} alt='더보기' />
+          <MoreSmallButton onClick={() => setIsOpenModal(true)}>
+            <img src={MORE_SMALL_ICON} alt='더보기' />
+          </MoreSmallButton>
         </UserInfoWrapperDiv>
         <ContentWrapperDiv>
           <ContentText>
@@ -40,6 +50,7 @@ const Post = ({ userName, userId }) => {
           <DateP>2023년 1월 6일</DateP>
         </ContentWrapperDiv>
       </WrapperDiv>
+      {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} /> : <></>}
     </>
   );
 };
@@ -75,7 +86,7 @@ const UserId = styled.p`
   color: var(--sub-text-color);
 `;
 
-const MoreSmallIcon = styled.img`
+const MoreSmallButton = styled.button`
   position: absolute;
   right: 0;
   width: 1.8rem;
