@@ -14,7 +14,7 @@ import {
   USER_FILL_ICON,
 } from '../../../styles/CommonIcons';
 
-const TabMenu = ({ selectMenuId = 0 }) => {
+const TabMenu = ({ currentMenuId = 0 }) => {
   const menuList = [
     { id: 0, title: '홈', icon: HOME_ICON, fillIcon: HOME_FILL_ICON },
     { id: 1, title: '채팅', icon: CHAT_ICON, fillIcon: CHAT_FILL_ICON },
@@ -27,8 +27,8 @@ const TabMenu = ({ selectMenuId = 0 }) => {
     <TabMenuDiv>
       {menuList.map(({ id, title, icon, fillIcon }) => (
         <TabMenuIconBtn key={id}>
-          <img src={id === selectMenuId ? fillIcon : icon} alt='' />
-          <TabMenuTitle id={id} selectMenuId={selectMenuId}>
+          <img src={id === currentMenuId ? fillIcon : icon} alt='' />
+          <TabMenuTitle id={id} currentMenuId={currentMenuId}>
             {title}
           </TabMenuTitle>
         </TabMenuIconBtn>
@@ -66,5 +66,5 @@ const TabMenuIconBtn = styled.button`
 const TabMenuTitle = styled.span`
   margin-top: 0.6em;
   font-size: 1em;
-  color: ${(props) => (props.id === props.selectMenuId ? 'var(--login-bg-color)' : 'var(--sub-text-color)')};
+  color: ${(props) => (props.id === props.currentMenuId ? 'var(--login-bg-color)' : 'var(--sub-text-color)')};
 `;
