@@ -7,7 +7,7 @@ import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 
 const ProfileHeader = ({ profileState, followState }) => {
-  const [isMyProfile, setIsMyProfile] = useState(false);
+  const [isMyProfile, setIsMyProfile] = useState(profileState);
 
   return (
     <ProfileWrapper>
@@ -25,7 +25,7 @@ const ProfileHeader = ({ profileState, followState }) => {
         <span>followings</span>
       </Followings>
       {/* isMyProfile에 따라 MyProfileBtns 과 UserProfileBtns 나뉘게 / */}
-      {isMyProfile == true ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
+      {isMyProfile ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
     </ProfileWrapper>
   );
 };
