@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Alert = ({ onClick }) => {
+const Alert = ({ summary, title, trigger, closeAlert, tiggerFunc }) => {
   return (
     <Section>
-      <h2 className='sr-only'>상품 삭제 알림창</h2>
+      <h2 className='sr-only'>{summary}</h2>
 
       <ContentsWrapper>
-        <Title>상품을 삭제할까요?</Title>
+        <Title>{title}</Title>
         <ButtonWrapper>
-          <button onClick={onClick}>취소</button>
-          <button>삭제</button>
+          <button onClick={closeAlert}>취소</button>
+          <button onClick={tiggerFunc}>{trigger}</button>
         </ButtonWrapper>
       </ContentsWrapper>
     </Section>
@@ -20,8 +20,12 @@ const Alert = ({ onClick }) => {
 export default Alert;
 
 const Section = styled.section`
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9900;
 `;
 
 const ContentsWrapper = styled.div`
@@ -33,7 +37,6 @@ const ContentsWrapper = styled.div`
   border-radius: 1rem;
   background-color: var(--main-bg-color);
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  z-index: 200;
 `;
 
 const Title = styled.strong`
@@ -45,10 +48,12 @@ const Title = styled.strong`
 `;
 
 const ButtonWrapper = styled.div`
+  display: flex;
   border-top: 1px solid var(--border-color);
 
   & button {
-    padding: 1.4rem 5rem;
+    width: 100%;
+    padding: 1.4rem 0;
     font-size: var(--fs-md);
   }
 
