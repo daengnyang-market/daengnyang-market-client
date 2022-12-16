@@ -5,10 +5,28 @@ import Alert from '../Alert/Alert';
 import { fadeIn } from '../Animation/Animation';
 
 // * 주의 *
-// 백그라운드 클릭 시 히든메뉴리스트를 닫기 위해서는 부모에게 onClickHandler 함수를 받아야 합니다.
-// 부모로부터 받은 onClickHandler 함수가 없다면 39~41번째 줄에서 사용중인 함수가 없어 백그라운드 클릭시 'onClick is not a function' 에러가 발생합니다.
-// 부모에 추가할 onClickHandler 함수 예시는 본 파일 최하단에 있습니다.
-const HiddenMenu = ({ onClick }) => {
+// 1. 백그라운드 클릭 시 히든메뉴리스트를 닫기 위해서는 부모에게 onClickHandler 함수를 받아야 합니다.
+//  - 부모로부터 받은 onClickHandler 함수가 없다면 39~41번째 줄에서 사용중인 함수가 없어 백그라운드 클릭시 'onClick is not a function' 에러가 발생합니다.
+//
+// 2. 히든메뉴 사용을 위해 아래와 같은 형식의 리스트를 만들어 props로 전달해줘야 합니다.
+// [예]
+// const filterList = [
+//   { id: 0, title: '5km 이내', type: 'button', isConnectAlert: false, to: '' },
+//   { id: 1, title: '10km 이내', type: 'button', isConnectAlert: false, to: '' },
+//   { id: 2, title: '20km 이내', type: 'button', isConnectAlert: false, to: '' },
+//   { id: 3, title: '30km 이내', type: 'link', isConnectAlert: true, to: '/test' },
+// ];
+// <HiddenMenu onClick={onClickHiddenMenuButtonHandler} itemList={filterList} />
+//
+// [옵션 설명]
+//  - id : key로 사용할 unique한 id
+//  - title : 리스트에 들어갈 제목
+//  - type : 아이템의 타입 (button, link 두 종류)
+//  - isConnectAlert : button 타입일 때 Alert 컴포넌트와 연결할지 여부 (boolean값으로 전달해야 함) / link 타입인 경우에는 false 값으로 작성
+//  - to : link 타입일 때 연결될 주소 / button 타입인 경우에는 빈 문자열로 작성
+//
+// ***** 본 파일 하단에 부모 컴포넌트에 추가할 내용에 대한 전체 예시가 있습니다 *****
+const HiddenMenu = ({ onChangeHiddenMenuState, itemList = [] }) => {
   const backgroundRef = useRef(null);
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
@@ -31,13 +49,13 @@ const HiddenMenu = ({ onClick }) => {
     };
   }, []);
 
-  const onClickHiddenMenuHandler = (e) => {
+  const onChangeHiddenMenuStateHandler = (e) => {
     if (isOpenAlert) {
       return;
     }
 
     if (e.target === backgroundRef.current) {
-      onClick(false);
+      onChangeHiddenMenuState(false);
     }
   };
 
@@ -50,17 +68,19 @@ const HiddenMenu = ({ onClick }) => {
       <section>
         <h2 className='sr-only'>메뉴</h2>
 
-        <MenuWrapper ref={backgroundRef} onClick={onClickHiddenMenuHandler}>
+        <MenuWrapper ref={backgroundRef} onClick={onChangeHiddenMenuStateHandler}>
           <MenuList isOpenAlert={isOpenAlert}>
-            <MenuItem>
-              <button onClick={onClickAlertButtonHandler}>삭제</button>
-            </MenuItem>
-            <MenuItem>
-              <button>수정</button>
-            </MenuItem>
-            <MenuItem>
-              <Link to='#'>웹사이트에서 상품보기</Link>
-            </MenuItem>
+            {itemList.map(({ id, title, type, isConnectAlert, to }) => (
+              <MenuItem key={id}>
+                {type === 'button' ? (
+                  <button onClick={isConnectAlert ? onClickAlertButtonHandler : null}>{title}</button>
+                ) : type === 'link' ? (
+                  <Link to={to}>{title}</Link>
+                ) : (
+                  <></>
+                )}
+              </MenuItem>
+            ))}
           </MenuList>
         </MenuWrapper>
       </section>
@@ -119,20 +139,32 @@ const MenuItem = styled.li`
 `;
 
 // 히든메뉴리스트를 닫기 위해 부모에 추가할 onClickHandler 함수 예시 시작 //
+// const filterList = [
+//   { id: 0, title: '5km 이내', type: 'button', isConnectAlert: false, to: '' },
+//   { id: 1, title: '10km 이내', type: 'button', isConnectAlert: true, to: '' },
+//   { id: 2, title: '20km 이내', type: 'button', isConnectAlert: false, to: '' },
+//   { id: 3, title: '30km 이내', type: 'link', isConnectAlert: false, to: '/test' },
+// ];
 // const [isShowHiddenMenu, setIsShowHiddenMenu] = useState(false);
-// const onClickHiddenMenuButtonHandler = () => {
+// const onChangeHiddenMenuStateHandler = () => {
 //   setIsShowHiddenMenu(!isShowHiddenMenu);
 // };
+//
 // return (
 //   <>
-//     <button onClick={onClickHiddenMenuButtonHandler}>히든메뉴 & alert 테스트 버튼</button>
-//     {isShowHiddenMenu ? (
-//       <>
-//         <HiddenMenu onClick={onClickHiddenMenuButtonHandler} />
-//       </>
-//     ) : (
-//       <></>
-//     )}
+//     <GlobalStyle />
+//     <FrameMain>
+//       <ScreenContainer>
+//         <button onClick={onChangeHiddenMenuStateHandler}>히든메뉴 & alert 테스트 버튼</button>
+//         {isShowHiddenMenu ? (
+//           <>
+//             <HiddenMenu onChangeHiddenMenuState={onChangeHiddenMenuStateHandler} itemList={filterList} />
+//           </>
+//         ) : (
+//           <></>
+//         )}
+//       </ScreenContainer>
+//     </FrameMain>
 //   </>
 // );
 // 히든메뉴리스트를 닫기 위해 부모에 추가할 onClickHandler 함수 예시 끝 //
