@@ -15,9 +15,9 @@ const ProfilePage = () => {
       <ContentsLayout padding='2rem 0 0 0'>
         <ProfileHeader></ProfileHeader>
         <SectionBorder />
-        <ProfileProduct></ProfileProduct>
+        <ProfileProduct />
         <SectionBorder />
-        <ProfilePost></ProfilePost>
+        <ProfilePost />
       </ContentsLayout>
       <TabMenu />
     </>
