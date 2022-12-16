@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import CommunityLayout from './../../CommunityLayout';
-import { BOTTOM_ICON } from '../../../../styles/CommonIcons';
+import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
 import HospitalList from './HospitalList';
 import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
@@ -26,7 +26,7 @@ const CommunityHospitaMainlPage = () => {
   };
 
   return (
-    <CommunityLayout padding='0'>
+    <CommunityLayout padding='0' selectMenuId={2}>
       <section>
         <h2 className='sr-only'>내 근처 동물병원 찾기</h2>
         <CurrentLocationBar />
@@ -70,6 +70,6 @@ const FilterButton = styled.button`
     width: 16px;
     height: 16px;
     margin-left: 0.6rem;
-    background: no-repeat center/cover url(${BOTTOM_ICON});
+    background: no-repeat center/cover url(${BOTTOM_ARROW_ICON});
   }
 `;

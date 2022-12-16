@@ -10,7 +10,7 @@ const CommunityWeatherPage = () => {
   const walkTextList = ['산책하기 좋은 날', '짧은 산책을 추천해요', '이불 속이 안전해'];
 
   return (
-    <CommunityLayout selectMenuId={2}>
+    <CommunityLayout selectMenuId={1}>
       <WeatherSection>
         {getLocation ? (
           <>

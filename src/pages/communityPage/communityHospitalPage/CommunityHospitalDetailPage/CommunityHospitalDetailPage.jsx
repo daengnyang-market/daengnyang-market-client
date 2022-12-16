@@ -7,7 +7,7 @@ import { LOCATION_BLACK_ICON } from '../../../../styles/CommonIcons';
 
 const CommunityHospitalDetailPage = () => {
   return (
-    <CommunityLayout padding='0'>
+    <CommunityLayout padding='0' navType='titleNav' selectMenuId={2}>
       <CurrentLocationBar />
       <HospitalDetailWrapper>
         <h2 className='sr-only'>어쩌구 동물병원 상세 정보</h2>
