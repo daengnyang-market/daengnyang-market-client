@@ -7,35 +7,32 @@ import {
   CHAT_ICON,
   CHAT_FILL_ICON,
   EDIT_ICON,
+  EDIT_FILL_ICON,
   COMMUNITY_ICON,
   COMMUNITY_FILL_ICON,
   USER_ICON,
   USER_FILL_ICON,
 } from '../../../styles/CommonIcons';
 
-const TabMenu = () => {
+const TabMenu = ({ selectMenuId = 0 }) => {
+  const menuList = [
+    { id: 0, title: '홈', icon: HOME_ICON, fillIcon: HOME_FILL_ICON },
+    { id: 1, title: '채팅', icon: CHAT_ICON, fillIcon: CHAT_FILL_ICON },
+    { id: 2, title: '게시물 작성', icon: EDIT_ICON, fillIcon: EDIT_FILL_ICON },
+    { id: 3, title: '집사생활', icon: COMMUNITY_ICON, fillIcon: COMMUNITY_FILL_ICON },
+    { id: 4, title: '프로필', icon: USER_ICON, fillIcon: USER_FILL_ICON },
+  ];
+
   return (
     <TabMenuDiv>
-      <TabMenuIconBtn>
-        <img src={HOME_ICON} alt='' />
-        <span>홈</span>
-      </TabMenuIconBtn>
-      <TabMenuIconBtn>
-        <img src={CHAT_ICON} alt='' />
-        <span>채팅</span>
-      </TabMenuIconBtn>
-      <TabMenuIconBtn>
-        <img src={EDIT_ICON} alt='' />
-        <span>게시물 작성</span>
-      </TabMenuIconBtn>
-      <TabMenuIconBtn>
-        <img src={COMMUNITY_ICON} alt='' />
-        <span>집사생활</span>
-      </TabMenuIconBtn>
-      <TabMenuIconBtn>
-        <img src={USER_ICON} alt='' />
-        <span>프로필</span>
-      </TabMenuIconBtn>
+      {menuList.map(({ id, title, icon, fillIcon }) => (
+        <TabMenuIconBtn key={id}>
+          <img src={id === selectMenuId ? fillIcon : icon} alt='' />
+          <TabMenuTitle id={id} selectMenuId={selectMenuId}>
+            {title}
+          </TabMenuTitle>
+        </TabMenuIconBtn>
+      ))}
     </TabMenuDiv>
   );
 };
@@ -64,9 +61,10 @@ const TabMenuIconBtn = styled.button`
     width: 24px;
     height: 24px;
   }
-  & span {
-    margin-top: 0.6em;
-    font-size: 1em;
-    color: var(--sub-text-color);
-  }
+`;
+
+const TabMenuTitle = styled.span`
+  margin-top: 0.6em;
+  font-size: 1em;
+  color: ${(props) => (props.id === props.selectMenuId ? 'var(--login-bg-color)' : 'var(--sub-text-color)')};
 `;
