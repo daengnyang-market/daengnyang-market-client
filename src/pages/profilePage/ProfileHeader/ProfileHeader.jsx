@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import UserProfileBtns from './UserProfileBtns';
+import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
-import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
-import Button from '../../../components/common/Button/Button';
 
-const ProfileHeader = ({ followState }) => {
-  const [isFollowing, setIsFollowing] = useState(followState);
-
-  function handleFollow() {
-    setIsFollowing(!isFollowing);
-  }
+const ProfileHeader = ({ profileState, followState }) => {
+  const [isMyProfile, setIsMyProfile] = useState(false);
 
   return (
     <ProfileWrapper>
@@ -28,42 +24,8 @@ const ProfileHeader = ({ followState }) => {
         <strong>128</strong>
         <span>followings</span>
       </Followings>
-      {/* 여기서 이제 followState에 따라 ProfileBtns이 나올거냐 myProfileBtns이 나올거냐로 나뉘게 구현 예정 */}
-      {/* <ProfileBtns>
-        <ProfileBtn />
-        <Button
-          size='M'
-          onClickHandler={handleFollow}
-          backgroundColor={isFollowing ? 'var(--login-bg-color)' : 'var(--main-bg-color)'}
-          borderColor={isFollowing ? 'transparent' : 'var(--border-color)'}
-          textColor={isFollowing ? 'var(--main-bg-color)' : 'var(--sub-text-color)'}
-        >
-          {isFollowing ? '팔로우' : '언팔로우'}
-        </Button>
-        <ProfileBtn isShare={true} />
-      </ProfileBtns> */}
-      <MyProfileBtns>
-        <li>
-          <Button
-            size='M'
-            backgroundColor={'var(--main-bg-color)'}
-            borderColor={'var(--border-color)'}
-            textColor={'var(--sub-text-color)'}
-          >
-            프로필 수정
-          </Button>
-        </li>
-        <li>
-          <Button
-            size='M'
-            backgroundColor={'var(--main-bg-color)'}
-            borderColor={'var(--border-color)'}
-            textColor={'var(--sub-text-color)'}
-          >
-            상품 등록
-          </Button>
-        </li>
-      </MyProfileBtns>
+      {/* isMyProfile에 따라 MyProfileBtns 과 UserProfileBtns 나뉘게 / */}
+      {isMyProfile == true ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
     </ProfileWrapper>
   );
 };
@@ -137,30 +99,4 @@ const Followings = styled.div`
     color: var(--sub-text-color);
     font-size: 1em;
   }
-`;
-
-const ProfileBtns = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
-  margin-top: 2.4em;
-  margin-bottom: 2.6em;
-`;
-
-const ProfileBtn = styled.button`
-  background: ${(props) =>
-    props.isShare ? `url(${SHARE_ICON}) no-repeat center / 15px` : `url(${CHAT_ICON}) no-repeat center / 15px`};
-  width: 34px;
-  height: 34px;
-  color: var(--sub-text-color);
-  border: 1px solid var(--border-color);
-  border-radius: 50%;
-`;
-
-const MyProfileBtns = styled.ul`
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 2.4em 0 3.4em 0;
 `;
