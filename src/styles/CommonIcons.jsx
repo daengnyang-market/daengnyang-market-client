@@ -1,3 +1,5 @@
+import ANIMAL_HOSPITAL_ICON from '../assets/icons/animal-hospital-icon.png';
+import BOTTOM_ARROW_ICON from '../assets/icons/bottom-arrow-icon.png';
 import CHAT_FILL_ICON from '../assets/icons/chat-fill-icon.png';
 import CHAT_ICON from '../assets/icons/chat-icon.png';
 import CLOSE_ICON from '../assets/icons/close-icon.png';
@@ -15,6 +17,8 @@ import IMAGE_ICON from '../assets/icons/image-icon.png';
 import KAKAO_ICON from '../assets/icons/kakao-icon.png';
 import LAYERS_ICON from '../assets/icons/layers-icon.png';
 import LEFT_ARROW_ICON from '../assets/icons/left-arrow-icon.png';
+import LOCATION_ICON from '../assets/icons/location-icon.png';
+import LOCATION_BLACK_ICON from '../assets/icons/location-black-icon.png';
 import MORE_ICON from '../assets/icons/more-icon.png';
 import MORE_SMALL_ICON from '../assets/icons/more-small-icon.png';
 import POST_ALBUM_OFF_ICON from '../assets/icons/post-album-off-icon.png';
@@ -22,6 +26,7 @@ import POST_ALBUM_ON_ICON from '../assets/icons/post-album-on-icon.png';
 import POST_LIST_OFF_ICON from '../assets/icons/post-list-off-icon.png';
 import POST_LIST_ON_ICON from '../assets/icons/post-list-on-icon.png';
 import REPLY_ICON from '../assets/icons/reply-icon.png';
+import RIGHT_ARROW_ICON from '../assets/icons/right-arrow-icon.png';
 import SEARCH_ICON from '../assets/icons/search-icon.png';
 import SHARE_ICON from '../assets/icons/share-icon.png';
 import USER_FILL_ICON from '../assets/icons/user-fill-icon.png';
@@ -30,6 +35,8 @@ import IMG_BUTTON_ICON from '../assets/icons/img-button-icon.png';
 import UPLOAD_FILE_ICON from '../assets/icons/upload-file-icon.png';
 
 export {
+  ANIMAL_HOSPITAL_ICON,
+  BOTTOM_ARROW_ICON,
   CHAT_FILL_ICON,
   CHAT_ICON,
   CLOSE_ICON,
@@ -47,6 +54,8 @@ export {
   KAKAO_ICON,
   LAYERS_ICON,
   LEFT_ARROW_ICON,
+  LOCATION_ICON,
+  LOCATION_BLACK_ICON,
   MORE_ICON,
   MORE_SMALL_ICON,
   POST_ALBUM_OFF_ICON,
@@ -54,6 +63,7 @@ export {
   POST_LIST_OFF_ICON,
   POST_LIST_ON_ICON,
   REPLY_ICON,
+  RIGHT_ARROW_ICON,
   SEARCH_ICON,
   SHARE_ICON,
   USER_FILL_ICON,
