@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const FrameLayout = ({ children }) => {
   return (
     <Frame>
-      <ScreenContainer>{children}</ScreenContainer>
+      <Screen>{children}</Screen>
     </Frame>
   );
 };
@@ -21,7 +21,7 @@ const Frame = styled.div`
   box-shadow: rgb(0 0 0 / 16%) 0px 0px 8px;
 `;
 
-const ScreenContainer = styled.div`
+const Screen = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
