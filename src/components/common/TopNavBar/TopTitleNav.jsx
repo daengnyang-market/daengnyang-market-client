@@ -5,16 +5,20 @@ import { Link } from 'react-router-dom';
 import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
 
-const TopTitleNav = ({ title }) => {
+const TopTitleNav = ({ title, viewMoreBtn = true }) => {
   return (
     <TopNavBar>
       <Link to='/'>
         <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기 버튼' />
       </Link>
       <TopNavH2>{title}</TopNavH2>
-      <MoreBtn>
-        <img src={MORE_ICON} alt='더보기 버튼' />
-      </MoreBtn>
+      {viewMoreBtn ? (
+        <MoreBtn>
+          <img src={MORE_ICON} alt='더보기 버튼' />
+        </MoreBtn>
+      ) : (
+        <></>
+      )}
     </TopNavBar>
   );
 };
