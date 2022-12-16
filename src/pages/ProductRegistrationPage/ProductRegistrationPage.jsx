@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
 import ContentsLayout from './../../components/layout/ContentsLayout/ContentsLayout';
@@ -5,6 +6,25 @@ import { IMG_BUTTON_ICON } from '../../styles/CommonIcons';
 import Input from './../../components/common/Input/Input';
 
 const ProductRegistrationPage = () => {
+  // 업로드 이미지 섬네일
+  const [thumbnailImg, setThumbnailImg] = useState('');
+
+  const onChangeInputHandler = (e) => {
+    const reader = new FileReader();
+
+    if (e.target.files[0]) {
+      reader.readAsDataURL(e.target.files[0]);
+    }
+
+    reader.onloadend = () => {
+      const thumbnailImgUrl = reader.result;
+
+      if (thumbnailImgUrl) {
+        setThumbnailImg([thumbnailImgUrl]);
+      }
+    };
+  };
+
   return (
     <>
       <TopUploadNav />
@@ -12,8 +32,8 @@ const ProductRegistrationPage = () => {
         <Section>
           <h2 className='sr-only'>상품 정보</h2>
           <P>이미지 등록</P>
-          <Label htmlFor='productImg'></Label>
-          <input className='sr-only' id='productImg' type='file' accept='image/*' />
+          <Label htmlFor='productImg'>{thumbnailImg ? <Img src={thumbnailImg} alt='' /> : ''}</Label>
+          <input onChange={onChangeInputHandler} className='sr-only' id='productImg' type='file' accept='image/*' />
           <Form>
             <Input labelText='상품명' inputType='text' id='productNameInput' placeholder='2~15자 이내여야 합니다.' />
             <Input labelText='가격' inputType='number' id='priceInput' placeholder='숫자만 입력 가능합니다.' />
@@ -63,6 +83,11 @@ const Label = styled.label`
     background-size: cover;
     border-radius: 50%;
   }
+`;
+
+// IE 미지원
+const Img = styled.img`
+  object-fit: scale-down;
 `;
 
 const Form = styled.form`
