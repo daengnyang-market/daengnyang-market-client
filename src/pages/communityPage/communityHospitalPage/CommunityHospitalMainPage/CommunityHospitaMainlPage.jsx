@@ -26,7 +26,7 @@ const CommunityHospitaMainlPage = () => {
   };
 
   return (
-    <CommunityLayout padding='0' selectMenuId={2}>
+    <CommunityLayout padding='0' currenttMenuId={2}>
       <section>
         <h2 className='sr-only'>내 근처 동물병원 찾기</h2>
         <CurrentLocationBar />

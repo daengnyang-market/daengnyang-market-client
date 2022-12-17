@@ -5,7 +5,7 @@ import TabMenu from './../../components/common/TabMenu/TabMenu';
 import CommunityMenu from './CommunityMenu';
 import TopTitleNav from '../../components/common/TopNavBar/TopTitleNav';
 
-const CommunityLayout = ({ children, navType = 'mainNav', selectMenuId }) => {
+const CommunityLayout = ({ children, navType = 'mainNav', currenttMenuId, isViewTabMenu = true }) => {
   return (
     <>
       {navType === 'mainNav' ? (
@@ -17,10 +17,10 @@ const CommunityLayout = ({ children, navType = 'mainNav', selectMenuId }) => {
       )}
 
       <ContentsLayout padding='0'>
-        <CommunityMenu selectMenuId={selectMenuId} />
+        <CommunityMenu currenttMenuId={currenttMenuId} />
         {children}
       </ContentsLayout>
-      <TabMenu currentMenuId={3} />
+      {isViewTabMenu ? <TabMenu currentMenuId={3} /> : <></>}
     </>
   );
 };

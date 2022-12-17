@@ -1,19 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CommunityMenu = ({ selectMenuId }) => {
+const CommunityMenu = ({ currenttMenuId }) => {
+  const navigate = useNavigate();
   const menuList = [
     { id: 0, title: '홈', to: '#' },
     { id: 1, title: '산책 난이도', to: '#' },
     { id: 2, title: '동물병원', to: '#' },
   ];
 
+  const changeMenu = (id) => {
+    switch (id) {
+      case 0:
+        navigate('/community');
+        break;
+
+      case 1:
+        navigate('/community/weather');
+        break;
+
+      case 2:
+        navigate('/community/hospital');
+        break;
+
+      default:
+    }
+  };
+
   return (
     <MenuList>
       {menuList.map(({ id, title, to }) => (
-        <MenuItem key={id} id={id} selectMenuId={selectMenuId}>
-          <MenuLink to={to}>{title}</MenuLink>
+        <MenuItem key={id} id={id} currenttMenuId={currenttMenuId}>
+          <MenuButton onClick={() => changeMenu(id)}>{title}</MenuButton>
         </MenuItem>
       ))}
     </MenuList>
@@ -36,11 +55,11 @@ const MenuItem = styled.li`
   width: 100%;
   height: 100%;
   font-size: var(--fs-lg);
-  font-weight: ${(props) => (props.id === props.selectMenuId ? '500' : '400')};
-  color: ${(props) => (props.id === props.selectMenuId ? 'var(--login-bg-color)' : 'var(--text-color)')};
+  font-weight: ${(props) => (props.id === props.currenttMenuId ? '500' : '400')};
+  color: ${(props) => (props.id === props.currenttMenuId ? 'var(--login-bg-color)' : 'var(--text-color)')};
 `;
 
-const MenuLink = styled(Link)`
+const MenuButton = styled.button`
   &:hover {
     color: var(--main-color);
     transition: color 150ms;
