@@ -1,25 +1,35 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { fadeOut } from '../../components/common/Animation/Animation';
 
 import { LOGO_IMAGE, MAIN_TITLE_IMAGE, SUB_TITLE_IMAGE } from '../../styles/CommonImages';
+import LoginMainPage from '../LoginMainPage/LoginMainPage';
 
 const SplashScreen = () => {
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      navigate('/login');
+    let timer = setTimeout(() => {
+      setIsLoading(false);
     }, 1400);
-  });
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   return (
-    <SplashScreenDiv>
-      <SubTitleImg src={SUB_TITLE_IMAGE} alt='우리집 댕냥이를 위한 따뜻한 선물' />
-      <MainLogoImg src={LOGO_IMAGE} alt='가져도댕냥 로고' />
-      <MainTitleImg src={MAIN_TITLE_IMAGE} alt='가져도댕냥' />
-    </SplashScreenDiv>
+    <>
+      {isLoading ? (
+        <SplashScreenDiv>
+          <SubTitleImg src={SUB_TITLE_IMAGE} alt='우리집 댕냥이를 위한 따뜻한 선물' />
+          <MainLogoImg src={LOGO_IMAGE} alt='가져도댕냥 로고' />
+          <MainTitleImg src={MAIN_TITLE_IMAGE} alt='가져도댕냥' />
+        </SplashScreenDiv>
+      ) : (
+        <LoginMainPage />
+      )}
+    </>
   );
 };
 
