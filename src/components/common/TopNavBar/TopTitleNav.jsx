@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
 
 const TopTitleNav = ({ title, viewMoreBtn = true }) => {
+  const navigate = useNavigate();
+
   return (
     <TopNavBar>
-      <Link to='/'>
+      <button onClick={() => navigate(-1)}>
         <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기 버튼' />
-      </Link>
+      </button>
       <TopNavH2>{title}</TopNavH2>
       {viewMoreBtn ? (
         <MoreBtn>

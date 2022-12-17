@@ -1,16 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { TopNavBar, LeftArrow } from './Styled';
 import { LEFT_ARROW_ICON } from '../../../styles/CommonIcons';
 import Button from '../Button/Button';
 
 const TopUploadNav = () => {
+  const navigate = useNavigate();
+
   return (
     <TopNavBar>
-      <Link to='/'>
+      <button onClick={() => navigate(-1)}>
         <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기버튼' />
-      </Link>
+      </button>
       <Button size='MS'>저장</Button>
     </TopNavBar>
   );

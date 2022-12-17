@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
-import ProfileHeader from './profileHeader/ProfileHeader';
+import ProfileHeader from './ProfileHeader/ProfileHeader';
 import ProfileProduct from './ProfileProduct/ProfileProduct';
 import ProfilePost from './ProfilePost/ProfilePost';
 

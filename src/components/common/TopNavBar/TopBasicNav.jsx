@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
@@ -7,6 +7,8 @@ import ProfileModal from '../modal/ProfileModal/ProfileModal';
 import ChatRoomModal from '../modal/ChatRoomModal/ChatRoomModal';
 
 const TopBasicNav = ({ pageType }) => {
+  const navigate = useNavigate();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const closeModal = () => {
@@ -16,9 +18,9 @@ const TopBasicNav = ({ pageType }) => {
   return (
     <>
       <TopNavBar>
-        <Link to='/'>
+        <button onClick={() => navigate(-1)}>
           <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기 버튼' />
-        </Link>
+        </button>
         <MoreBtn onClick={() => setIsOpenModal(true)}>
           <img src={MORE_ICON} alt='더보기 버튼' />
         </MoreBtn>
