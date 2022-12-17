@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
-import ProfileHeader from './ProfileHeader/ProfileHeader';
+import ProfileHeader from './profileHeader/ProfileHeader';
 import ProfileProduct from './ProfileProduct/ProfileProduct';
 import ProfilePost from './ProfilePost/ProfilePost';
 
@@ -13,11 +13,11 @@ const ProfilePage = () => {
     <>
       <TopBasicNav pageType='profile' />
       <ContentsLayout padding='2rem 0 0 0'>
-        <ProfileHeader></ProfileHeader>
+        <ProfileHeader profileState={true} followState={false} />
         <SectionBorder />
         <ProfileProduct />
         <SectionBorder />
-        <ProfilePost />
+        <ProfilePost postState={true} />
       </ContentsLayout>
       <TabMenu />
     </>
