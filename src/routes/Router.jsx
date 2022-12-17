@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import ChatRoomPage from '../pages/ChatRoomPage/ChatRoomPage';
 import CommunityHospitalDetailPage from '../pages/communityPage/communityHospitalPage/CommunityHospitalDetailPage/CommunityHospitalDetailPage';
 import CommunityHospitaMainlPage from '../pages/communityPage/communityHospitalPage/CommunityHospitalMainPage/CommunityHospitaMainlPage';
 import CommunityMainPage from '../pages/communityPage/CommunityMainPage/CommunityMainPage';
@@ -40,7 +41,7 @@ const Router = () => {
       <Route path='/community/hospital' element={<CommunityHospitaMainlPage />} />
       <Route path='/community/hospital/:hospitalid' element={<CommunityHospitalDetailPage />} />
       <Route path='/chat' element={<ChatListPage />} />
-      <Route path='/chat/:accountname' element={<></>} />
+      <Route path='/chat/:accountname' element={<ChatRoomPage />} />
       <Route path='*' element={<></>} />
       <Route path='/notfound' element={<></>} />
     </Routes>
