@@ -19,4 +19,6 @@ const Image = styled.img`
   border: ${(props) => props.borderWeight}px solid var(--profile-border-color);
   border-radius: 50%;
   cursor: ${(props) => (props.isPointer ? 'pointer' : 'default')};
+  // IE 미지원
+  object-fit: scale-down;
 `;
