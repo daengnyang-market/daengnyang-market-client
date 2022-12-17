@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { fadeOut } from '../../components/common/Animation/Animation';
 
 import { LOGO_IMAGE, MAIN_TITLE_IMAGE, SUB_TITLE_IMAGE } from '../../styles/CommonImages';
 
 const SplashScreen = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setTimeout(() => {
+      navigate('/login');
+    }, 1400);
+  });
+
   return (
     <SplashScreenDiv>
       <SubTitleImg src={SUB_TITLE_IMAGE} alt='우리집 댕냥이를 위한 따뜻한 선물' />
@@ -21,6 +31,8 @@ const SplashScreenDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: ${fadeOut} 1400ms linear;
+  animation-fill-mode: forwards;
 `;
 
 const SubTitleImg = styled.img`
