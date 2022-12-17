@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 import { LOGO_WHITE_IMAGE } from '../../styles/CommonImages';
 import { KAKAO_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../styles/CommonIcons';
+import { fadeIn } from '../../components/common/Animation/Animation';
 
 const LoginMainPage = () => {
   return (
     <Main>
-      <LogoHeadingOne>
-        <LogoImg src={LOGO_WHITE_IMAGE} alt='가져도댕냥 로고' />
-      </LogoHeadingOne>
+      <LogoHeadingWrapper>
+        <LogoHeadingOne>
+          <LogoImg src={LOGO_WHITE_IMAGE} alt='가져도댕냥 로고' />
+        </LogoHeadingOne>
+      </LogoHeadingWrapper>
       <LoginSection>
         <KakaoButton>
           <CommonStyleImg src={KAKAO_ICON} alt='' />
@@ -38,19 +41,29 @@ export default LoginMainPage;
 
 const Main = styled.main`
   position: relative;
+  display: flex;
   width: 100%;
   height: 100vh;
   background-color: var(--login-bg-color);
+  animation: ${fadeIn} 200ms linear;
+`;
+
+const LogoHeadingWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 319px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LogoHeadingOne = styled.h1`
   width: 160px;
   height: 160px;
-  margin: 17.1rem 0 0 13rem;
 `;
 
 const LogoImg = styled.img`
   width: 100%;
+  margin-left: 15px;
 `;
 
 const LoginSection = styled.section`
