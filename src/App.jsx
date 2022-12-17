@@ -6,17 +6,17 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <Frame>
-        <Screen>
+      <MainContainer>
+        <ScreenContainer>
           <Router />
-        </Screen>
-      </Frame>
+        </ScreenContainer>
+      </MainContainer>
     </>
   );
 };
 export default App;
 
-const Frame = styled.div`
+const MainContainer = styled.div`
   position: relative;
   max-width: 390px;
   height: 100%;
@@ -26,7 +26,7 @@ const Frame = styled.div`
   box-shadow: rgb(0 0 0 / 16%) 0px 0px 8px;
 `;
 
-const Screen = styled.div`
+const ScreenContainer = styled.div`
   display: flex;
   min-height: 100%;
   flex-direction: column;
