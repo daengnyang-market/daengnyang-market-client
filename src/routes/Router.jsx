@@ -17,6 +17,7 @@ import ProfilePage from '../pages/profilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
 import ChatListPage from '../pages/chatListPage/ChatListPage';
+import Error404Page from '../pages/Error404Page/Error404Page';
 
 const Router = () => {
   return (
@@ -42,7 +43,7 @@ const Router = () => {
       <Route path='/community/hospital/:hospitalid' element={<CommunityHospitalDetailPage />} />
       <Route path='/chat' element={<ChatListPage />} />
       <Route path='/chat/:accountname' element={<ChatRoomPage />} />
-      <Route path='*' element={<></>} />
+      <Route path='*' element={<Error404Page />} />
       <Route path='/notfound' element={<></>} />
     </Routes>
   );
