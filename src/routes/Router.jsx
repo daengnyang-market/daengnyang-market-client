@@ -16,6 +16,7 @@ import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileMod
 import ProfilePage from '../pages/profilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
+import ChatListPage from '../pages/chatListPage/ChatListPage';
 
 const Router = () => {
   return (
@@ -39,7 +40,7 @@ const Router = () => {
       <Route path='/community/weather' element={<CommunityWeatherPage />} />
       <Route path='/community/hospital' element={<CommunityHospitaMainlPage />} />
       <Route path='/community/hospital/:hospitalid' element={<CommunityHospitalDetailPage />} />
-      <Route path='/chat' element={<></>} />
+      <Route path='/chat' element={<ChatListPage />} />
       <Route path='/chat/:accountname' element={<ChatRoomPage />} />
       <Route path='*' element={<></>} />
       <Route path='/notfound' element={<></>} />
