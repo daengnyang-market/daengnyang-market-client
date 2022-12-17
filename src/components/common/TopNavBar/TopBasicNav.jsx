@@ -4,9 +4,8 @@ import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
 import ProfileModal from '../modal/ProfileModal/ProfileModal';
-import ChatRoomModal from '../modal/ChatRoomModal/ChatRoomModal';
 
-const TopBasicNav = ({ pageType }) => {
+const TopBasicNav = () => {
   const navigate = useNavigate();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -25,17 +24,7 @@ const TopBasicNav = ({ pageType }) => {
           <img src={MORE_ICON} alt='더보기 버튼' />
         </MoreBtn>
       </TopNavBar>
-      {isOpenModal ? (
-        pageType === 'profile' ? (
-          <ProfileModal closeModal={closeModal} />
-        ) : pageType === 'chatRoom' ? (
-          <ChatRoomModal closeModal={closeModal} />
-        ) : (
-          <></>
-        )
-      ) : (
-        <></>
-      )}
+      {isOpenModal ? <ProfileModal closeModal={closeModal} /> : <></>}
     </>
   );
 };
