@@ -1,36 +1,42 @@
 import styled from 'styled-components';
 import { LOGO_WHITE_IMAGE } from '../../styles/CommonImages';
 import { KAKAO_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../styles/CommonIcons';
+import { fadeIn } from '../../components/common/Animation/Animation';
+import { Link } from 'react-router-dom';
 
 const LoginMainPage = () => {
   return (
-    <Main>
-      <LogoHeadingOne>
-        <LogoImg src={LOGO_WHITE_IMAGE} alt='가져도댕냥 로고' />
-      </LogoHeadingOne>
-      <LoginSection>
-        <KakaoButton>
-          <CommonStyleImg src={KAKAO_ICON} alt='' />
-          카카오 계정으로 로그인
-        </KakaoButton>
-        <GoogleButton>
-          <CommonStyleImg src={GOOGLE_ICON} alt='' />
-          구글 계정으로 로그인
-        </GoogleButton>
-        <FacebookButton>
-          <CommonStyleImg src={FACEBOOK_ICON} alt='' />
-          페이스북 계정으로 로그인
-        </FacebookButton>
-        <Ul>
-          <EmailLoginLi>
-            <button type='button'>이메일로 로그인</button>
-          </EmailLoginLi>
-          <JoinLi>
-            <a href='/join'>회원가입</a>
-          </JoinLi>
-        </Ul>
-      </LoginSection>
-    </Main>
+    <>
+      <Main>
+        <LogoHeadingWrapper>
+          <LogoHeadingOne>
+            <LogoImg src={LOGO_WHITE_IMAGE} alt='가져도댕냥 로고' />
+          </LogoHeadingOne>
+        </LogoHeadingWrapper>
+        <LoginSection>
+          <KakaoButton>
+            <CommonStyleImg src={KAKAO_ICON} alt='' />
+            카카오 계정으로 로그인
+          </KakaoButton>
+          <GoogleButton>
+            <CommonStyleImg src={GOOGLE_ICON} alt='' />
+            구글 계정으로 로그인
+          </GoogleButton>
+          <FacebookButton>
+            <CommonStyleImg src={FACEBOOK_ICON} alt='' />
+            페이스북 계정으로 로그인
+          </FacebookButton>
+          <Ul>
+            <EmailLoginLi>
+              <Link to='/login'>이메일로 로그인</Link>
+            </EmailLoginLi>
+            <JoinLi>
+              <Link to='/join'>회원가입</Link>
+            </JoinLi>
+          </Ul>
+        </LoginSection>
+      </Main>
+    </>
   );
 };
 
@@ -38,19 +44,29 @@ export default LoginMainPage;
 
 const Main = styled.main`
   position: relative;
+  display: flex;
   width: 100%;
   height: 100vh;
   background-color: var(--login-bg-color);
+  animation: ${fadeIn} 200ms linear;
+`;
+
+const LogoHeadingWrapper = styled.div`
+  width: 100%;
+  margin-bottom: 319px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LogoHeadingOne = styled.h1`
   width: 160px;
   height: 160px;
-  margin: 17.1rem 0 0 13rem;
 `;
 
 const LogoImg = styled.img`
   width: 100%;
+  margin-left: 15px;
 `;
 
 const LoginSection = styled.section`
