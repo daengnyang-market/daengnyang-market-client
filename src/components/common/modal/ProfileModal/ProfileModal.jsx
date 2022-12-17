@@ -21,7 +21,7 @@ const ProfileModal = ({ closeModal }) => {
       <ModalLayout closeModal={closeModal} isOpenAlert={isOpenAlert}>
         <MenuList>
           <MenuItem>
-            <Link to='#'>설정 및 개인정보</Link>
+            <Link to='/profile/edit'>설정 및 개인정보</Link>
           </MenuItem>
           <MenuItem>
             <button type='button' onClick={() => setIsOpenAlert(true)}>
