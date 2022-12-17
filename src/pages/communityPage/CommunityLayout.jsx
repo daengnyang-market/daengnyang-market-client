@@ -20,7 +20,7 @@ const CommunityLayout = ({ children, navType = 'mainNav', selectMenuId }) => {
         <CommunityMenu selectMenuId={selectMenuId} />
         {children}
       </ContentsLayout>
-      <TabMenu />
+      <TabMenu currentMenuId={3} />
     </>
   );
 };

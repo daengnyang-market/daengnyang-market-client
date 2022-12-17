@@ -19,7 +19,7 @@ const ProfilePage = () => {
         <SectionBorder />
         <ProfilePost />
       </ContentsLayout>
-      <TabMenu />
+      <TabMenu currentMenuId={4} />
     </>
   );
 };
