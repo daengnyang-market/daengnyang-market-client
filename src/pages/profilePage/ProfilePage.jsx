@@ -11,7 +11,7 @@ import ProfilePost from './ProfilePost/ProfilePost';
 const ProfilePage = () => {
   return (
     <>
-      <TopBasicNav />
+      <TopBasicNav pageType='profile' />
       <ContentsLayout padding='2rem 0 0 0'>
         <ProfileHeader></ProfileHeader>
         <SectionBorder />
