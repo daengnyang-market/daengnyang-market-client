@@ -11,7 +11,7 @@ const SplashScreen = () => {
   useEffect(() => {
     let timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1400);
+    }, 1500);
 
     return () => {
       clearTimeout(timer);
@@ -41,7 +41,7 @@ const SplashScreenDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  animation: ${fadeOut} 1400ms linear;
+  animation: ${fadeOut} 1500ms linear;
   animation-fill-mode: forwards;
 `;
 
