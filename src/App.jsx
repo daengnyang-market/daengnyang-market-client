@@ -1,7 +1,22 @@
 import styled from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
+import Router from './routes/Router';
 
-const FrameMain = styled.main`
+const App = () => {
+  return (
+    <>
+      <GlobalStyle />
+      <MainContainer>
+        <ScreenContainer>
+          <Router />
+        </ScreenContainer>
+      </MainContainer>
+    </>
+  );
+};
+export default App;
+
+const MainContainer = styled.div`
   position: relative;
   max-width: 390px;
   height: 100%;
@@ -16,15 +31,3 @@ const ScreenContainer = styled.div`
   min-height: 100%;
   flex-direction: column;
 `;
-
-const App = () => {
-  return (
-    <>
-      <GlobalStyle />
-      <FrameMain>
-        <ScreenContainer></ScreenContainer>
-      </FrameMain>
-    </>
-  );
-};
-export default App;
