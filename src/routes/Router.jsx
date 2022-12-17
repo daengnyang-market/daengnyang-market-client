@@ -17,6 +17,7 @@ import ProfilePage from '../pages/profilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
 import ChatListPage from '../pages/chatListPage/ChatListPage';
+import ProfileSettingsPage from '../pages/ProfileSettingsPage/ProfileSettingsPage';
 
 const Router = () => {
   return (
@@ -25,6 +26,7 @@ const Router = () => {
       <Route path='/' element={<SplashScreen />} />
       <Route path='/login' element={<EmailLoginPage />} />
       <Route path='/join' element={<JoinMembershipPage />} />
+      <Route path='/join/setprofile' element={<ProfileSettingsPage />} />
       {/* 회원만 진입 가능 페이지 */}
       <Route path='/home' element={<FeedPage />} />
       <Route path='/search' element={<SearchPage />} />
