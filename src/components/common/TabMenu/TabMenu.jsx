@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import {
@@ -15,6 +16,8 @@ import {
 } from '../../../styles/CommonIcons';
 
 const TabMenu = ({ currentMenuId = 0 }) => {
+  const navigate = useNavigate();
+
   const menuList = [
     { id: 0, title: '홈', icon: HOME_ICON, fillIcon: HOME_FILL_ICON },
     { id: 1, title: '채팅', icon: CHAT_ICON, fillIcon: CHAT_FILL_ICON },
@@ -23,10 +26,36 @@ const TabMenu = ({ currentMenuId = 0 }) => {
     { id: 4, title: '프로필', icon: USER_ICON, fillIcon: USER_FILL_ICON },
   ];
 
+  const moveSelectMenu = (id) => {
+    switch (id) {
+      case 0:
+        navigate('/home');
+        break;
+
+      case 1:
+        navigate('/chat');
+        break;
+
+      case 2:
+        navigate('/post/upload');
+        break;
+
+      case 3:
+        navigate('/community');
+        break;
+
+      case 4:
+        navigate('/profile');
+        break;
+
+      default:
+    }
+  };
+
   return (
     <TabMenuDiv>
       {menuList.map(({ id, title, icon, fillIcon }) => (
-        <TabMenuIconBtn key={id}>
+        <TabMenuIconBtn key={id} onClick={() => moveSelectMenu(id)}>
           <img src={id === currentMenuId ? fillIcon : icon} alt='' />
           <TabMenuTitle id={id} currentMenuId={currentMenuId}>
             {title}
