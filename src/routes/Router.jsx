@@ -4,10 +4,10 @@ import CommunityHospitalDetailPage from '../pages/communityPage/communityHospita
 import CommunityHospitaMainlPage from '../pages/communityPage/communityHospitalPage/CommunityHospitalMainPage/CommunityHospitaMainlPage';
 import CommunityMainPage from '../pages/communityPage/CommunityMainPage/CommunityMainPage';
 import CommunityWeatherPage from '../pages/communityPage/CommunityWeatherPage/CommunityWeatherPage';
+import EmailLoginPage from '../pages/EmailLoginPage/EmailLoginPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
 import JoinMembershipPage from '../pages/JoinMembershipPage/JoinMembershipPage';
-import LoginMainPage from '../pages/LoginMainPage/LoginMainPage';
 import PostDetailPage from '../pages/PostDetailPage/PostDetailPage';
 import PostUploadPage from '../pages/PostUploadPage/PostUploadPage';
 import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
@@ -21,7 +21,7 @@ const Router = () => {
     <Routes>
       {/* 비회원도 진입 페이지 */}
       <Route path='/' element={<SplashScreen />} />
-      <Route path='/login' element={<LoginMainPage />} />
+      <Route path='/login' element={<EmailLoginPage />} />
       <Route path='/join' element={<JoinMembershipPage />} />
       {/* 회원만 진입 가능 페이지 */}
       <Route path='/home' element={<FeedPage />} />
