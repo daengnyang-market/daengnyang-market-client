@@ -20,7 +20,7 @@ const FollowListPage = () => {
           <Follow />
         </FollowList>
       </ContentsLayout>
-      <TabMenu />
+      <TabMenu currentMenuId={4} />
     </>
   );
 };

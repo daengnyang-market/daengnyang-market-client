@@ -19,7 +19,7 @@ const ProfilePage = () => {
         <SectionBorder />
         <ProfilePost postState={true} />
       </ContentsLayout>
-      <TabMenu />
+      <TabMenu currentMenuId={4} />
     </>
   );
 };
