@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styled, { css } from 'styled-components';
 import Button from '../../components/common/Button/Button';
 
@@ -11,10 +12,6 @@ const JoinMembershipInput = () => {
   const [isValidatedEmail, setIsValidatedEmail] = useState('');
   const [isValidatedPassword, setIsValidatedPassword] = useState('');
   const navigate = useNavigate();
-
-  const onClickPageHandler = () => {
-    navigate('/join/setprofile');
-  };
 
   useEffect(() => {
     const regexEmail =
@@ -36,12 +33,38 @@ const JoinMembershipInput = () => {
       setPasswordMessage('*비밀번호는 6자 이상이어야 합니다.');
       setIsValidatedPassword(false);
     } else if (password === '') {
+      setPasswordMessage('');
       setIsValidatedPassword('');
     } else {
       setPasswordMessage('');
       setIsValidatedPassword(true);
     }
   }, [password]);
+
+  const onClickPageHandler = async (e) => {
+    e.preventDefault();
+    const res = await axios.post('https://mandarin.api.weniv.co.kr/user/emailvalid', {
+      user: {
+        email: email,
+      },
+    });
+    if (res.data.message === '사용 가능한 이메일 입니다.') {
+      setIsValidatedEmail(true);
+      navigate('/join/setprofile', {
+        state: {
+          email: email,
+          password: password,
+        },
+      });
+    } else if (res.data.message === '이미 가입된 이메일 주소 입니다.') {
+      setIsValidatedEmail(false);
+      setEmailMessage('*이미 가입된 이메일 주소 입니다.');
+    } else {
+      setIsValidatedEmail(false);
+      alert('잘못된 접근입니다.');
+    }
+  };
+
   return (
     <InputWrapper>
       <InputLabel htmlFor='email'>이메일</InputLabel>
@@ -60,7 +83,7 @@ const JoinMembershipInput = () => {
       <ErrorMessage>{emailMessage}</ErrorMessage>
       <InputLabel htmlFor='password'>패스워드</InputLabel>
       <InputPasswordText
-        type='text'
+        type='password'
         id='password'
         name='password'
         placeholder='패스워드를 입력해 주세요.'
@@ -74,8 +97,8 @@ const JoinMembershipInput = () => {
       <ErrorMessage>{passwordMessage}</ErrorMessage>
 
       <Button
-        onClickHandler={onClickPageHandler}
         disabled={isValidatedEmail && isValidatedPassword === true ? false : true}
+        onClickHandler={onClickPageHandler}
         size='L'
       >
         다음
@@ -86,7 +109,7 @@ const JoinMembershipInput = () => {
 
 export default JoinMembershipInput;
 
-const InputWrapper = styled.div`
+const InputWrapper = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -100,48 +123,40 @@ const InputLabel = styled.label`
 `;
 
 const PasswordBorderStyle = css`
-  ${(props) =>
-    props.isValidatedPassword === true &&
-    css`
-      border-bottom: 1px solid var(--main-color);
-    `};
-  ${(props) =>
-    props.isValidatedPassword === false &&
-    css`
-      border-bottom: 1px solid var(--alert-color);
-    `};
-  ${(props) =>
-    props.isValidatedPassword === '' &&
-    css`
-      border-bottom: 1px solid var(--border-color);
-    `};
+  ${({ isValidatedPassword }) => {
+    switch (isValidatedPassword) {
+      case true:
+        return `border-bottom: 1px solid var(--main-color)`;
+      case false:
+        return `border-bottom: 1px solid var(--alert-color)`;
+      case '':
+        return `border-bottom: 1px solid var(--border-color)`;
+      default:
+        return;
+    }
+  }}
 `;
 
 const EmailwordBorderStyle = css`
-  ${(props) =>
-    props.isValidatedEmail === true &&
-    css`
-      border-bottom: 1px solid var(--main-color);
-    `};
-  ${(props) =>
-    props.isValidatedEmail === false &&
-    css`
-      border-bottom: 1px solid var(--alert-color);
-    `};
-  ${(props) =>
-    props.isValidatedEmail === '' &&
-    css`
-      border-bottom: 1px solid var(--border-color);
-    `};
+  ${({ isValidatedEmail }) => {
+    switch (isValidatedEmail) {
+      case true:
+        return `border-bottom: 1px solid var(--main-color)`;
+      case false:
+        return `border-bottom: 1px solid var(--alert-color)`;
+      case '':
+        return `border-bottom: 1px solid var(--border-color)`;
+      default:
+        return;
+    }
+  }}
 `;
 
 const InputEmailText = styled.input`
   padding-bottom: 0.8rem;
   font-size: var(--fs-md);
   ${EmailwordBorderStyle};
-
   outline: none;
-
   &::placeholder {
     color: var(--border-color);
   }
@@ -152,7 +167,6 @@ const InputPasswordText = styled.input`
   font-size: var(--fs-md);
   ${PasswordBorderStyle};
   outline: none;
-
   &::placeholder {
     color: var(--border-color);
   }
