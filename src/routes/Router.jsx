@@ -44,7 +44,7 @@ const Router = () => {
       <Route path='/chat' element={<ChatListPage />} />
       <Route path='/chat/:accountname' element={<ChatRoomPage />} />
       <Route path='*' element={<Error404Page />} />
-      <Route path='/notfound' element={<></>} />
+      <Route path='/notfound' element={<Error404Page />} />
     </Routes>
   );
 };
