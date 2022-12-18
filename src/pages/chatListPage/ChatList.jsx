@@ -12,7 +12,7 @@ const ChatList = ({ name, content, date }) => {
         <NewMeassageAlert />
         <ChatContents className='ellipsis'>
           <strong>{name}</strong>
-          <span>{content}</span>
+          <span className='ellipsis'>{content}</span>
         </ChatContents>
         <ChatDate>{date}</ChatDate>
       </ChatLi>
@@ -54,6 +54,7 @@ const ChatContents = styled.div`
   }
 
   & span {
+    width: 100%;
     font-size: 1.2em;
     color: var(--sub-text-color);
   }

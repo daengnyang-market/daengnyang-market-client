@@ -5,14 +5,18 @@ import UserProfileBtns from './UserProfileBtns';
 import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileHeader = ({ profileState, followState }) => {
   const [isMyProfile, setIsMyProfile] = useState(profileState);
-
+  const navigate = useNavigate();
+  const moveFollowers = () => {
+    navigate(`/follow/:accountname/:type`);
+  };
   return (
     <ProfileWrapper>
       <h2 className='sr-only'>프로필 정보</h2>
-      <Followers>
+      <Followers onClick={moveFollowers}>
         <strong>2950</strong>
         <span>followers</span>
       </Followers>
@@ -20,7 +24,7 @@ const ProfileHeader = ({ profileState, followState }) => {
       <UserName>애월읍 위니브 감귤농장</UserName>
       <UserID>@ weniv_Mandarin</UserID>
       <UserIntro>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</UserIntro>
-      <Followings>
+      <Followings onClick={moveFollowers}>
         <strong>128</strong>
         <span>followings</span>
       </Followings>
@@ -60,7 +64,7 @@ const UserIntro = styled.span`
   color: var(--sub-text-color);
 `;
 
-const Followers = styled.div`
+const Followers = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -69,7 +73,7 @@ const Followers = styled.div`
   left: 5.6em;
 
   & strong {
-    margin-bottom: 0.6em;
+    margin-bottom: 0.35em;
     font-weight: 700;
     font-size: 1.8em;
     color: var(--text-color);
@@ -80,7 +84,7 @@ const Followers = styled.div`
   }
 `;
 
-const Followings = styled.div`
+const Followings = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +93,7 @@ const Followings = styled.div`
   right: 5.6em;
 
   & strong {
-    margin-bottom: 0.6em;
+    margin-bottom: 0.35em;
     font-weight: 700;
     font-size: 1.8em;
     color: var(--text-color);
