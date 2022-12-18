@@ -11,7 +11,7 @@ const EmailLoginPage = () => {
     {
       id: 0,
       label: '이메일',
-      type: 'text',
+      type: 'email',
       inputId: 'emailInput',
       name: 'email',
       ref: emailInputRef,
@@ -19,7 +19,7 @@ const EmailLoginPage = () => {
     {
       id: 1,
       label: '비밀번호',
-      type: 'text',
+      type: 'password',
       inputId: 'passwordInput',
       name: 'password',
       ref: passwordInputRef,
