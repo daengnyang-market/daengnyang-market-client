@@ -24,7 +24,7 @@ const ChatListPage = () => {
           </Link>
         </ChatUl>
       </ContentsLayout>
-      <TabMenu />
+      <TabMenu currentMenuId={1} />
     </>
   );
 };

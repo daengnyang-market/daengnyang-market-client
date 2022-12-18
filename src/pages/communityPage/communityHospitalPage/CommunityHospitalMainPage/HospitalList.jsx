@@ -7,7 +7,7 @@ const HospitalList = () => {
   return (
     <HospitalListWrapper>
       <HospitalItem>
-        <HospitalLink to='#' aria-label='어쩌구 동물병원 상세 정보'>
+        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
           <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
           <HospitalInfo>
             <HospitalTitle>어쩌구 동물병원</HospitalTitle>
@@ -16,7 +16,7 @@ const HospitalList = () => {
         </HospitalLink>
       </HospitalItem>
       <HospitalItem>
-        <HospitalLink to='#' aria-label='어쩌구 동물병원 상세 정보'>
+        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
           <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
           <HospitalInfo>
             <HospitalTitle>어쩌구 동물병원</HospitalTitle>
@@ -25,7 +25,7 @@ const HospitalList = () => {
         </HospitalLink>
       </HospitalItem>
       <HospitalItem>
-        <HospitalLink to='#' aria-label='어쩌구 동물병원 상세 정보'>
+        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
           <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
           <HospitalInfo>
             <HospitalTitle>어쩌구 동물병원</HospitalTitle>
