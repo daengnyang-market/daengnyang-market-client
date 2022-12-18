@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import useInput from '../../hooks/useInput';
 import Button from '../../components/common/Button/Button';
+import EmailLoginInput from './EmailLoginInput';
 
 const EmailLoginPage = () => {
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
+
   const inputList = [
     {
       id: 0,
@@ -25,10 +27,12 @@ const EmailLoginPage = () => {
       ref: passwordInputRef,
     },
   ];
+
   const [alertMessage, setAlertMessage] = useState({
     emailAlertMessage: '',
     passwordAlertMessage: '',
   });
+
   const [inputsValidState, setInputsValidState] = useState({ email: false, password: false });
 
   const { values, onBlurHandler, onFocusHandler, onChangeHandler, disabledSubmitButton } = useInput({
@@ -44,40 +48,15 @@ const EmailLoginPage = () => {
       <Title>로그인</Title>
 
       <form>
-        <LoginInputWrapper>
-          {inputList.map(({ id, label, type, inputId, name, ref }) => (
-            <LoginInput key={id}>
-              <LoginInputLabel htmlFor={inputId}>{label}</LoginInputLabel>
-              <LoginInputText
-                type={type}
-                id={inputId}
-                name={name}
-                ref={ref}
-                value={values[name]}
-                onFocus={onFocusHandler}
-                onBlur={onBlurHandler}
-                onChange={onChangeHandler}
-                autoComplete='off'
-                spellCheck='false'
-              />
-              {name === 'email' ? (
-                inputsValidState.email ? (
-                  <></>
-                ) : (
-                  <LoginInputAlert>{alertMessage.emailAlertMessage}</LoginInputAlert>
-                )
-              ) : name === 'password' ? (
-                inputsValidState.password ? (
-                  <></>
-                ) : (
-                  <LoginInputAlert>{alertMessage.passwordAlertMessage}</LoginInputAlert>
-                )
-              ) : (
-                <></>
-              )}
-            </LoginInput>
-          ))}
-        </LoginInputWrapper>
+        <EmailLoginInput
+          inputList={inputList}
+          values={values}
+          onFocusHandler={onFocusHandler}
+          onBlurHandler={onBlurHandler}
+          onChangeHandler={onChangeHandler}
+          inputsValidState={inputsValidState}
+          alertMessage={alertMessage}
+        />
 
         <Button size='L' disabled={disabledSubmitButton}>
           로그인
@@ -102,49 +81,10 @@ const Title = styled.h1`
   text-align: center;
 `;
 
-const LoginInputWrapper = styled.div`
-  margin-bottom: 3rem;
-
-  & > div:not(:last-of-type) {
-    margin-bottom: 1.6rem;
-  }
-`;
-
-const LoginInput = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
 const JoinLink = styled(Link)`
   display: block;
   margin-top: 2rem;
   color: var(--sub-text-color);
   font-size: var(--fs-sm);
   text-align: center;
-`;
-
-const LoginInputLabel = styled.label`
-  margin-bottom: 1rem;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--sub-text-color);
-`;
-
-const LoginInputText = styled.input`
-  padding-bottom: 0.8rem;
-  font-size: var(--fs-md);
-  border-bottom: 1px solid ${(props) => (props.isShowAlert ? 'var(--main-color)' : 'var(--border-color)')};
-  outline: none;
-
-  &::placeholder {
-    color: var(--border-color);
-  }
-`;
-
-const LoginInputAlert = styled.strong`
-  margin-top: 6px;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--alert-color);
 `;
