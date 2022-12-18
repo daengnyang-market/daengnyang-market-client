@@ -11,6 +11,11 @@ const MyProfileBtns = () => {
     e.preventDefault();
     navigate('/profile/edit');
   };
+
+  const handleRegistProduct = (e) => {
+    e.preventDefault();
+    navigate('/product');
+  };
   return (
     <MyProfileBtnsStyle>
       <li>
@@ -30,6 +35,7 @@ const MyProfileBtns = () => {
           backgroundColor={'var(--main-bg-color)'}
           borderColor={'var(--border-color)'}
           textColor={'var(--sub-text-color)'}
+          onClickHandler={handleRegistProduct}
         >
           상품 등록
         </Button>
