@@ -66,11 +66,3 @@ const InputText = styled.input`
     color: var(--border-color);
   }
 `;
-
-const InputAlert = styled.strong`
-  margin-top: 0.6rem;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--alert-color);
-  line-height: 14px;
-`;
