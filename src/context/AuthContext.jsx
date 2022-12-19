@@ -1,11 +1,11 @@
 import { createContext } from 'react';
 
 const AuthContext = createContext({
-  token: localStorage.getItem('token'),
+  token: localStorage.getItem('token') || null,
 });
 
 const AuthContextProvider = ({ children }) => {
-  let token = localStorage.getItem('token');
+  let token = localStorage.getItem('token') || null;
   const setToken = (data) => {
     token = data;
   };
