@@ -1,7 +1,7 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 
 const AuthContext = createContext({
-  token: null,
+  token: localStorage.getItem('token'),
 });
 
 const AuthContextProvider = ({ children }) => {
