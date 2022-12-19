@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { fadeOut } from '../../components/common/Animation/Animation';
+import { AuthContext } from '../../context/AuthContext';
 
 import { LOGO_IMAGE, MAIN_TITLE_IMAGE, SUB_TITLE_IMAGE } from '../../styles/CommonImages';
 import LoginMainPage from '../LoginMainPage/LoginMainPage';
@@ -9,7 +11,9 @@ import LoginMainPage from '../LoginMainPage/LoginMainPage';
 const SplashScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isValid, setIsValid] = useState();
-  const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
+
+  const { token } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -22,16 +26,17 @@ const SplashScreen = () => {
   }, []);
 
   const goHome = () => {
-    window.location.href = '/home';
-  };
 
+    navigate('/home');
+  };
   const handleCheckToken = () => {
     // 토큰 검증
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/checktoken',
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${tempToken}`,
+
+        Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },
     };
