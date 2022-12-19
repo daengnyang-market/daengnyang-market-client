@@ -9,7 +9,7 @@ const Post = ({ userName, userId, content, img }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
 
-  const [contentImg, setContentImg] = useState(true);
+  const [contentImg, setContentImg] = useState(img);
 
   const [like, setLike] = useState(false);
   const onClickLikeButtonHandler = () => {
@@ -24,7 +24,7 @@ const Post = ({ userName, userId, content, img }) => {
     <>
       <WrapperDiv>
         <UserInfoWrapperDiv>
-          <ProfileImage src={img} alt='프로필 이미지' width='42' />
+          <ProfileImage src={PROFILE1_IMAGE} alt='프로필 이미지' width='42' />
           <UserInfoDiv>
             <UserName>{userName}</UserName>
             <UserId>{userId}</UserId>
@@ -35,7 +35,7 @@ const Post = ({ userName, userId, content, img }) => {
         </UserInfoWrapperDiv>
         <ContentWrapperDiv>
           <ContentText>{content}</ContentText>
-          {contentImg === true ? <ContentImg src={PROFILE1_IMAGE} alt='프로필 이미지' /> : <></>}
+          {contentImg === true ? <ContentImg src={img} alt='프로필 이미지' /> : <></>}
           <Div>
             <LikeButton like={like} onClick={onClickLikeButtonHandler}>
               <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
