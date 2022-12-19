@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import styled from 'styled-components';
-import Button from '../../components/common/Button/Button';
-import Input from '../../components/common/Input/Input';
 import JoinMembershipInput from './JoinMembershipInput';
 const JoinMembershipPage = () => {
   // 유효성 검사에 따른, 페이지 이동을 설정하기위해서, Link 가 아닌 useNavigate 를 사용하였습니다.
