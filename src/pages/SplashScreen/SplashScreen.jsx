@@ -16,6 +16,14 @@ const SplashScreen = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (token) {
+      handleCheckToken();
+
+      if (isValid) {
+        goHome();
+      }
+    }
+
     let timer = setTimeout(() => {
       setIsLoading(false);
     }, 1500);
@@ -23,10 +31,9 @@ const SplashScreen = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [isValid]);
 
   const goHome = () => {
-
     navigate('/home');
   };
   const handleCheckToken = () => {
@@ -35,24 +42,16 @@ const SplashScreen = () => {
       url: 'https://mandarin.api.weniv.co.kr/user/checktoken',
       method: 'GET',
       headers: {
-
         Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },
     };
     axios(option)
       .then((res) => {
-        console.log(res);
         setIsValid(res.data.isValid);
       })
       .catch((err) => console.error(err));
   };
-
-  useEffect(() => handleCheckToken(), []);
-
-  if (isValid) {
-    goHome();
-  }
 
   return (
     <>
