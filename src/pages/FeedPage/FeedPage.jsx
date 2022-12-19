@@ -36,12 +36,14 @@ const FeedPage = () => {
       await axios(option)
         .then((res) => {
           setIsFollowingPost(res.data.posts);
-          console.log(res);
+          // console.log(res);
         })
         .catch((err) => console.error(err));
     };
 
-    getUserFeed();
+    if (token) {
+      getUserFeed();
+    }
   }, [token]);
 
   return (
