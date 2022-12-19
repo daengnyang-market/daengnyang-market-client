@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContext, AuthContextStore } from '../../context/AuthContext';
 
 import TopMainNav from '../.././components/common/TopNavBar/TopMainNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
@@ -17,31 +17,32 @@ const FeedPage = () => {
 
   const url = 'https://mandarin.api.weniv.co.kr';
   // const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
-  const { token } = useContext(AuthContext);
+  const { token } = useContext(AuthContextStore);
+
   const goSearch = () => {
     navigate('/search');
   };
 
   useEffect(() => {
-    const getUserFeed = async () => {
-      const option = {
-        url: url + `/post/feed`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-type': 'application/json',
-        },
+    if (token) {
+      const getUserFeed = async () => {
+        const option = {
+          url: url + `/post/feed`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-type': 'application/json',
+          },
+        };
+
+        await axios(option)
+          .then((res) => {
+            setIsFollowingPost(res.data.posts);
+            // console.log(res);
+          })
+          .catch((err) => console.error(err));
       };
 
-      await axios(option)
-        .then((res) => {
-          setIsFollowingPost(res.data.posts);
-          // console.log(res);
-        })
-        .catch((err) => console.error(err));
-    };
-
-    if (token) {
       getUserFeed();
     }
   }, [token]);
@@ -49,12 +50,12 @@ const FeedPage = () => {
   return (
     <>
       <TopMainNav title={'가져도댕냥 피드'} />
-      {isFollowingPost.length !== 0 ? (
+      {isFollowingPost.length > 0 ? (
         <ContentsLayout>
           <MainFeedStyle>
             {isFollowingPost.map((post) => {
               return (
-                <div key={post}>
+                <div key={post.id}>
                   <Post
                     userName={post.author.username}
                     userId={post.author.accountname}

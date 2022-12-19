@@ -5,11 +5,12 @@ import useInput from '../../hooks/useInput';
 import Button from '../../components/common/Button/Button';
 import EmailLoginInput from './EmailLoginInput';
 import styled from 'styled-components';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContextStore } from '../../context/AuthContext';
 
 const EmailLoginPage = () => {
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContextStore);
+
   const [loginFail, setLoginFail] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
