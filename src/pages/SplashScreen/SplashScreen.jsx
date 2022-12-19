@@ -32,7 +32,7 @@ const SplashScreen = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [token]);
+  }, [isValid]);
 
   const goHome = () => {
     navigate('/home');
