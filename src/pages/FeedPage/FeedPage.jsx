@@ -23,16 +23,16 @@ const FeedPage = () => {
   };
 
   useEffect(() => {
-    const option = {
-      url: url + `/post/feed`,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    };
-
     const getUserFeed = async () => {
+      const option = {
+        url: url + `/post/feed`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-type': 'application/json',
+        },
+      };
+
       await axios(option)
         .then((res) => {
           setIsFollowingPost(res.data.posts);

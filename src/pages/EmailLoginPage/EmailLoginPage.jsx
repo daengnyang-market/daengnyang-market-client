@@ -1,13 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import useInput from '../../hooks/useInput';
 import Button from '../../components/common/Button/Button';
 import EmailLoginInput from './EmailLoginInput';
 import styled from 'styled-components';
+import { AuthContext } from '../../context/AuthContext';
 
 const EmailLoginPage = () => {
   const navigate = useNavigate();
+  const { setToken } = useContext(AuthContext);
   const [loginFail, setLoginFail] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
@@ -54,7 +56,6 @@ const EmailLoginPage = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
 
-    // TODO: 서버와 통신해서 로그인 진행
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/login',
       method: 'POST',
@@ -87,6 +88,7 @@ const EmailLoginPage = () => {
 
     if (token) {
       localStorage.setItem('token', token);
+      setToken(token);
     }
   };
 

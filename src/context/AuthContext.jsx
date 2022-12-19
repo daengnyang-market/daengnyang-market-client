@@ -5,9 +5,12 @@ const AuthContext = createContext({
 });
 
 const AuthContextProvider = ({ children }) => {
-  const token = localStorage.getItem('token');
+  let token = localStorage.getItem('token');
+  const setToken = (data) => {
+    token = data;
+  };
 
-  return <AuthContext.Provider value={{ token }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, setToken }}>{children}</AuthContext.Provider>;
 };
 
 export { AuthContext, AuthContextProvider };
