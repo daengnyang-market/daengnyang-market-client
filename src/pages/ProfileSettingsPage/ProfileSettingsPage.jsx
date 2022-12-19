@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileInfo from './ProfileInfo';
 import Button from '../../components/common/Button/Button';
 
 const ProfileSettingsPage = () => {
+  const location = useLocation();
+  console.log(location.state);
   return (
     <ProfileSettingsSection>
       <TitleHeadingTwo>프로필 설정</TitleHeadingTwo>
