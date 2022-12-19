@@ -5,11 +5,11 @@ import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 import PostModal from '../modal/PostModal/PostModal';
 
-const Post = ({ userName, userId }) => {
+const Post = ({ userName, userId, content, img }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
 
-  const [contentImg, setContentImg] = useState(true);
+  const [contentImg, setContentImg] = useState(img);
 
   const [like, setLike] = useState(false);
   const onClickLikeButtonHandler = () => {
@@ -34,11 +34,8 @@ const Post = ({ userName, userId }) => {
           </MoreSmallButton>
         </UserInfoWrapperDiv>
         <ContentWrapperDiv>
-          <ContentText>
-            옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의 뼈 따뜻한 그들의 그와
-            약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다.
-          </ContentText>
-          {contentImg === true ? <ContentImg src={PROFILE1_IMAGE} alt='프로필 이미지' /> : <></>}
+          <ContentText>{content}</ContentText>
+          {contentImg === true ? <ContentImg src={img} alt='프로필 이미지' /> : <></>}
           <Div>
             <LikeButton like={like} onClick={onClickLikeButtonHandler}>
               <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>

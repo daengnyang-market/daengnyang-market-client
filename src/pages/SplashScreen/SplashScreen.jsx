@@ -11,6 +11,7 @@ import LoginMainPage from '../LoginMainPage/LoginMainPage';
 const SplashScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isValid, setIsValid] = useState();
+
   const { token } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -25,16 +26,16 @@ const SplashScreen = () => {
   }, []);
 
   const goHome = () => {
+
     navigate('/home');
   };
-
-
   const handleCheckToken = () => {
     // 토큰 검증
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/checktoken',
       method: 'GET',
       headers: {
+
         Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },

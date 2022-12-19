@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
+import { AuthContext } from '../../context/AuthContext';
 
 import TopMainNav from '../.././components/common/TopNavBar/TopMainNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
@@ -9,23 +12,65 @@ import Post from '../../components/common/Post/Post';
 import { EMPTY_FEED_IMAGE } from '../.././styles/CommonImages';
 
 const FeedPage = () => {
-  const [isFollowingPost, setIsFollowingPost] = useState(false);
+  const navigate = useNavigate();
+  const [isFollowingPost, setIsFollowingPost] = useState([]);
+
+  const url = 'https://mandarin.api.weniv.co.kr';
+  // const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
+  const { token } = useContext(AuthContext);
+  const goSearch = () => {
+    navigate('/search');
+  };
+
+  useEffect(() => {
+    const option = {
+      url: url + `/post/feed`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-type': 'application/json',
+      },
+    };
+
+    const getUserFeed = async () => {
+      await axios(option)
+        .then((res) => {
+          setIsFollowingPost(res.data.posts);
+          console.log(res);
+        })
+        .catch((err) => console.error(err));
+    };
+
+    getUserFeed();
+  }, [token]);
 
   return (
     <>
       <TopMainNav title={'가져도댕냥 피드'} />
-      {isFollowingPost ? (
+      {isFollowingPost.length !== 0 ? (
         <ContentsLayout>
           <MainFeedStyle>
-            <Post userName='' userId='' />
-            <Post userName='' userId='' />
+            {isFollowingPost.map((post) => {
+              return (
+                <div key={post}>
+                  <Post
+                    userName={post.author.username}
+                    userId={post.author.accountname}
+                    content={post.content}
+                    img={post.image}
+                  />
+                </div>
+              );
+            })}
           </MainFeedStyle>
         </ContentsLayout>
       ) : (
         <EmptyFeedStyle>
-          <ErrorImg src={EMPTY_FEED_IMAGE} alt='' />
+          <ErrorImg src={EMPTY_FEED_IMAGE} alt='에러 이미지' />
           <span>유저를 검색해 팔로우 해보세요!</span>
-          <Button size='M'>검색하기</Button>
+          <Button size='M' onClickHandler={goSearch}>
+            검색하기
+          </Button>
         </EmptyFeedStyle>
       )}
       <TabMenu />
