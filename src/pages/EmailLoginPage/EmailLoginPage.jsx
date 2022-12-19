@@ -1,11 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import useInput from '../../hooks/useInput';
 import Button from '../../components/common/Button/Button';
 import EmailLoginInput from './EmailLoginInput';
+import styled from 'styled-components';
 
 const EmailLoginPage = () => {
+  const navigate = useNavigate();
+  const [loginFail, setLoginFail] = useState(false);
   const emailInputRef = useRef();
   const passwordInputRef = useRef();
 
@@ -35,28 +38,76 @@ const EmailLoginPage = () => {
 
   const [inputsValidState, setInputsValidState] = useState({ email: false, password: false });
 
+  const ChangeLoginFailStateToFail = () => {
+    setLoginFail(false);
+  };
+
   const { values, onBlurHandler, onFocusHandler, onChangeHandler, disabledSubmitButton } = useInput({
     initailValues: { email: '', password: '' },
     inputsValidState,
     setInputsValidState,
     alertMessage,
     setAlertMessage,
+    ChangeLoginFailStateToFail,
   });
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+
+    // TODO: 서버와 통신해서 로그인 진행
+    const option = {
+      url: 'https://mandarin.api.weniv.co.kr/user/login',
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      data: {
+        user: {
+          email: values['email'],
+          password: values['password'],
+        },
+      },
+    };
+
+    axios(option)
+      .then((res) => {
+        if (res.data.status === 422) {
+          setLoginFail(true);
+          return;
+        }
+
+        saveToken(res);
+        goHome();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const saveToken = (res) => {
+    const token = res.data.user.token;
+
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+  };
+
+  const goHome = () => {
+    navigate('/home');
+  };
 
   return (
     <Main>
       <Title>로그인</Title>
 
-      <form>
+      <form onSubmit={onSubmitHandler}>
         <EmailLoginInput
           inputList={inputList}
           values={values}
           onFocusHandler={onFocusHandler}
           onBlurHandler={onBlurHandler}
           onChangeHandler={onChangeHandler}
-          inputsValidState={inputsValidState}
           alertMessage={alertMessage}
         />
+        {loginFail ? <LoginFailAlert>* 아이디, 비밀번호가 일치하지 않습니다.</LoginFailAlert> : <></>}
 
         <Button size='L' disabled={disabledSubmitButton}>
           로그인
@@ -87,4 +138,12 @@ const JoinLink = styled(Link)`
   color: var(--sub-text-color);
   font-size: var(--fs-sm);
   text-align: center;
+`;
+
+const LoginFailAlert = styled.strong`
+  position: absolute;
+  margin-top: -30px;
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--alert-color);
 `;
