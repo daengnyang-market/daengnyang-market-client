@@ -1,33 +1,18 @@
-import styled from 'styled-components';
-import GlobalStyle from './styles/GlobalStyle';
 import Router from './routes/Router';
+import GlobalStyle from './styles/GlobalStyle';
+import MainLayout from './components/layout/ContentsLayout/MainLayout';
+import { AuthContextProvider } from './context/AuthContext';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
-      <MainContainer>
-        <ScreenContainer>
+      <AuthContextProvider>
+        <MainLayout>
           <Router />
-        </ScreenContainer>
-      </MainContainer>
+        </MainLayout>
+      </AuthContextProvider>
     </>
   );
 };
 export default App;
-
-const MainContainer = styled.div`
-  position: relative;
-  max-width: 390px;
-  height: 100%;
-  min-height: 100vh;
-  margin: 0 auto;
-  background-color: var(--main-bg-color);
-  box-shadow: rgb(0 0 0 / 16%) 0px 0px 8px;
-`;
-
-const ScreenContainer = styled.div`
-  display: flex;
-  min-height: 100%;
-  flex-direction: column;
-`;
