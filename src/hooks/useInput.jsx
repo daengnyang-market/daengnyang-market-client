@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { regexEmail } from '../utils/ValidationRegex';
 
-const useInput = ({ initailValues, inputsValidState, setInputsValidState, alertMessage, setAlertMessage }) => {
+const useInput = ({
+  initailValues,
+  inputsValidState,
+  setInputsValidState,
+  alertMessage,
+  setAlertMessage,
+  ChangeLoginFailStateToFail = null,
+}) => {
   const [values, setValues] = useState(initailValues);
   const [disabledSubmitButton, setDisabledSubmitButton] = useState(true);
   const [isPassValidation, setIsPassValidation] = useState(false);
@@ -30,6 +37,11 @@ const useInput = ({ initailValues, inputsValidState, setInputsValidState, alertM
 
   // TODO: 인풋이 포커스를 얻었을 때
   const onFocusHandler = (e) => {
+    // *참고* 41~43 라인은 로그인 페이지 한정 - 로그인 실패 메시지 컨트롤을 위한 코드. 기본값(null)인 경우에는 41~43 라인 코드를 실행하지 않음
+    if (ChangeLoginFailStateToFail) {
+      ChangeLoginFailStateToFail();
+    }
+
     e.currentTarget.style.borderBottom = '1px solid var(--main-color)';
   };
 
@@ -68,7 +80,7 @@ const useInput = ({ initailValues, inputsValidState, setInputsValidState, alertM
     }
 
     if (!regexEmail.test(value)) {
-      setAlertMessage({ ...alertMessage, emailAlertMessage: '이메일 형식에 맞지 않습니다.' });
+      setAlertMessage({ ...alertMessage, emailAlertMessage: '* 이메일 형식에 맞지 않습니다.' });
       return false;
     }
 
@@ -87,7 +99,7 @@ const useInput = ({ initailValues, inputsValidState, setInputsValidState, alertM
     }
 
     if (value.length < 6) {
-      setAlertMessage({ ...alertMessage, passwordAlertMessage: '비밀번호는 6자리 이상이어야 합니다.' });
+      setAlertMessage({ ...alertMessage, passwordAlertMessage: '* 비밀번호는 6자리 이상이어야 합니다.' });
       return false;
     }
 
