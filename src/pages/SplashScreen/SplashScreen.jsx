@@ -21,6 +21,7 @@ const SplashScreen = () => {
 
       if (isValid) {
         goHome();
+        return;
       }
     }
 
