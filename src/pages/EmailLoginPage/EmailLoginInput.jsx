@@ -1,15 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const EmailLoginInput = ({
-  inputList,
-  values,
-  onFocusHandler,
-  onBlurHandler,
-  onChangeHandler,
-  inputsValidState,
-  alertMessage,
-}) => {
+const EmailLoginInput = ({ inputList, values, onFocusHandler, onBlurHandler, onChangeHandler, alertMessage }) => {
   return (
     <LoginInputWrapper>
       {inputList.map(({ id, label, type, inputId, name, ref }) => (
@@ -28,17 +20,9 @@ const EmailLoginInput = ({
             spellCheck='false'
           />
           {name === 'email' ? (
-            inputsValidState.email ? (
-              <></>
-            ) : (
-              <LoginInputAlert>{alertMessage.emailAlertMessage}</LoginInputAlert>
-            )
+            <LoginInputAlert>{alertMessage.emailAlertMessage}</LoginInputAlert>
           ) : name === 'password' ? (
-            inputsValidState.password ? (
-              <></>
-            ) : (
-              <LoginInputAlert>{alertMessage.passwordAlertMessage}</LoginInputAlert>
-            )
+            <LoginInputAlert>{alertMessage.passwordAlertMessage}</LoginInputAlert>
           ) : (
             <></>
           )}
