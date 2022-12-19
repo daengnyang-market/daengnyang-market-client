@@ -16,8 +16,8 @@ const FeedPage = () => {
   const [isFollowingPost, setIsFollowingPost] = useState([]);
 
   const url = 'https://mandarin.api.weniv.co.kr';
-  const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
-  // const token = useContext(AuthContext);
+  // const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
+  const { token } = useContext(AuthContext);
   const goSearch = () => {
     navigate('/search');
   };
@@ -27,7 +27,7 @@ const FeedPage = () => {
       url: url + `/post/feed`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${tempToken}`,
+        Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },
     };
@@ -42,7 +42,7 @@ const FeedPage = () => {
     };
 
     getUserFeed();
-  }, [tempToken]);
+  }, [token]);
 
   return (
     <>
@@ -56,7 +56,8 @@ const FeedPage = () => {
                   <Post
                     userName={post.author.username}
                     userId={post.author.accountname}
-                    content={post.author.content}
+                    content={post.content}
+                    img={post.image}
                   />
                 </div>
               );
