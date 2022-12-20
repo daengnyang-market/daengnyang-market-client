@@ -12,18 +12,18 @@ import { AuthContextStore } from '../../context/AuthContext';
 
 const ProductRegistrationPage = () => {
   const [itemName, setItemName] = useState('');
-  const itemNameFunction = (x) => {
-    setItemName(x);
+  const itemNameFunction = (value) => {
+    setItemName(value);
   };
 
   const [price, setPrice] = useState(0);
-  const priceFunction = (x) => {
-    setPrice(parseInt(x));
+  const priceFunction = (value) => {
+    setPrice(parseInt(value));
   };
 
   const [link, setLink] = useState('');
-  const linkFunction = (x) => {
-    setLink(x);
+  const linkFunction = (value) => {
+    setLink(value);
   };
 
   const [itemImage, setItemImage] = useState('');
@@ -84,8 +84,11 @@ const ProductRegistrationPage = () => {
   useEffect(() => {
     if (itemName && price && link && thumbnailImg) {
       setDisabledButton(false);
+    } else {
+      setDisabledButton(true);
     }
-    console.log('render!!');
+    // console.log('render!!');
+    // console.log(link);
   }, [thumbnailImg, itemName, price, link]);
 
   return (
