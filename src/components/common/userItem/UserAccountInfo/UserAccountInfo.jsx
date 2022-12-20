@@ -1,25 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { PROFILE2_IMAGE } from '../../../../styles/CommonImages';
 import ProfileImage from '../../ProfileImage/ProfileImage';
 
-const UserAccountInfo = ({ keyword = '' }) => {
+// 키워드를 설정안하면, 기본 username 이 뜨도록 설정해두었습니다.
+const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
+  const usernameValidate = ~username.indexOf(keyword);
+  const accountnameValidate = ~accountname.indexOf(keyword);
+  const COMMA_APPEND_USERNAME = username.replace(keyword, `,${keyword},`);
+  const arrayKeyword = COMMA_APPEND_USERNAME.split(',');
+
   return (
     <UserLink to='#'>
-      <ProfileImage src={PROFILE2_IMAGE} alt='weniv_Mandarin님의 프로필 사진' width='50' />
-
+      <ProfileImage src={image} alt={`${username}님의 프로필사진`} width='50' />
       <AccountInfoWrapper>
         <UserName>
-          {keyword ? (
-            <>
-              <Keyword>애월읍</Keyword> 위니브 감귤농장
-            </>
+          {/* TODO : username은 keyword와 겹치는데 accountname은 겹지 않는다면, 그냥 username을 반환 / 그게 아니라면, keyword 만 색상 변경하여 출력 */}
+          {!usernameValidate && accountnameValidate ? (
+            <>{username}</>
           ) : (
-            <>애월읍 위니브 감귤농장</>
+            <span>
+              {arrayKeyword[0]}
+              <Keyword>{arrayKeyword[1]}</Keyword>
+              {arrayKeyword[2]}
+            </span>
           )}
         </UserName>
-        <UserId>weniv_Mandarin</UserId>
+        <UserId>{accountname}</UserId>
       </AccountInfoWrapper>
     </UserLink>
   );
@@ -48,7 +55,9 @@ const UserName = styled.strong`
 `;
 
 const Keyword = styled.span`
-  color: var(--main-color);
+  && {
+    color: var(--main-color);
+  }
 `;
 
 const UserId = styled.strong`
