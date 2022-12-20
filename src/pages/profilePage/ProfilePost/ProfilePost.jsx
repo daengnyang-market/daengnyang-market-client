@@ -32,6 +32,19 @@ const ProfilePost = ({ postState }) => {
     onListClicked(false);
   };
 
+  const testPost = {
+    author: {
+      accountname: 'test',
+      image: 'https://mandarin.api.weniv.co.kr/Ellipse.png',
+      username: '테스트',
+    },
+    commentCount: 0,
+    content: '테스트용 객체',
+    createdAt: '2022-07-18T06:15:39.035Z',
+    heartCount: 0,
+    id: '62d4fa8b82fdcc712f4c98a5',
+  };
+
   return (
     <>
       <h2 className='sr-only'>게시물 리스트</h2>
@@ -44,31 +57,34 @@ const ProfilePost = ({ postState }) => {
         </AlbumIcon>
       </PostHeader>
 
-      {postState ?       listBtn === true ? (
-        <PostUl>
-          <h3 className='sr-only'>리스트형 포스트 목록</h3>
-          <Post userId='@ weniv_Mandarin' userName='애월읍 위니브 감귤농장' />
-          <Post userId='@ weniv_Mandarin' userName='애월읍 위니브 감귤농장' />
-          <Post userId='@ weniv_Mandarin' userName='애월읍 위니브 감귤농장' />
-        </PostUl>
+      {postState ? (
+        listBtn === true ? (
+          <PostUl>
+            <h3 className='sr-only'>리스트형 포스트 목록</h3>
+            <Post post={testPost} />
+            <Post post={testPost} />
+            <Post post={testPost} />
+          </PostUl>
+        ) : (
+          <PostGrid>
+            <h3 className='sr-only'>앨범형 포스트 목록</h3>
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
+          </PostGrid>
+        )
       ) : (
-        <PostGrid>
-          <h3 className='sr-only'>앨범형 포스트 목록</h3>
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-        </PostGrid>
-      ) : <NoPost>
-        <img src={EMPTY_POST_IMAGE} alt='포스트가 존재하지 않습니다' />
-        <span>아직 작성된 게시글이 없어요.</span>
-      </NoPost>}
-      
+        <NoPost>
+          <img src={EMPTY_POST_IMAGE} alt='포스트가 존재하지 않습니다' />
+          <span>아직 작성된 게시글이 없어요.</span>
+        </NoPost>
+      )}
     </>
   );
 };

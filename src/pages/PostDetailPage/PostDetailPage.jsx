@@ -7,12 +7,25 @@ import styled from 'styled-components';
 import PostComment from './PostComment';
 
 const PostDetailPage = () => {
+  const testPost = {
+    author: {
+      accountname: 'test',
+      image: 'https://mandarin.api.weniv.co.kr/Ellipse.png',
+      username: '테스트',
+    },
+    commentCount: 0,
+    content: '테스트용 객체',
+    createdAt: '2022-07-18T06:15:39.035Z',
+    heartCount: 0,
+    id: '62d4fa8b82fdcc712f4c98a5',
+  };
+
   return (
     <ContentsLayout isTabMenu={true} padding='2rem 0 0 0'>
       <TopBasicNav />
       <PostViewer>
         <h2 className='sr-only'>Post Item</h2>
-        <Post userName={'Test'} userId={'@test'} />
+        <Post post={testPost} />
       </PostViewer>
       <PostCommentList>
         <h2 className='sr-only'>PostComment</h2>
