@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import UserProfileBtns from './UserProfileBtns';
@@ -6,32 +6,43 @@ import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../../components/common/Loading/Loading';
 
-const ProfileHeader = ({ profileState, followState }) => {
-  const [isMyProfile, setIsMyProfile] = useState(profileState);
+// profileState : 내 프로필인지 구별하는 props (참/거짓)
+// followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔뜨게
+// profileData : 헤더에서 넘어오는 프로필 정보들
+const ProfileHeader = ({ profileState, followState, profileData }) => {
+  // const [isMyProfile, setIsMyProfile] = useState(profileState);
+
   const navigate = useNavigate();
   const moveFollowers = () => {
     navigate(`/follow/:accountname/:type`);
   };
-  return (
-    <ProfileWrapper>
-      <h2 className='sr-only'>프로필 정보</h2>
-      <Followers onClick={moveFollowers}>
-        <strong>2950</strong>
-        <span>followers</span>
-      </Followers>
-      <ProfileImage src={PROFILE1_IMAGE} alt='weniv_Mandarin님의 프로필 사진' width='110' />
-      <UserName>애월읍 위니브 감귤농장</UserName>
-      <UserID>@ weniv_Mandarin</UserID>
-      <UserIntro>애월읍 감귤 전국 배송, 귤따기 체험, 감귤 농장</UserIntro>
-      <Followings onClick={moveFollowers}>
-        <strong>128</strong>
-        <span>followings</span>
-      </Followings>
-      {/* isMyProfile에 따라 MyProfileBtns 과 UserProfileBtns 나뉘게 / */}
-      {isMyProfile ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
-    </ProfileWrapper>
-  );
+  if (!profileData) {
+    return <Loading />;
+  } else {
+    console.log(profileData);
+    return (
+      <>
+        <ProfileWrapper>
+          <h2 className='sr-only'>프로필 정보</h2>
+          <Followers onClick={moveFollowers}>
+            <strong>{profileData.user.followerCount}</strong>
+            <span>followers</span>
+          </Followers>
+          <ProfileImage src={profileData.user.image} alt='프로필 사진' width='110' />
+          <UserName>{profileData.user.username}</UserName>
+          <UserID>@ {profileData.user.accountname}</UserID>
+          <UserIntro>{profileData.user.intro}</UserIntro>
+          <Followings onClick={moveFollowers}>
+            <strong>{profileData.user.followingCount}</strong>
+            <span>followings</span>
+          </Followings>
+          {profileState ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
+        </ProfileWrapper>
+      </>
+    );
+  }
 };
 
 export default ProfileHeader;
