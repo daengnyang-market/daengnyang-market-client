@@ -7,7 +7,7 @@ import { MenuList, MenuItem } from './../Styled';
 
 const ProfileModal = ({ closeModal }) => {
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContextStore);
+  const { setToken, setAccountname } = useContext(AuthContextStore);
 
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
@@ -17,7 +17,11 @@ const ProfileModal = ({ closeModal }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    setToken('');
+    localStorage.removeItem('accountname');
+
+    setToken(null);
+    setAccountname(null);
+
     navigate('/');
   };
 
