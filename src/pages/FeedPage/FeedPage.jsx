@@ -49,6 +49,9 @@ const FeedPage = () => {
       };
 
       getUserFeed();
+    } else {
+      navigate('/');
+      return;
     }
   }, [userToken]);
 
