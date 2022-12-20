@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
 // profileState : 내 프로필인지 구별하는 props (참/거짓)
-// followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔뜨게
+// followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
 // profileData : 헤더에서 넘어오는 프로필 정보들
+
+
 const ProfileHeader = ({ profileState, followState, profileData }) => {
   // const [isMyProfile, setIsMyProfile] = useState(profileState);
 
