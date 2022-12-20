@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 
-const EmptyPosts = ({ type }) => {
+const EmptyPosts = () => {
   return (
     <EmptyContents>
       <EmptyImage src={EMPTY_POST_IMAGE} alt='' />
-      <EmptyText>아직 {type === 'follower' ? '팔로워가' : '팔로우한 사용자가'} 없어요.</EmptyText>
+      <EmptyText>실시간 인기글이 없어요.</EmptyText>
     </EmptyContents>
   );
 };
