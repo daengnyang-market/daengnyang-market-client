@@ -17,6 +17,7 @@ import IMAGE_ICON from '../assets/icons/image-icon.png';
 import KAKAO_ICON from '../assets/icons/kakao-icon.png';
 import LAYERS_ICON from '../assets/icons/layers-icon.png';
 import LEFT_ARROW_ICON from '../assets/icons/left-arrow-icon.png';
+import LOADING_ICON from '../assets/icons/loading-icon.png';
 import LOCATION_ICON from '../assets/icons/location-icon.png';
 import LOCATION_BLACK_ICON from '../assets/icons/location-black-icon.png';
 import MORE_ICON from '../assets/icons/more-icon.png';
@@ -54,6 +55,7 @@ export {
   KAKAO_ICON,
   LAYERS_ICON,
   LEFT_ARROW_ICON,
+  LOADING_ICON,
   LOCATION_ICON,
   LOCATION_BLACK_ICON,
   MORE_ICON,
