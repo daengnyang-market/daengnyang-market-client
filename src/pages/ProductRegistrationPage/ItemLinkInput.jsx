@@ -11,6 +11,8 @@ const ItemLinkInput = ({ labelText = 'label', inputType = 'text', id, placeholde
   const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
 
+  const [LinkValid, setLinkValid] = useState(false);
+
   const handleChange = (e) => {
     setInputValue(e.target.value);
 
@@ -20,7 +22,19 @@ const ItemLinkInput = ({ labelText = 'label', inputType = 'text', id, placeholde
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    linkFunction(e.target.value);
+    const regex = /(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi;
+
+    if (regex.test(e.target.value)) {
+      setLinkValid(true);
+    } else {
+      setLinkValid(false);
+    }
+
+    if (LinkValid) {
+      linkFunction(e.target.value);
+    } else {
+      linkFunction('');
+    }
   };
 
   return (
@@ -36,7 +50,6 @@ const ItemLinkInput = ({ labelText = 'label', inputType = 'text', id, placeholde
         autoComplete='off'
         spellCheck='false'
       />
-      {isShowAlert ? <InputAlert>이미 가입된 이메일 주소입니다</InputAlert> : <></>}
     </InputWrapper>
   );
 };
@@ -64,16 +77,5 @@ const InputText = styled.input`
 
   &::placeholder {
     color: var(--border-color);
-  }
-`;
-
-const InputAlert = styled.strong`
-  margin-top: 6px;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--alert-color);
-
-  &::before {
-    content: '* ';
   }
 `;
