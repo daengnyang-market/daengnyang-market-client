@@ -13,7 +13,8 @@ import PostDetailPage from '../pages/PostDetailPage/PostDetailPage';
 import PostUploadPage from '../pages/PostUploadPage/PostUploadPage';
 import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
 import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileModificationPage';
-import ProfilePage from '../pages/profilePage/ProfilePage';
+import MyProfilePage from '../pages/profilePage/MyProfilePage';
+import UserProfilePage from '../pages/profilePage/UserProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
 import ChatListPage from '../pages/chatListPage/ChatListPage';
@@ -31,8 +32,8 @@ const Router = () => {
       {/* 회원만 진입 가능 페이지 */}
       <Route path='/home' element={<FeedPage />} />
       <Route path='/search' element={<SearchPage />} />
-      <Route path='/profile' element={<ProfilePage />} />
-      <Route path='/profile/:accountname' element={<ProfilePage />} />
+      <Route path='/profile' element={<MyProfilePage />} />
+      <Route path='/profile/:accountname' element={<UserProfilePage />} />
       <Route path='/profile/edit' element={<ProfileModificationPage />} />
       <Route path='/follow/:accountname/:type' element={<FollowListPage />} />
       <Route path='/post/:postid' element={<PostDetailPage />} />
