@@ -9,7 +9,7 @@ import { AuthContextStore } from '../../context/AuthContext';
 
 const EmailLoginPage = () => {
   const navigate = useNavigate();
-  const { setToken, setAccountname } = useContext(AuthContextStore);
+  const { setUserToken, setUserAccountname } = useContext(AuthContextStore);
 
   const [loginFail, setLoginFail] = useState(false);
   const emailInputRef = useRef();
@@ -91,8 +91,8 @@ const EmailLoginPage = () => {
     localStorage.setItem('token', token);
     localStorage.setItem('accountname', accountname);
 
-    setToken(token);
-    setAccountname(accountname);
+    setUserToken(token);
+    setUserAccountname(accountname);
   };
 
   const goHome = () => {

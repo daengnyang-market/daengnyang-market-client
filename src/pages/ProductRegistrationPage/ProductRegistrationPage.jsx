@@ -27,14 +27,14 @@ const ProductRegistrationPage = () => {
 
   const [itemImage, setItemImage] = useState('');
 
-  const { token } = useContext(AuthContextStore);
+  const { userToken } = useContext(AuthContextStore);
 
   const productRegistration = () => {
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/product',
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
         'Content-type': 'application/json',
       },
       data: {
