@@ -1,18 +1,18 @@
 import { createContext, useState } from 'react';
 
 export const AuthContextStore = createContext({
-  token: localStorage.getItem('token') || null,
-  accountname: localStorage.getItem('accountname') || null,
-  setToken: () => {},
-  setAccountname: () => {},
+  userToken: localStorage.getItem('token') || null,
+  userAccountname: localStorage.getItem('accountname') || null,
+  setUserToken: () => {},
+  setUserAccountname: () => {},
 });
 
 const AuthContext = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
-  const [accountname, setAccountname] = useState(localStorage.getItem('accountname') || null);
+  const [userToken, setUserToken] = useState(localStorage.getItem('token') || null);
+  const [userAccountname, setUserAccountname] = useState(localStorage.getItem('accountname') || null);
 
   return (
-    <AuthContextStore.Provider value={{ token, setToken, accountname, setAccountname }}>
+    <AuthContextStore.Provider value={{ userToken, setUserToken, userAccountname, setUserAccountname }}>
       {children}
     </AuthContextStore.Provider>
   );
