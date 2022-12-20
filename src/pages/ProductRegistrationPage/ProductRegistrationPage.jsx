@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
@@ -7,6 +7,7 @@ import { IMG_BUTTON_ICON } from '../../styles/CommonIcons';
 import ItemNameInput from './ItemNameInput';
 import PriceInput from './PriceInput';
 import ItemLinkInput from './ItemLinkInput';
+import { AuthContextStore } from '../../context/AuthContext';
 
 const ProductRegistrationPage = () => {
   const [itemName, setItemName] = useState('');
@@ -26,13 +27,14 @@ const ProductRegistrationPage = () => {
 
   const [itemImage, setItemImage] = useState('');
 
+  const { token } = useContext(AuthContextStore);
+
   const productRegistration = () => {
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/product',
       method: 'POST',
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTA3NmJkMTdhZTY2NjU4MWNiMjAyNiIsImV4cCI6MTY3NjY0NDU1NiwiaWF0IjoxNjcxNDYwNTU2fQ.hZi4-C6yFT-5jLda7QRBsxv8zgCJ-wmBrTN9-ab18ec',
+        Authorization: `Bearer ${token}`,
         'Content-type': 'application/json',
       },
       data: {
