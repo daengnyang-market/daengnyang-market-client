@@ -1,9 +1,9 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AuthContextStore } from '../../../../context/AuthContext';
 import Button from '../../Button/Button';
-import FollowUserInfo from '../UserAccountInfo/FollowUserInfo';
+import UserAccountInfo from '../UserAccountInfo/UserAccountInfo';
 
 const Follow = ({ followUserInfo }) => {
   const [isFollow, setIsFollow] = useState(followUserInfo.isfollow);
@@ -27,7 +27,11 @@ const Follow = ({ followUserInfo }) => {
 
   return (
     <UserItem>
-      <FollowUserInfo followUserInfo={followUserInfo} />
+      <UserAccountInfo
+        accountname={followUserInfo.accountname}
+        username={followUserInfo.username}
+        image={followUserInfo.image}
+      />
 
       {followUserInfo.accountname === userAccountname ? (
         <></>
