@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
@@ -28,6 +29,8 @@ const ProductRegistrationPage = () => {
   const [itemImage, setItemImage] = useState('');
 
   const { token } = useContext(AuthContextStore);
+
+  const [disabledButton, setDisabledButton] = useState(true);
 
   const productRegistration = () => {
     const option = {
@@ -77,9 +80,20 @@ const ProductRegistrationPage = () => {
     };
   };
 
+  // 버튼 활성화
+  useEffect(() => {
+    if (itemName && price && link && thumbnailImg) {
+      setDisabledButton(false);
+    }
+    console.log('render!!');
+  }, [thumbnailImg, itemName, price, link]);
+
   return (
     <>
-      <TopUploadNav onClick={productRegistration} />
+      <Link to='/profile'>
+        <TopUploadNav activeButton={disabledButton} onClick={productRegistration} />
+      </Link>
+
       <ContentsLayout isTabMenu='false' padding='0'>
         <Section>
           <h2 className='sr-only'>상품 정보</h2>
