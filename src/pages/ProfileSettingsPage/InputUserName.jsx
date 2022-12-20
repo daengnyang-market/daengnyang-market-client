@@ -6,7 +6,15 @@ import styled from 'styled-components';
 // inputType : input 태그의 타입 (생략시 기본값: text)
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
-const InputUserName = ({ children, labelText = 'label', inputType = 'text', id, placeholder, maxLength }) => {
+const InputUserName = ({
+  children,
+  labelText = 'label',
+  inputType = 'text',
+  id,
+  placeholder,
+  maxLength,
+  userNameFunction,
+}) => {
   const [inputValue, setInputValue] = useState('');
 
   const [isShowAlert, setIsShowAlert] = useState(false);
@@ -19,6 +27,12 @@ const InputUserName = ({ children, labelText = 'label', inputType = 'text', id, 
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
+    }
+
+    if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+      userNameFunction(e.target.value);
+    } else {
+      userNameFunction('');
     }
   };
 
