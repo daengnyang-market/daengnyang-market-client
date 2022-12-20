@@ -4,14 +4,20 @@ import ProfileImage from '../ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 import PostModal from '../modal/PostModal/PostModal';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Post = ({ userName, userId, content, img }) => {
+const Post = ({ post = {} }) => {
+  const navigate = useNavigate();
+
+  const year = new Date(post.createdAt).getFullYear();
+  const month = new Date(post.createdAt).getMonth() + 1;
+  const date = new Date(post.createdAt).getDate();
+
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
 
-  const [contentImg, setContentImg] = useState(img);
-
   const [like, setLike] = useState(false);
+
   const onClickLikeButtonHandler = () => {
     setLike(!like);
   };
@@ -22,39 +28,53 @@ const Post = ({ userName, userId, content, img }) => {
 
   return (
     <>
-      <WrapperDiv>
-        <UserInfoWrapperDiv>
-          <ProfileImage src={PROFILE1_IMAGE} alt='프로필 이미지' width='42' />
-          <UserInfoDiv>
-            <UserName>{userName}</UserName>
-            <UserId>{userId}</UserId>
-          </UserInfoDiv>
-          <MoreSmallButton onClick={() => setIsOpenModal(true)}>
-            <img src={MORE_SMALL_ICON} alt='더보기' />
-          </MoreSmallButton>
-        </UserInfoWrapperDiv>
-        <ContentWrapperDiv>
-          <ContentText>{content}</ContentText>
-          {contentImg === true ? <ContentImg src={img} alt='프로필 이미지' /> : <></>}
-          <Div>
-            <LikeButton like={like} onClick={onClickLikeButtonHandler}>
-              <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
-            </LikeButton>
-            <LikeSpan>0</LikeSpan>
-            <ChatImg src={REPLY_ICON} alt='채팅' />
-            <ChatSpan>0</ChatSpan>
-          </Div>
-          <DateP>2023년 1월 6일</DateP>
-        </ContentWrapperDiv>
-      </WrapperDiv>
-      {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} /> : <></>}
+      {Object.keys(post).length > 0 ? (
+        <>
+          <WrapperDiv>
+            <UserInfoWrapperDiv>
+              <UserProfileLink to={`/profile/${post.author.accountname}`}>
+                <ProfileImage src={post.author.image} alt={`${post.author.username}님의 프로필 사진`} width='42' />
+                <UserInfoDiv>
+                  <UserName>{post.author.username}</UserName>
+                  <UserId>@ {post.author.accountname}</UserId>
+                </UserInfoDiv>
+              </UserProfileLink>
+              <MoreSmallButton onClick={() => setIsOpenModal(true)}>
+                <img src={MORE_SMALL_ICON} alt='더보기' />
+              </MoreSmallButton>
+            </UserInfoWrapperDiv>
+            <ContentWrapperDiv>
+              <PostDetailLink to={`/post/${post.id}`} type='content'>
+                <ContentText>{post.content}</ContentText>
+                {post.image ? <ContentImg src={post.image} alt='' /> : <></>}
+              </PostDetailLink>
+              <Div>
+                <LikeButton like={like} onClick={onClickLikeButtonHandler}>
+                  <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
+                </LikeButton>
+                <LikeSpan>{post.heartCount}</LikeSpan>
+                <PostDetailLink to={`/post/${post.id}`} type='comment'>
+                  <ChatImg src={REPLY_ICON} alt='댓글 보기' />
+                  <ChatSpan>{post.commentCount}</ChatSpan>
+                </PostDetailLink>
+              </Div>
+              <DateP>
+                {year}년 {month}월 {date}일
+              </DateP>
+            </ContentWrapperDiv>
+          </WrapperDiv>
+          {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} /> : <></>}
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
 
 export default Post;
 
-const WrapperDiv = styled.div`
+const WrapperDiv = styled.article`
   width: 35.8rem;
   margin: 0 auto 2rem;
 `;
@@ -63,6 +83,10 @@ const UserInfoWrapperDiv = styled.div`
   display: flex;
   position: relative;
   cursor: pointer;
+`;
+
+const UserProfileLink = styled(Link)`
+  display: flex;
 `;
 
 const UserInfoDiv = styled.div`
@@ -128,6 +152,11 @@ const LikeSpan = styled.span`
   font-size: var(--fs-sm);
   line-height: 1.8rem;
   color: var(--sub-text-color);
+`;
+
+const PostDetailLink = styled(Link)`
+  display: flex;
+  ${(props) => (props.type === 'content' ? 'flex-direction: column' : '')}
 `;
 
 const ChatImg = styled.img`
