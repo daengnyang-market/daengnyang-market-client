@@ -32,7 +32,6 @@ const FollowListPage = () => {
         return;
       }
 
-      // TODO: 비동기 통신 코드 작성
       const option = {
         url: `https://mandarin.api.weniv.co.kr/profile/${accountname}/${type}`,
         method: 'GET',
