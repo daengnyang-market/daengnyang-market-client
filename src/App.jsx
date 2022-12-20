@@ -1,17 +1,17 @@
 import Router from './routes/Router';
 import GlobalStyle from './styles/GlobalStyle';
 import MainLayout from './components/layout/ContentsLayout/MainLayout';
-import { AuthContextProvider } from './context/AuthContext';
+import AuthContext from './context/AuthContext';
 
 const App = () => {
   return (
     <>
       <GlobalStyle />
-      <AuthContextProvider>
+      <AuthContext>
         <MainLayout>
           <Router />
         </MainLayout>
-      </AuthContextProvider>
+      </AuthContext>
     </>
   );
 };

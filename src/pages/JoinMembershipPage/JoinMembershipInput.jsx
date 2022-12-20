@@ -111,6 +111,7 @@ export default JoinMembershipInput;
 
 const InputWrapper = styled.form`
   display: flex;
+  gap: 0.8rem;
   flex-direction: column;
   width: 100%;
 `;
@@ -174,4 +175,7 @@ const InputPasswordText = styled.input`
 
 const ErrorMessage = styled.p`
   color: #eb5757;
+  & + button {
+    margin-top: 1.4rem;
+  }
 `;

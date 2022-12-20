@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import { fadeOut } from '../../components/common/Animation/Animation';
-import { AuthContext } from '../../context/AuthContext';
+import { AuthContextStore } from '../../context/AuthContext';
 
 import { LOGO_IMAGE, MAIN_TITLE_IMAGE, SUB_TITLE_IMAGE } from '../../styles/CommonImages';
 import LoginMainPage from '../LoginMainPage/LoginMainPage';
@@ -12,7 +12,8 @@ const SplashScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isValid, setIsValid] = useState();
 
-  const { token } = useContext(AuthContext);
+  const { token } = useContext(AuthContextStore);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const SplashScreen = () => {
     return () => {
       clearTimeout(timer);
     };
-  }, [token]);
+  }, [isValid]);
 
   const goHome = () => {
     navigate('/home');
