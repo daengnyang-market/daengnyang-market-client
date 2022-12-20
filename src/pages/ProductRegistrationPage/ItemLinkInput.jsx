@@ -32,6 +32,8 @@ const ItemLinkInput = ({ labelText = 'label', inputType = 'text', id, placeholde
 
     if (LinkValid) {
       linkFunction(e.target.value);
+    } else {
+      linkFunction('');
     }
   };
 
