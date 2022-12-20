@@ -9,7 +9,7 @@ import { AuthContextStore } from '../../context/AuthContext';
 
 const EmailLoginPage = () => {
   const navigate = useNavigate();
-  const { setToken } = useContext(AuthContextStore);
+  const { setToken, setAccountname } = useContext(AuthContextStore);
 
   const [loginFail, setLoginFail] = useState(false);
   const emailInputRef = useRef();
@@ -76,7 +76,7 @@ const EmailLoginPage = () => {
           return;
         }
 
-        saveToken(res);
+        saveUserInfo(res);
         goHome();
       })
       .catch((err) => {
@@ -84,13 +84,15 @@ const EmailLoginPage = () => {
       });
   };
 
-  const saveToken = (res) => {
+  const saveUserInfo = (res) => {
     const token = res.data.user.token;
+    const accountname = res.data.user.accountname;
 
-    if (token) {
-      localStorage.setItem('token', token);
-      setToken(token);
-    }
+    localStorage.setItem('token', token);
+    localStorage.setItem('accountname', accountname);
+
+    setToken(token);
+    setAccountname(accountname);
   };
 
   const goHome = () => {
