@@ -11,7 +11,7 @@ const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
   const arrayKeyword = COMMA_APPEND_USERNAME.split(',');
 
   return (
-    <UserLink to='#'>
+    <UserLink to={`/profile/${accountname}`}>
       <ProfileImage src={image} alt={`${username}님의 프로필사진`} width='50' />
       <AccountInfoWrapper>
         <UserName>
