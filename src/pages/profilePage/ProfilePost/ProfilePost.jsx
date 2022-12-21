@@ -40,7 +40,6 @@ const ProfilePost = () => {
     onAlbumClicked(true);
     onListClicked(false);
   };
-
   const getMyPost = () => {
     const url = `https://mandarin.api.weniv.co.kr`;
 
@@ -102,6 +101,7 @@ const ProfilePost = () => {
       </>
     );
   }
+
 };
 
 export default ProfilePost;
