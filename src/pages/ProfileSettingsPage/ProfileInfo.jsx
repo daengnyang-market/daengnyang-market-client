@@ -12,7 +12,11 @@ const ProfileInfo = ({
   accountNameFunction,
   introFunction,
   imageFunction,
-  disabledButtonFunction,
+  // disabledButtonFunction,
+
+  userName,
+  accountName,
+  intro,
 }) => {
   // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
@@ -61,6 +65,7 @@ const ProfileInfo = ({
           maxLength='10'
           children={'* 2~10자 이내여야 합니다.'}
           userNameFunction={userNameFunction}
+          userName={userName}
         />
         <InputAccountName
           labelText='계정 ID'
@@ -69,7 +74,8 @@ const ProfileInfo = ({
           placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
           maxLength='10'
           accountNameFunction={accountNameFunction}
-          disabledButtonFunction={disabledButtonFunction}
+          // disabledButtonFunction={disabledButtonFunction}
+          accountName={accountName}
         />
         <InputIntro
           labelText='소개'
@@ -78,6 +84,7 @@ const ProfileInfo = ({
           placeholder='자신과 판매할 상품에 대해 소개해 주세요.'
           maxLength='25'
           introFunction={introFunction}
+          intro={intro}
         ></InputIntro>
       </Form>
     </>
