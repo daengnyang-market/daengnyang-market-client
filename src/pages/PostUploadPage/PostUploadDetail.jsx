@@ -16,9 +16,6 @@ const PostUploadDetail = () => {
   const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
   const inputRef = useRef();
-  const onPicBtnClick = () => {
-    inputRef.current.click();
-  };
 
   // TODO : 유저 이미지 저장
   useEffect(() => {
