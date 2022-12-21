@@ -64,7 +64,7 @@ const ProfileModificationPage = () => {
 
       axios(option)
         .then((res) => {
-          console.log(res.data.user);
+          // console.log(res.data.user);
           setUserName(res.data.user.username);
           setAccountName(res.data.user.accountname);
           setIntro(res.data.user.intro);
@@ -94,13 +94,24 @@ const ProfileModificationPage = () => {
 
     axios(option)
       .then((res) => {
-        // console.log(res);
-        console.log('수정!!!');
+        console.log('프로필 수정 성공!!');
+        console.log(res);
       })
       .catch((err) => {
         console.error(err);
       });
   };
+
+  // 버튼 활성화
+  useEffect(() => {
+    if (userName && accountName && intro) {
+      setDisabledButton(false);
+    } else {
+      setDisabledButton(true);
+    }
+    // console.log('render!!');
+    // console.log(link);
+  }, [userName, accountName, intro]);
 
   return (
     <>
