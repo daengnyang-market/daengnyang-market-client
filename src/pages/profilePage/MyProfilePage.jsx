@@ -4,7 +4,6 @@ import { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AuthContextStore } from '../../context/AuthContext';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext';
 
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
@@ -19,11 +18,8 @@ const ProfilePage = () => {
   const [isMyProfile, setMyProfile] = useState(null);
   // 내 프로필 정보 담기
   const [myProfileInfo, setMyProfileInfo] = useState('');
-  // 유저의 프로필 정보 담기
-
-  // 일단 해당 데이터로 프로필 전달하기
-  const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjcxMTA4NywiaWF0IjoxNjcxNTI3MDg3fQ.GNjuwF4GcX7fQiZtX2I8H3kpgClotfYvwS-_pPyIzRE`;
-  const tempMyAccountName = 'rosy';
+  // 내 포스트 담기
+  const [myPostList, setMyPost] = useState([]);
 
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const url = `https://mandarin.api.weniv.co.kr`;
@@ -42,10 +38,26 @@ const ProfilePage = () => {
       })
       .catch((err) => console.error(err));
   };
-
+  const getMyPost = () => {
+    axios({
+      url: url + `/post/${userAccountname}/userpost`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => {
+        console.log(res.data.post);
+        setMyPost(res.data.post);
+        console.log(myPostList);
+      })
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
     getMyProfileInfo();
-  }, []);
+    getMyPost();
+  }, [userToken]);
 
   if (userToken === null) {
     window.location = '/login';
@@ -60,7 +72,7 @@ const ProfilePage = () => {
           <SectionBorder />
           <ProfileProduct />
           <SectionBorder />
-          <ProfilePost postState={true} />
+          <ProfilePost postData={myPostList} />
         </ContentsLayout>
         <TabMenu currentMenuId={4} />
       </>
