@@ -15,6 +15,10 @@ const PostUploadDetail = () => {
   const [text, setText] = useState('');
   const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
+  const inputRef = useRef();
+  const onPicBtnClick = () => {
+    inputRef.current.click();
+  };
 
   // TODO : 유저 이미지 저장
   useEffect(() => {
@@ -48,17 +52,39 @@ const PostUploadDetail = () => {
     setText(e.target.value);
     handleResizeHeight();
   };
+
+  // TODO : 업로드될 이미지, POST 요청받아 숫자로 이루어진 filename을 응답받을수있다.
+  const uploadImgData = async () => {
+    let formData = new FormData();
+    let imgData = uploadImg;
+    for (let i = 0; i < imgData.length; i++) {
+      const file = imgData[i];
+      formData.append('image', file);
+    }
+    const res = await axios({
+      method: 'post',
+      url: 'https://mandarin.api.weniv.co.kr/image/uploadfiles',
+      data: formData,
+    });
+
+    const imgUrls = res.data.map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename).join();
+    return imgUrls;
+  };
+
   // TODO : 업로드 버튼이 클릭되면 POST 요청
   const onClickUploadHandler = async (e) => {
     e.preventDefault();
+    const url = 'https://mandarin.api.weniv.co.kr';
+    const resImage = await uploadImgData();
+    console.log(resImage);
     try {
       await axios
         .post(
-          `https://mandarin.api.weniv.co.kr/post`,
+          `${url}/post`,
           {
             post: {
               content: `${text}`,
-              image: `${uploadImg}`,
+              image: await resImage,
             },
           },
           {
@@ -75,7 +101,8 @@ const PostUploadDetail = () => {
       console.log(error);
     }
   };
-  // TODO : 텍스트 유무에 따른 버튼활성화
+
+  // TODO : 텍스트,이미지 유무에 따른 버튼활성화
   useEffect(() => {
     if (text !== '' || uploadImg.length > 0) {
       setIsValidate(false);
@@ -102,7 +129,7 @@ const PostUploadDetail = () => {
               onChange={handleChangeText}
               maxLength='200'
             />
-            <ImgUploadButton setUploadImg={setUploadImg} />
+            <ImgUploadButton setUploadImg={setUploadImg} inputRef={inputRef} />
           </PostForm>
         </PostWrite>
       </UploadMain>

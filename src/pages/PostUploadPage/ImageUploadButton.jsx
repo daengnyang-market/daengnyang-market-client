@@ -1,55 +1,71 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CLOSE_ICON } from '../../styles/CommonIcons';
 
-const ImageUploadButton = ({ className, setUploadImg }) => {
-  const [showImages, setShowImages] = useState([]);
+const ImageUploadButton = ({ className, setUploadImg, inputRef }) => {
+  const [image, setImgfile] = useState([]);
+  const [imageUrl, setImageUrl] = useState('');
 
   // 이미지 상대경로 저장
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files;
-    let imageUrlLists = [...showImages];
+  const handleAddImages = (e) => {
+    const Blob = e.target.files[0];
 
-    const currentImageUrl = URL.createObjectURL(imageLists[0]);
-    imageUrlLists.push(currentImageUrl);
-
-    if (showImages.length > 2) {
-      alert('3개까지만 선택 가능합니다!');
-    } else {
-      setShowImages(imageUrlLists);
+    setImgfile((prevState) => [...prevState, Blob]);
+    if (Blob === undefined) {
+      return;
     }
+    const reader = new FileReader();
+    reader.readAsDataURL(Blob);
+    e.target.value = '';
+    reader.onload = () => {
+      setImageUrl((imageUrl) => [...imageUrl, reader.result]);
+    };
   };
 
   // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
+  const handleDeleteImage = (index) => {
+    const imgArr = image.filter((image, i) => i !== index);
+    const imgNameArr = imageUrl.filter((image, i) => i !== index);
+
+    setImgfile([...imgArr]);
+    setImageUrl([...imgNameArr]);
   };
 
-  setUploadImg(showImages);
+  // 부모요소에 이미지 전달
+  setUploadImg(image);
   return (
     <>
-      {showImages.length > 1 ? (
+      {imageUrl.length > 0 && (
         <PreviewImgItem>
-          {showImages.map((image, id) => (
-            <MultipleImgList key={id}>
-              <PreviewImg src={image} alt={`${image}-${id}`} />
-              <DeletButton onClick={() => handleDeleteImage(id)}></DeletButton>
-            </MultipleImgList>
-          ))}
-        </PreviewImgItem>
-      ) : (
-        <PreviewImgItem>
-          {showImages.map((image, id) => (
-            <ImgList key={id}>
-              <PreviewImg src={image} alt={`${image}-${id}`} />
-              <DeletButton onClick={() => handleDeleteImage(id)}></DeletButton>
-            </ImgList>
-          ))}
+          {imageUrl.length > 1
+            ? imageUrl.map((image, i) => {
+                return (
+                  <MultipleImgList key={i}>
+                    <PreviewImg src={image} alt={`${image}-${i}`} />
+                    <DeletButton onClick={() => handleDeleteImage(i)}></DeletButton>
+                  </MultipleImgList>
+                );
+              })
+            : imageUrl.map((image, i) => {
+                return (
+                  <ImgList key={i}>
+                    <PreviewImg src={image} alt={`${image}-${i}`} />
+                    <DeletButton onClick={() => handleDeleteImage(i)}></DeletButton>
+                  </ImgList>
+                );
+              })}
         </PreviewImgItem>
       )}
       <div>
         <label htmlFor='imgUpload' className={className} />
-        <input type='file' accept='image/*' id='imgUpload' onChange={handleAddImages} className='sr-only' />
+        <input
+          type='file'
+          accept='image/*'
+          id='imgUpload'
+          ref={inputRef}
+          onChange={handleAddImages}
+          className='sr-only'
+        />
       </div>
     </>
   );
