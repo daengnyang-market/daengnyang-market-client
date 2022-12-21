@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { TopNavBar, LeftArrow } from './Styled';
 import { LEFT_ARROW_ICON } from '../../../styles/CommonIcons';
 
-const TopSearchNav = () => {
+const TopSearchNav = ({ onTyping }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,12 @@ const TopSearchNav = () => {
       <button onClick={() => navigate(-1)}>
         <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기 버튼' />
       </button>
-      <SearchInput placeholder='계정 검색' />
+      <SearchInput
+        placeholder='계정 검색'
+        onChange={(e) => {
+          onTyping(e.target.value);
+        }}
+      />
     </TopNavBar>
   );
 };
