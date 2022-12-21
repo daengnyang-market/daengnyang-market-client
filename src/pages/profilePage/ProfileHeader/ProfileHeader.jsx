@@ -12,7 +12,6 @@ import Loading from '../../../components/common/Loading/Loading';
 // followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
 // profileData : 헤더에서 넘어오는 프로필 정보들
 
-
 const ProfileHeader = ({ profileState, followState, profileData }) => {
   // const [isMyProfile, setIsMyProfile] = useState(profileState);
 
@@ -23,7 +22,6 @@ const ProfileHeader = ({ profileState, followState, profileData }) => {
   if (!profileData) {
     return <Loading />;
   } else {
-    console.log(profileData);
     return (
       <>
         <ProfileWrapper>

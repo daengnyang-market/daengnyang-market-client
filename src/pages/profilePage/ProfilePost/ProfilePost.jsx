@@ -21,7 +21,7 @@ const ProfilePost = () => {
   const [isRendered, setisRendered] = useState(true);
   const [listClicked, onListClicked] = useState(true);
   const [albumClicked, onAlbumClicked] = useState(false);
-  // 내 포스트 담기
+  // 포스트 담기
   const [myPostList, setMyPost] = useState([]);
   const handleListBtn = () => {
     setListBtn(true);
@@ -47,9 +47,7 @@ const ProfilePost = () => {
       },
     })
       .then((res) => {
-        console.log(res.data.post);
         setMyPost(res.data.post);
-        console.log(myPostList);
       })
       .catch((err) => console.log(err));
   };
@@ -59,7 +57,6 @@ const ProfilePost = () => {
     getMyPost();
   }, [userToken]);
 
-  console.log(myPostList);
   if (!isRendered) {
     <Loading />;
   } else {
@@ -74,20 +71,19 @@ const ProfilePost = () => {
             <strong className='sr-only'>앨범으로 보기</strong>
           </AlbumIcon>
         </PostHeader>
-
         {myPostList ? (
           listBtn === true ? (
             <PostUl>
               <h3 className='sr-only'>리스트형 포스트 목록</h3>
               {myPostList.map((post) => (
-                <Post post={post} />
+                <Post key={post.id} post={post} />
               ))}
             </PostUl>
           ) : (
             <PostGrid>
               <h3 className='sr-only'>앨범형 포스트 목록</h3>
               {myPostList.map((post) => (
-                <img src={myPostList.image} alt='썸네일 이미지'></img>
+                <img key={post.id} src={myPostList.image} alt='썸네일 이미지'></img>
               ))}
             </PostGrid>
           )

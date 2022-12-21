@@ -14,17 +14,12 @@ import ProfilePost from './ProfilePost/ProfilePost';
 import Loading from '../../components/common/Loading/Loading';
 
 const ProfilePage = () => {
-  // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountName } = useParams();
-
+  // useParams() 사용해서 url 에 있는 파라미터 받아오기
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
   //내가 이사람 팔로우 했는지 안했는지
   const [isFollow, setIsFollow] = useState('');
-
-  // 일단 해당 데이터로 프로필 전달하기
-  const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjcxMTA4NywiaWF0IjoxNjcxNTI3MDg3fQ.GNjuwF4GcX7fQiZtX2I8H3kpgClotfYvwS-_pPyIzRE`;
-  const tempAccountName = 'daengnyang';
 
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const url = `https://mandarin.api.weniv.co.kr`;
@@ -32,10 +27,10 @@ const ProfilePage = () => {
   // 다른 유저 프로필 불러오기
   const getUserProfileInfo = () => {
     axios({
-      url: url + `/profile/${tempAccountName}`,
+      url: url + `/profile/${accountName}`,
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${tempToken}`,
+        Authorization: `Bearer ${userToken}`,
         'Content-type': 'application/json',
       },
     })
@@ -47,7 +42,7 @@ const ProfilePage = () => {
   };
   useEffect(() => {
     getUserProfileInfo();
-  }, []);
+  }, [userToken]);
 
   if (!userProfileInfo) {
     return <Loading />;
