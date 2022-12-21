@@ -4,20 +4,38 @@ import DustBadge from './DustBadgeStyled';
 
 const DetailWeatherInfo = ({ weatherInfo, dustInfo }) => {
   // TODO: 미세먼지 지수 가공
-  const getDustIndex = (dustInfo) => {
-    if (dustInfo <= 30) {
-      return <DustBadge index='good'>좋음 ({dustInfo})</DustBadge>;
+  const getDustIndex = (dustType, dustInfo) => {
+    if (dustType === 'pm10') {
+      if (dustInfo <= 30) {
+        return <DustBadge index='good'>좋음 ({dustInfo})</DustBadge>;
+      }
+
+      if (dustInfo <= 50) {
+        return <DustBadge index='notBad'>보통 ({dustInfo})</DustBadge>;
+      }
+
+      if (dustInfo <= 100) {
+        return <DustBadge index='bad'>나쁨 ({dustInfo})</DustBadge>;
+      }
+
+      return <DustBadge index='veryBad'>매우 나쁨 ({dustInfo})</DustBadge>;
     }
 
-    if (dustInfo <= 50) {
-      return <DustBadge index='notBad'>보통 ({dustInfo})</DustBadge>;
-    }
+    if (dustType === 'pm2_5') {
+      if (dustInfo <= 15) {
+        return <DustBadge index='good'>좋음 ({dustInfo})</DustBadge>;
+      }
 
-    if (dustInfo <= 100) {
-      return <DustBadge index='bad'>나쁨 ({dustInfo})</DustBadge>;
-    }
+      if (dustInfo <= 25) {
+        return <DustBadge index='notBad'>보통 ({dustInfo})</DustBadge>;
+      }
 
-    return <DustBadge index='veryBad'>매우 나쁨 ({dustInfo})</DustBadge>;
+      if (dustInfo <= 50) {
+        return <DustBadge index='bad'>나쁨 ({dustInfo})</DustBadge>;
+      }
+
+      return <DustBadge index='veryBad'>매우 나쁨 ({dustInfo})</DustBadge>;
+    }
   };
 
   return (
@@ -51,11 +69,11 @@ const DetailWeatherInfo = ({ weatherInfo, dustInfo }) => {
         </HumidityWrapper>
         <FineDustWrapper>
           <dt>미세먼지</dt>
-          {getDustIndex(dustInfo.pm2_5)}
+          {getDustIndex('pm10', dustInfo.pm10)}
         </FineDustWrapper>
         <UltraFineDustWrapper>
           <dt>초미세먼지</dt>
-          {getDustIndex(dustInfo.pm10)}
+          {getDustIndex('pm2_5', dustInfo.pm2_5)}
         </UltraFineDustWrapper>
       </WeatherList>
     </DetailInfoWrapper>
