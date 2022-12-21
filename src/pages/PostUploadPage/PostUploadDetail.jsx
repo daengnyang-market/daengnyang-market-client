@@ -1,138 +1,118 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import axios from 'axios';
+import { AuthContextStore } from '../../context/AuthContext';
+import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
+import { useNavigate } from 'react-router-dom';
+import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
-import { UPLOAD_FILE_ICON, CLOSE_ICON } from '../../styles/CommonIcons';
-
-// 폼버튼 새로고침 방지
-const handleSubmit = (e) => {
-  e.preventDefault();
-};
+import ImageUploadButton from './ImageUploadButton';
 
 const PostUploadDetail = () => {
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [userImg, setUserImg] = useState([]);
+  const [uploadImg, setUploadImg] = useState([]);
+  const [text, setText] = useState('');
+  const [isValidate, setIsValidate] = useState(true);
+  const navigate = useNavigate();
+
+  // TODO : 유저 이미지 저장
+  useEffect(() => {
+    if (userAccountname) {
+      axios({
+        url: `https://mandarin.api.weniv.co.kr/profile/${userAccountname}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      }).then((response) => {
+        setUserImg(response.data.profile.image);
+      });
+    }
+  }, [userAccountname, userToken]);
+
+  // 폼버튼 새로고침 방지
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  // TODO : 텍스트의 길이에 맞추어 박스크기 조정
   const textRef = useRef();
   const handleResizeHeight = useCallback(() => {
     textRef.current.style.height = textRef.current.scrollHeight + 'px';
   }, []);
+
+  // TODO : 게시글 텍스트 관리
+  const handleChangeText = (e) => {
+    setText(e.target.value);
+    handleResizeHeight();
+  };
+  // TODO : 업로드 버튼이 클릭되면 POST 요청
+  const onClickUploadHandler = async (e) => {
+    e.preventDefault();
+    try {
+      await axios
+        .post(
+          `https://mandarin.api.weniv.co.kr/post`,
+          {
+            post: {
+              content: `${text}`,
+              image: `${uploadImg}`,
+            },
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+              'Content-type': 'application/json',
+            },
+          },
+        )
+        .then(() => {
+          navigate('/profile');
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  // TODO : 텍스트 유무에 따른 버튼활성화
+  useEffect(() => {
+    if (text !== '' || uploadImg.length > 0) {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
+    }
+  }, [text, uploadImg]);
+
   return (
-    <UploadMain>
-      <h2 className='sr-only'>게시글 작성 메인화면</h2>
-      <ProfileImage src={PROFILE1_IMAGE} width='42' />
-      <PostWrite>
-        <h3 className='sr-only'>게시글 작성</h3>
-        <PostForm onSubmit={handleSubmit}>
-          <PostTextInput
-            name='text'
-            placeholder='게시글 입력하기...'
-            data-value='0'
-            autoComplete='off'
-            ref={textRef}
-            onChange={handleResizeHeight}
-            maxLength='200'
-          />
-          <ImgUploadButton />
-        </PostForm>
-      </PostWrite>
-    </UploadMain>
+    <>
+      <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
+      <UploadMain>
+        <h2 className='sr-only'>게시글 작성 메인화면</h2>
+        <ProfileImage src={userImg} width='42' />
+        <PostWrite>
+          <h3 className='sr-only'>게시글 작성</h3>
+          <PostForm onSubmit={handleSubmit}>
+            <PostTextInput
+              name='text'
+              placeholder='게시글 입력하기...'
+              data-value='0'
+              autoComplete='off'
+              ref={textRef}
+              onChange={handleChangeText}
+              maxLength='200'
+            />
+            <ImgUploadButton setUploadImg={setUploadImg} />
+          </PostForm>
+        </PostWrite>
+      </UploadMain>
+    </>
   );
 };
 
 export default PostUploadDetail;
 
-// 이미지 업로드 및 삭제를 위한 컴포넌트
-const ImgUploadTag = ({ className }) => {
-  const [showImages, setShowImages] = useState([]);
-
-  // 이미지 상대경로 저장
-  const handleAddImages = (event) => {
-    const imageLists = event.target.files;
-    let imageUrlLists = [...showImages];
-
-    for (let i = 0; i < imageLists.length; i++) {
-      const currentImageUrl = URL.createObjectURL(imageLists[i]);
-      imageUrlLists.push(currentImageUrl);
-    }
-
-    if (imageUrlLists.length > 10) {
-      imageUrlLists = imageUrlLists.slice(0, 10);
-    }
-
-    setShowImages(imageUrlLists);
-  };
-
-  // X버튼 클릭 시 이미지 삭제
-  const handleDeleteImage = (id) => {
-    setShowImages(showImages.filter((_, index) => index !== id));
-  };
-  console.log(showImages);
-  return (
-    <>
-      {showImages.length > 1 ? (
-        <PreviewImgItem>
-          {showImages.map((image, id) => (
-            <MultipleImgList key={id}>
-              <PreviewImg src={image} alt={`${image}-${id}`} />
-              <DeletButton onClick={() => handleDeleteImage(id)}></DeletButton>
-            </MultipleImgList>
-          ))}
-        </PreviewImgItem>
-      ) : (
-        <PreviewImgItem>
-          {showImages.map((image, id) => (
-            <ImgList key={id}>
-              <PreviewImg src={image} alt={`${image}-${id}`} />
-              <DeletButton onClick={() => handleDeleteImage(id)}></DeletButton>
-            </ImgList>
-          ))}
-        </PreviewImgItem>
-      )}
-      <div>
-        <label htmlFor='imgUpload' className={className} />
-        <input type='file' accept='image/*' id='imgUpload' onChange={handleAddImages} className='sr-only' />
-      </div>
-    </>
-  );
-};
-
-const PreviewImg = styled.img`
-  border-radius: 10px;
-`;
-
-const PreviewImgItem = styled.ul`
-  white-space: nowrap;
-  margin-left: 1.3rem;
-  margin-right: -1.6rem;
-  overflow-x: scroll;
-`;
-
-const ImgList = styled.li`
-  position: relative;
-  border: 0.5px solid #dbdbdb;
-  border-radius: 10px;
-  height: 22.8rem;
-  width: 30.4rem;
-`;
-
-const MultipleImgList = styled(ImgList)`
-  & {
-    display: inline-block;
-    margin-right: 8px;
-    width: 16.8rem;
-    height: 12.6rem;
-  }
-`;
-
-const DeletButton = styled.button`
-  position: absolute;
-  top: 0.6rem;
-  right: 0.6rem;
-  width: 2.2rem;
-  height: 2.2rem;
-  background-size: cover;
-  background-image: url(${CLOSE_ICON});
-`;
-
-const ImgUploadButton = styled(ImgUploadTag)`
+const ImgUploadButton = styled(ImageUploadButton)`
   position: fixed;
   margin-left: 26.6rem;
   bottom: 1.6rem;
