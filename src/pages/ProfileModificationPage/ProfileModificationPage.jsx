@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
@@ -51,32 +52,61 @@ const ProfileModificationPage = () => {
   };
   // console.log(image);
 
-  const test = () => {
+  const [disabledButton, setDisabledButton] = useState(false);
+
+  useEffect(() => {
+    const getInfo = () => {
+      const option = {
+        url: 'https://mandarin.api.weniv.co.kr/user/myinfo',
+        method: 'GET',
+        headers: { Authorization: `Bearer ${userToken}` },
+      };
+
+      axios(option)
+        .then((res) => {
+          console.log(res.data.user);
+          setUserName(res.data.user.username);
+          setAccountName(res.data.user.accountname);
+          setIntro(res.data.user.intro);
+          setImage(res.data.user.image);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    };
+    getInfo();
+  }, [userToken]);
+
+  const onClickSaveButtonHandler = () => {
     const option = {
-      url: 'https://mandarin.api.weniv.co.kr/user/myinfo',
-      method: 'GET',
-      headers: { Authorization: `Bearer ${userToken}` },
+      url: 'https://mandarin.api.weniv.co.kr/user',
+      method: 'PUT',
+      headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' },
+      data: {
+        user: {
+          username: userName,
+          accountname: accountName,
+          intro: intro,
+          image: image,
+        },
+      },
     };
 
     axios(option)
       .then((res) => {
-        // console.log(res.data.user);
-        setUserName(res.data.user.username);
-        setAccountName(res.data.user.accountname);
-        setIntro(res.data.user.intro);
+        // console.log(res);
+        console.log('수정!!!');
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  test();
-
-  useEffect(() => {}, [userName]);
-
   return (
     <>
-      <TopUploadNav />
+      <Link to='/profile'>
+        <TopUploadNav activeButton={disabledButton} onClick={onClickSaveButtonHandler} />
+      </Link>
       <ContentsLayout isTabMenu='false' padding='0'>
         <Section>
           <h2 className='sr-only'>프로필 정보 수정</h2>
@@ -88,6 +118,7 @@ const ProfileModificationPage = () => {
             userName={userName}
             accountName={accountName}
             intro={intro}
+            image={image}
           />
         </Section>
       </ContentsLayout>
@@ -102,8 +133,4 @@ const Section = styled.section`
   flex-direction: column;
   align-items: center;
   padding: 3rem 3.4rem 0;
-`;
-
-const Input = styled.input`
-  border: 2px solid pink;
 `;
