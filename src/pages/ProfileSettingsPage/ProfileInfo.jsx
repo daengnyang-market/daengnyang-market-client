@@ -17,6 +17,7 @@ const ProfileInfo = ({
   userName,
   accountName,
   intro,
+  image,
 }) => {
   // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
@@ -46,6 +47,8 @@ const ProfileInfo = ({
         <WrapperImg>
           {thumbnailImg ? (
             <ProfileImage src={thumbnailImg} alt='업로드 이미지' width='110' />
+          ) : image ? (
+            <ProfileImage src={image} alt='업로드 이미지' width='110' />
           ) : (
             <ProfileImage src={PROFILE1_IMAGE} alt='업로드 이미지' width='110' />
           )}
