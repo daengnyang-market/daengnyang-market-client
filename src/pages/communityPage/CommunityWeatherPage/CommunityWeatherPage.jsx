@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Loading from '../../../components/common/Loading/Loading';
-import weatherDescKo from '../../../utils/WeatherDescKo';
+import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
 import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
@@ -79,7 +79,7 @@ const CommunityWeatherPage = () => {
 
     const getWeatherInfo = (resData) => {
       setWeatherInfo({
-        weather: weatherDescKo[resData.weather[0].id],
+        weather: WeatherDescription[resData.weather[0].id],
         temp: resData.main.temp.toFixed(1),
         tempMax: resData.main.temp_max.toFixed(1),
         tempMin: resData.main.temp_min.toFixed(1),
