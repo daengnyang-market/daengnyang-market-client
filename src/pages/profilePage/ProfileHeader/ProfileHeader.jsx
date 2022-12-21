@@ -4,23 +4,15 @@ import styled from 'styled-components';
 import UserProfileBtns from './UserProfileBtns';
 import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
 // followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
 // profileData : 프로필 페이지에서 넘어오는 프로필 정보들
 
 const ProfileHeader = ({ followState, profileData }) => {
-  const navigate = useNavigate();
   const location = useLocation();
   let { accountname } = useParams();
-
-  // 사용자 토큰,아이디 context 값
-  // const { userToken, userAccountname } = useContext(AuthContextStore);
-
-  const moveFollowers = () => {
-    navigate(`/follow/:accountname/:type`);
-  };
 
   if (!profileData) {
     <Loading />;
@@ -29,15 +21,16 @@ const ProfileHeader = ({ followState, profileData }) => {
       <>
         <ProfileWrapper>
           <h2 className='sr-only'>프로필 정보</h2>
-          <Followers onClick={moveFollowers}>
+          <Followers to={`/follow/${accountname}/follower`}>
             <strong>{profileData.followerCount}</strong>
             <span>followers</span>
           </Followers>
+
           <ProfileImage src={profileData.image} alt='프로필 사진' width='110' />
           <UserName>{profileData.username}</UserName>
           <UserID>@ {profileData.accountname}</UserID>
           <UserIntro>{profileData.intro}</UserIntro>
-          <Followings onClick={moveFollowers}>
+          <Followings to={`/follow/${accountname}/following`}>
             <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
@@ -78,7 +71,7 @@ const UserIntro = styled.span`
   color: var(--sub-text-color);
 `;
 
-const Followers = styled.button`
+const Followers = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
