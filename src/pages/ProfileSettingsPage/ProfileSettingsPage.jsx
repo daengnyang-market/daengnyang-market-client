@@ -7,7 +7,7 @@ import Button from '../../components/common/Button/Button';
 
 const ProfileSettingsPage = () => {
   const location = useLocation();
-  // console.log(location.state);
+  console.log(location.state);
 
   const email = location.state.email;
   const password = location.state.password;
@@ -55,9 +55,9 @@ const ProfileSettingsPage = () => {
   // console.log(image);
 
   const [disabledButton, setDisabledButton] = useState(true);
-  const disabledButtonFunction = (value) => {
-    setDisabledButton(value);
-  };
+  // const disabledButtonFunction = (value) => {
+  //   setDisabledButton(value);
+  // };
 
   // 버튼 활성화
   useEffect(() => {
@@ -105,7 +105,7 @@ const ProfileSettingsPage = () => {
         accountNameFunction={accountNameFunction}
         introFunction={introFunction}
         imageFunction={imageFunction}
-        disabledButtonFunction={disabledButtonFunction}
+        // disabledButtonFunction={disabledButtonFunction}
       />
       <Link to='/'>
         <Button disabled={disabledButton} onClickHandler={onClickStartButtonHandler} size='L'>
