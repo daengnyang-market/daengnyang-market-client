@@ -31,7 +31,7 @@ export default function MultiItemCarousel({ itemList }) {
         className='mySwiper'
       >
         {itemList.map((item) => (
-          <SwiperSlide>
+          <SwiperSlide key={item.id}>
             <Product
               productImg={item.itemImage}
               productName={item.itemName}
