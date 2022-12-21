@@ -16,7 +16,7 @@ const InputUserName = ({
   userNameFunction,
   userName,
 }) => {
-  const [inputValue, setInputValue] = useState(`${userName ? userName : ''}`);
+  const [inputValue, setInputValue] = useState('');
 
   const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
