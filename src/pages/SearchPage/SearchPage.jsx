@@ -9,14 +9,14 @@ import { AuthContextStore } from '../../context/AuthContext';
 const SearchPage = () => {
   const [searchData, setSearchData] = useState([]);
   const [keywordData, setKeywordData] = useState('');
-  const { token } = useContext(AuthContextStore);
+  const { userToken } = useContext(AuthContextStore);
 
   const getSearchData = async (searchKeyword) => {
     await axios({
       method: 'get',
       url: `https://mandarin.api.weniv.co.kr/user/searchuser/?keyword=${searchKeyword}`,
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${userToken}`,
         'Content-type': 'application/json',
       },
     }).then((response) => {
@@ -28,7 +28,6 @@ const SearchPage = () => {
     !searchKeyword ? setSearchData('') : getSearchData(searchKeyword);
     setKeywordData(searchKeyword);
   };
-
   // TODO : 성능개선을 위해, 무한스크롤과 버추얼스크롤을 적용해 볼 예정이다.
   return (
     <ContentsLayout isTabMenu={true} padding='0rem'>
