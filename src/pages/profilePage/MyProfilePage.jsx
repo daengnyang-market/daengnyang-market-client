@@ -18,8 +18,7 @@ const ProfilePage = () => {
   const [isMyProfile, setMyProfile] = useState(null);
   // 내 프로필 정보 담기
   const [myProfileInfo, setMyProfileInfo] = useState('');
-  // 내 포스트 담기
-  const [myPostList, setMyPost] = useState([]);
+
 
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const url = `https://mandarin.api.weniv.co.kr`;
@@ -38,25 +37,10 @@ const ProfilePage = () => {
       })
       .catch((err) => console.error(err));
   };
-  const getMyPost = () => {
-    axios({
-      url: url + `/post/${userAccountname}/userpost`,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        'Content-type': 'application/json',
-      },
-    })
-      .then((res) => {
-        console.log(res.data.post);
-        setMyPost(res.data.post);
-        console.log(myPostList);
-      })
-      .catch((err) => console.log(err));
-  };
+
   useEffect(() => {
     getMyProfileInfo();
-    getMyPost();
+
   }, [userToken]);
 
   if (userToken === null) {
@@ -72,7 +56,7 @@ const ProfilePage = () => {
           <SectionBorder />
           <ProfileProduct />
           <SectionBorder />
-          <ProfilePost postData={myPostList} />
+          <ProfilePost />
         </ContentsLayout>
         <TabMenu currentMenuId={4} />
       </>
