@@ -12,9 +12,13 @@ import {
 } from '../../../styles/CommonIcons';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const ProfilePost = () => {
+  let { accountname } = useParams();
+  const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
+  const location = useLocation();
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
   const [albumBtn, setAlbumBtn] = useState(false);
@@ -23,6 +27,7 @@ const ProfilePost = () => {
   const [albumClicked, onAlbumClicked] = useState(false);
   // 포스트 담기
   const [myPostList, setMyPost] = useState([]);
+
   const handleListBtn = () => {
     setListBtn(true);
     setAlbumBtn(false);
@@ -35,11 +40,12 @@ const ProfilePost = () => {
     onAlbumClicked(true);
     onListClicked(false);
   };
+
   const getMyPost = () => {
     const url = `https://mandarin.api.weniv.co.kr`;
 
     axios({
-      url: url + `/post/${userAccountname}/userpost`,
+      url: url + `/post/${accountname ? accountname : userAccountname}/userpost`,
       method: 'GET',
       headers: {
         Authorization: `Bearer ${userToken}`,

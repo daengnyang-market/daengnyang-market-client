@@ -1,44 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-
+// import AuthContextStore from '../../../context/AuthContext';
 import UserProfileBtns from './UserProfileBtns';
 import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
-// profileState : 내 프로필인지 구별하는 props (참/거짓)
 // followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
-// profileData : 헤더에서 넘어오는 프로필 정보들
+// profileData : 프로필 페이지에서 넘어오는 프로필 정보들
 
-const ProfileHeader = ({ profileState, followState, profileData }) => {
-  // const [isMyProfile, setIsMyProfile] = useState(profileState);
-
+const ProfileHeader = ({ followState, profileData }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  let { accountname } = useParams();
+
+  // 사용자 토큰,아이디 context 값
+  // const { userToken, userAccountname } = useContext(AuthContextStore);
+
   const moveFollowers = () => {
     navigate(`/follow/:accountname/:type`);
   };
+
   if (!profileData) {
-    return <Loading />;
+    <Loading />;
   } else {
     return (
       <>
         <ProfileWrapper>
           <h2 className='sr-only'>프로필 정보</h2>
           <Followers onClick={moveFollowers}>
-            <strong>{profileData.user.followerCount}</strong>
+            <strong>{profileData.followerCount}</strong>
             <span>followers</span>
           </Followers>
-          <ProfileImage src={profileData.user.image} alt='프로필 사진' width='110' />
-          <UserName>{profileData.user.username}</UserName>
-          <UserID>@ {profileData.user.accountname}</UserID>
-          <UserIntro>{profileData.user.intro}</UserIntro>
+          <ProfileImage src={profileData.image} alt='프로필 사진' width='110' />
+          <UserName>{profileData.username}</UserName>
+          <UserID>@ {profileData.accountname}</UserID>
+          <UserIntro>{profileData.intro}</UserIntro>
           <Followings onClick={moveFollowers}>
-            <strong>{profileData.user.followingCount}</strong>
+            <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
-          {profileState ? <MyProfileBtns /> : <UserProfileBtns isFollowing={true} />}
+          {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns isFollowing={followState} />}
         </ProfileWrapper>
       </>
     );
