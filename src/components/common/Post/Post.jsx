@@ -1,59 +1,42 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper';
 import ProfileImage from '../ProfileImage/ProfileImage';
+import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 import PostModal from '../modal/PostModal/PostModal';
-import Loading from '../../common/Loading/Loading';
-import 'swiper/css';
-import 'swiper/css/pagination';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Post = ({ post }) => {
+const Post = ({ post = {} }) => {
   const navigate = useNavigate();
-  const [like, setLike] = useState(false);
-  const [data, setData] = useState('');
-  const [dateData, setDateData] = useState({});
-  const [imageFile, setImageFile] = useState([]);
-  useEffect(() => {
-    if (post) {
-      return setData({ ...post });
-    }
-  }, []);
 
-  useEffect(() => {
-    if (data) {
-      setDateData(data.createdAt);
-      setImageFile(data.image.split(','));
-    }
-  }, [data]);
-
-  const year = new Date(dateData).getFullYear();
-  const month = new Date(dateData).getMonth() + 1;
-  const date = new Date(dateData).getDate();
+  const year = new Date(post.createdAt).getFullYear();
+  const month = new Date(post.createdAt).getMonth() + 1;
+  const date = new Date(post.createdAt).getDate();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
 
+  const [like, setLike] = useState(false);
+
   const onClickLikeButtonHandler = () => {
     setLike(!like);
   };
+
   const closeModal = () => {
     setIsOpenModal(false);
   };
 
   return (
     <>
-      {data ? (
+      {Object.keys(post).length > 0 ? (
         <>
           <WrapperDiv>
             <UserInfoWrapperDiv>
-              <UserProfileLink to={`/profile/${data.author.accountname}`}>
-                <ProfileImage src={data.author.image} alt={`${data.author.username}님의 프로필 사진`} width='42' />
+              <UserProfileLink to={`/profile/${post.author.accountname}`}>
+                <ProfileImage src={post.author.image} alt={`${post.author.username}님의 프로필 사진`} width='42' />
                 <UserInfoDiv>
-                  <UserName>{data.author.username}</UserName>
-                  <UserId>@ {data.author.accountname}</UserId>
+                  <UserName>{post.author.username}</UserName>
+                  <UserId>@ {post.author.accountname}</UserId>
                 </UserInfoDiv>
               </UserProfileLink>
               <MoreSmallButton onClick={() => setIsOpenModal(true)}>
@@ -61,37 +44,18 @@ const Post = ({ post }) => {
               </MoreSmallButton>
             </UserInfoWrapperDiv>
             <ContentWrapperDiv>
-              <PostDetailLink to={`/post/${data.id}`} type='content'>
-                <ContentText>{data.content}</ContentText>
-                <SwiperWrapper>
-                  <Swiper
-                    spaceBetween={30}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className='mySwiper'
-                  >
-                    {imageFile ? (
-                      imageFile.map((img, i) => (
-                        <SwiperSlide key={i}>
-                          <ContentImg src={img} alt='' />
-                        </SwiperSlide>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </Swiper>
-                </SwiperWrapper>
+              <PostDetailLink to={`/post/${post.id}`} type='content'>
+                <ContentText>{post.content}</ContentText>
+                {post.image ? <ContentImg src={post.image} alt='' /> : <></>}
               </PostDetailLink>
               <Div>
                 <LikeButton like={like} onClick={onClickLikeButtonHandler}>
                   <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
                 </LikeButton>
-                <LikeSpan>{data.heartCount}</LikeSpan>
-                <PostDetailLink to={`/data/${data.id}`} type='comment'>
+                <LikeSpan>{post.heartCount}</LikeSpan>
+                <PostDetailLink to={`/post/${post.id}`} type='comment'>
                   <ChatImg src={REPLY_ICON} alt='댓글 보기' />
-                  <ChatSpan>{data.commentCount}</ChatSpan>
+                  <ChatSpan>{post.commentCount}</ChatSpan>
                 </PostDetailLink>
               </Div>
               <DateP>
@@ -102,19 +66,13 @@ const Post = ({ post }) => {
           {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} /> : <></>}
         </>
       ) : (
-        <Loading />
+        <></>
       )}
     </>
   );
 };
 
 export default Post;
-
-const SwiperWrapper = styled.div`
-  > div {
-    width: 100%;
-  }
-`;
 
 const WrapperDiv = styled.article`
   width: 35.8rem;
@@ -178,7 +136,6 @@ const ContentImg = styled.img`
 
 const Div = styled.div`
   display: flex;
-  margin-top: 1.6rem;
   margin-bottom: 1.6rem;
 `;
 
