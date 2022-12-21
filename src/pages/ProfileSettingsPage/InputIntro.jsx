@@ -7,7 +7,7 @@ import styled from 'styled-components';
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
 const InputIntro = ({ labelText = 'label', inputType = 'text', id, placeholder, maxLength, introFunction, intro }) => {
-  const [inputValue, setInputValue] = useState(`${intro ? intro : ''}`);
+  const [inputValue, setInputValue] = useState('');
 
   const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
