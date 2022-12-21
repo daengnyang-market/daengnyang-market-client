@@ -7,7 +7,7 @@ import Button from '../../components/common/Button/Button';
 
 const ProfileSettingsPage = () => {
   const location = useLocation();
-  console.log(location.state);
+  // console.log(location.state);
 
   const email = location.state.email;
   const password = location.state.password;
