@@ -34,7 +34,7 @@ const SummaryWeatherInfo = ({ walkingScore, dateInfo, districtInfo, weather, loc
             산책 난이도 : <em>{walkingScore >= 5 ? '어려움' : walkingScore >= 2 ? '보통' : '쉬움'}</em>
           </WalkLevel>
           <WalkDescription>
-            {walkingScore >= 5 ? '이불 속이 안전하댕' : walkingScore >= 2 ? '산책 가도 괜찮댕' : '빨리 나가면 안댕?'}
+            {walkingScore >= 5 ? '이불 밖은 위험하댕' : walkingScore >= 2 ? '산책 가도 괜찮댕' : '빨리 나가면 안댕?'}
           </WalkDescription>
         </WalkText>
       </div>
