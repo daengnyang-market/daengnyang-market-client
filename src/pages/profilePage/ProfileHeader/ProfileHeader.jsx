@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
-// import AuthContextStore from '../../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 import UserProfileBtns from './UserProfileBtns';
 import MyProfileBtns from './MyProfileBtns';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
-import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
 // followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
@@ -12,7 +12,25 @@ import Loading from '../../../components/common/Loading/Loading';
 
 const ProfileHeader = ({ followState, profileData }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   let { accountname } = useParams();
+  const { userAccountname } = useContext(AuthContextStore);
+
+  const onClickFollower = () => {
+    if (location.pathname === `/profile`) {
+      navigate(`/follow/${userAccountname}/follower`);
+    } else {
+      navigate(`/follow/${accountname}/follower`);
+    }
+  };
+
+  const onClickFollowing = () => {
+    if (location.pathname === `/profile`) {
+      navigate(`/follow/${userAccountname}/following`);
+    } else {
+      navigate(`/follow/${accountname}/following`);
+    }
+  };
 
   if (!profileData) {
     <Loading />;
@@ -21,7 +39,7 @@ const ProfileHeader = ({ followState, profileData }) => {
       <>
         <ProfileWrapper>
           <h2 className='sr-only'>프로필 정보</h2>
-          <Followers to={`/follow/${accountname}/follower`}>
+          <Followers onClick={onClickFollower}>
             <strong>{profileData.followerCount}</strong>
             <span>followers</span>
           </Followers>
@@ -30,7 +48,7 @@ const ProfileHeader = ({ followState, profileData }) => {
           <UserName>{profileData.username}</UserName>
           <UserID>@ {profileData.accountname}</UserID>
           <UserIntro>{profileData.intro}</UserIntro>
-          <Followings to={`/follow/${accountname}/following`}>
+          <Followings onClick={onClickFollowing}>
             <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
@@ -71,7 +89,7 @@ const UserIntro = styled.span`
   color: var(--sub-text-color);
 `;
 
-const Followers = styled(Link)`
+const Followers = styled.button`
   display: flex;
   flex-direction: column;
   align-items: center;
