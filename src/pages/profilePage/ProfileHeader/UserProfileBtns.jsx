@@ -6,7 +6,7 @@ import axios from 'axios';
 import Button from '../../../components/common/Button/Button';
 import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
 import { AuthContextStore } from '../../../context/AuthContext';
-// followState가 true면 팔로우된 사용자, false면 팔로잉하지 않은 사용자
+
 const UserProfileBtns = ({ profileData }) => {
   const [isFollowing, setIsFollowing] = useState(profileData.isfollow);
   const { userToken } = useContext(AuthContextStore);
@@ -22,14 +22,12 @@ const UserProfileBtns = ({ profileData }) => {
     await axios(option)
       .then((res) => {
         setIsFollowing(!isFollowing);
-        console.log(res);
       })
       .catch((err) => {
         console.error(err);
       });
   };
 
-  console.log(profileData.isfollow);
   return (
     <UserProfileBtnsStyle>
       <ProfileBtn />

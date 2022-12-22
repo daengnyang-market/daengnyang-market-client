@@ -15,7 +15,6 @@ const ProfileHeader = ({ profileData }) => {
   const navigate = useNavigate();
   const { userAccountname, userToken } = useContext(AuthContextStore);
   const { accountname } = useParams();
-  const [isRendered, setIsRendered] = useState(true);
 
   const onClickFollowList = (followType) => {
     if (location.pathname === `/profile`) {

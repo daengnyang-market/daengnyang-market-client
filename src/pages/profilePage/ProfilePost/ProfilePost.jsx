@@ -87,9 +87,9 @@ const ProfilePost = () => {
           ) : (
             <PostGrid>
               <h3 className='sr-only'>앨범형 포스트 목록</h3>
-              {myPostList.map((post) => (
-                <img key={post.id} src={myPostList.image} alt='썸네일 이미지'></img>
-              ))}
+              {myPostList.map((post) => {
+                return post.image ? <img key={post.id} src={post.image} alt='썸네일 이미지'></img> : null;
+              })}
             </PostGrid>
           )
         ) : (
