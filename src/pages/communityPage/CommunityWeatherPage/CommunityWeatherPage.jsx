@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Loading from '../../../components/common/Loading/Loading';
 import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
 import DetailWeatherInfo from './DetailWeatherInfo';
@@ -15,6 +14,7 @@ const CommunityWeatherPage = () => {
   const [districtInfo, setDistrictInfo] = useState('');
   const [weatherInfo, setWeatherInfo] = useState({});
   const [dustInfo, setDustInfo] = useState({});
+  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
 
   const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
@@ -26,6 +26,10 @@ const CommunityWeatherPage = () => {
       longitude,
       latitude,
     });
+
+    setTimeout(() => {
+      setIsLocationUpdate(false);
+    }, 300);
   };
 
   const getLocation = () => {
@@ -123,18 +127,19 @@ const CommunityWeatherPage = () => {
   return (
     <CommunityLayout currenttMenuId={1}>
       <WeatherSection>
-        <>
-          <h2 className='sr-only'>실시간 날씨 정보</h2>
-          <SummaryWeatherInfo
-            walkScore={walkScore}
-            walkTextList={walkTextList}
-            dateInfo={dateInfo}
-            districtInfo={districtInfo}
-            weather={weatherInfo.weather}
-            weatherIcon={weatherInfo.weatherIcon}
-          />
-          <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
-        </>
+        <h2 className='sr-only'>실시간 날씨 정보</h2>
+        <SummaryWeatherInfo
+          walkScore={walkScore}
+          walkTextList={walkTextList}
+          dateInfo={dateInfo}
+          districtInfo={districtInfo}
+          weather={weatherInfo.weather}
+          weatherIcon={weatherInfo.weatherIcon}
+          getLocation={getLocation}
+          isLocationUpdate={isLocationUpdate}
+          setIsLocationUpdate={setIsLocationUpdate}
+        />
+        <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
       </WeatherSection>
     </CommunityLayout>
   );
@@ -143,5 +148,6 @@ const CommunityWeatherPage = () => {
 export default CommunityWeatherPage;
 
 const WeatherSection = styled.section`
+  position: relative;
   border-top: 1px solid var(--border-color);
 `;

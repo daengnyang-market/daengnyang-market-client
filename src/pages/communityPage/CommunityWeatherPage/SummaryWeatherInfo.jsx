@@ -1,15 +1,36 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { WALK_ABLE_IMAGE, WALK_DISABLE_IMAGE } from '../../../styles/CommonImages';
+import { UPDATE_ICON } from '../../../styles/CommonIcons';
+import { spin } from '../../../components/common/Animation/Animation';
 
-const SummaryWeatherInfo = ({ walkScore, walkTextList, dateInfo, districtInfo, weather }) => {
+const SummaryWeatherInfo = ({
+  walkScore,
+  walkTextList,
+  dateInfo,
+  districtInfo,
+  weather,
+  getLocation,
+  isLocationUpdate,
+  setIsLocationUpdate,
+}) => {
+  const updateLocation = () => {
+    setIsLocationUpdate(true);
+    getLocation();
+  };
+
   return (
     <SummaryInfoWrapper>
       <SummaryInfo>
         <Date dateTime='2022-11-06'>
           {dateInfo.year}년 {dateInfo.month}월 {dateInfo.day}일
         </Date>
-        <District>{districtInfo}</District>
+        <DistrictWrapper>
+          <LocationUpdateButton onClick={updateLocation} isUpdate={isLocationUpdate}>
+            <span className='sr-only'>현재 위치 갱신하기</span>
+          </LocationUpdateButton>
+          <District>{districtInfo}</District>
+        </DistrictWrapper>
         <CurrentWeather>{weather}</CurrentWeather>
       </SummaryInfo>
       <div>
@@ -30,7 +51,7 @@ const SummaryWeatherInfo = ({ walkScore, walkTextList, dateInfo, districtInfo, w
 export default SummaryWeatherInfo;
 
 const SummaryInfoWrapper = styled.div`
-  padding: 5.3rem 3.5rem;
+  padding: 6.5rem 3.5rem 5.3rem;
   text-align: center;
 `;
 
@@ -45,10 +66,28 @@ const Date = styled.time`
   color: var(--sub-text-color);
 `;
 
+const DistrictWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+`;
+
+const LocationUpdateButton = styled.button`
+  min-width: 1.8rem;
+  min-height: 1.8rem;
+  margin-right: 0.7rem;
+  background: no-repeat center/cover url(${UPDATE_ICON});
+  animation: ${(props) =>
+    props.isUpdate &&
+    css`
+      ${spin} 2000ms linear infinite
+    `};
+`;
+
 const District = styled.strong`
   display: block;
-  margin-bottom: 1.5rem;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 500;
 `;
 
