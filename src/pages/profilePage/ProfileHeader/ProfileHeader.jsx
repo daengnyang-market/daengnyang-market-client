@@ -16,19 +16,11 @@ const ProfileHeader = ({ followState, profileData }) => {
   let { accountname } = useParams();
   const { userAccountname } = useContext(AuthContextStore);
 
-  const onClickFollower = () => {
+  const onClickFollow = (followType) => {
     if (location.pathname === `/profile`) {
-      navigate(`/follow/${userAccountname}/follower`);
+      navigate(`/follow/${userAccountname}/${followType}`);
     } else {
-      navigate(`/follow/${accountname}/follower`);
-    }
-  };
-
-  const onClickFollowing = () => {
-    if (location.pathname === `/profile`) {
-      navigate(`/follow/${userAccountname}/following`);
-    } else {
-      navigate(`/follow/${accountname}/following`);
+      navigate(`/follow/${accountname}/${followType}`);
     }
   };
 
@@ -39,7 +31,7 @@ const ProfileHeader = ({ followState, profileData }) => {
       <>
         <ProfileWrapper>
           <h2 className='sr-only'>프로필 정보</h2>
-          <Followers onClick={onClickFollower}>
+          <Followers onClick={() => onClickFollow('follower')}>
             <strong>{profileData.followerCount}</strong>
             <span>followers</span>
           </Followers>
@@ -48,7 +40,7 @@ const ProfileHeader = ({ followState, profileData }) => {
           <UserName>{profileData.username}</UserName>
           <UserID>@ {profileData.accountname}</UserID>
           <UserIntro>{profileData.intro}</UserIntro>
-          <Followings onClick={onClickFollowing}>
+          <Followings onClick={() => onClickFollow('following')}>
             <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
