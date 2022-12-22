@@ -23,8 +23,6 @@ const ProfilePage = () => {
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
-  // 내가 이사람 팔로우 했는지 안했는지
-  const [isFollow, setIsFollow] = useState(Boolean);
 
   // 사용자 토큰,아이디 context 값
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -48,7 +46,6 @@ const ProfilePage = () => {
     })
       .then((res) => {
         setUserProfileInfo(res.data.profile);
-        setIsFollow(res.data.profile.isfollow);
       })
       .catch((err) => console.error(err));
   };
@@ -59,26 +56,33 @@ const ProfilePage = () => {
   }, [userToken]);
 
   if (!userProfileInfo) {
-    <Loading />;
+    <LoadingWrapper>
+      <Loading />;
+    </LoadingWrapper>;
   } else {
     return (
       <>
         <TopBasicNav />
         <ContentsLayout padding='2rem 0 0 0'>
-          <ProfileHeader followState={isFollow} profileData={userProfileInfo} />
+          <ProfileHeader profileData={userProfileInfo} />
           <SectionBorder />
           <ProfileProduct />
           <SectionBorder />
           <ProfilePost postState={true} />
         </ContentsLayout>
-        <TabMenu />
+        <TabMenu currentMenuId={4} />
       </>
     );
   }
 };
 
 export default ProfilePage;
-
+const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+`;
 const SectionBorder = styled.div`
   height: 6px;
   width: 100%;

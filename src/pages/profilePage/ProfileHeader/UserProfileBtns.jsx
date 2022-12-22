@@ -1,25 +1,44 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import Button from '../../../components/common/Button/Button';
 import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
-// followState가 true면 팔로우된 사용자, false면 팔로잉하지 않은 사용자
-const UserProfileBtns = ({ followState }) => {
-  const [isFollowing, setIsFollowing] = useState(followState);
-  function handleFollow() {
-    setIsFollowing(!isFollowing);
-  }
+import { AuthContextStore } from '../../../context/AuthContext';
+
+const UserProfileBtns = ({ profileData }) => {
+  const [isFollowing, setIsFollowing] = useState(profileData.isfollow);
+  const { userToken } = useContext(AuthContextStore);
+  const { accountname } = useParams();
+
+  const handleFollow = async () => {
+    const option = {
+      url: `https://mandarin.api.weniv.co.kr/profile/${accountname}/${isFollowing ? 'unfollow' : 'follow'}`,
+      method: isFollowing ? 'DELETE' : 'POST',
+      headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' },
+    };
+
+    await axios(option)
+      .then((res) => {
+        setIsFollowing(!isFollowing);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
   return (
     <UserProfileBtnsStyle>
       <ProfileBtn />
       <Button
         size='M'
         onClickHandler={handleFollow}
-        backgroundColor={isFollowing ? 'var(--login-bg-color)' : 'var(--main-bg-color)'}
-        borderColor={isFollowing ? 'transparent' : 'var(--border-color)'}
-        textColor={isFollowing ? 'var(--main-bg-color)' : 'var(--sub-text-color)'}
+        backgroundColor={isFollowing ? 'var(--main-bg-color)' : undefined}
+        borderColor={isFollowing ? 'var(--border-color)' : undefined}
+        textColor={isFollowing ? 'var(--sub-text-color)' : undefined}
       >
-        {!isFollowing ? '팔로우' : '언팔로우'}
+        {isFollowing ? '언팔로우' : '팔로우'}
       </Button>
       <ProfileBtn isShare={true} />
     </UserProfileBtnsStyle>
