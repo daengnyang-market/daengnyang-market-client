@@ -51,12 +51,12 @@ const SummaryWeatherInfo = ({
 export default SummaryWeatherInfo;
 
 const SummaryInfoWrapper = styled.div`
-  padding: 6.5rem 3.5rem 5.3rem;
+  padding: 4.5rem 3.5rem;
   text-align: center;
 `;
 
 const SummaryInfo = styled.div`
-  margin-bottom: 5rem;
+  margin-bottom: 3.5rem;
 `;
 
 const Date = styled.time`
@@ -69,15 +69,15 @@ const Date = styled.time`
 const DistrictWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  margin-bottom: 1.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.8rem;
 `;
 
 const LocationUpdateButton = styled.button`
   min-width: 1.8rem;
   min-height: 1.8rem;
   margin-right: 0.7rem;
-  background: no-repeat center/cover url(${UPDATE_ICON});
+  background: no-repeat center/contain url(${UPDATE_ICON});
   animation: ${(props) =>
     props.isUpdate &&
     css`
