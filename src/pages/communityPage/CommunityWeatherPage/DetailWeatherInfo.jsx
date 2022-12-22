@@ -83,7 +83,7 @@ const DetailWeatherInfo = ({ weatherInfo, dustInfo }) => {
 export default DetailWeatherInfo;
 
 const DetailInfoWrapper = styled.div`
-  padding: 5.3rem 3.5rem;
+  padding: 4.5rem 3.5rem;
   border-top: 1px solid var(--border-color);
 `;
 
@@ -102,6 +102,9 @@ const CurrentTemp = styled.dd`
 
   &::after {
     content: '°';
+    position: relative;
+    top: 0.3rem;
+    left: 0.3rem;
   }
 `;
 
