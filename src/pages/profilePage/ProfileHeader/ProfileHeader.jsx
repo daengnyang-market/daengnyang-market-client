@@ -27,6 +27,7 @@ const ProfileHeader = ({ profileData }) => {
   if (!profileData) {
     <Loading />;
   } else {
+    console.log(profileData);
     return (
       <>
         <ProfileWrapper>

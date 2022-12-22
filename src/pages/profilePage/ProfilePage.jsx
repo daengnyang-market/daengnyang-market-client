@@ -19,7 +19,7 @@ const ProfilePage = () => {
   // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountname } = useParams();
   // state 랜더링 위해 추가
-  const [isRendered, setIsRendered] = useState(true);
+  const [isRendered, setIsRendered] = useState(false);
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
@@ -32,7 +32,7 @@ const ProfilePage = () => {
     if (location.pathname === `/profile/${userAccountname}`) {
       navigate('/profile');
     }
-  }, [location]);
+  }, [location, accountname]);
 
   // 유저 프로필 불러오기
   const getUserProfileInfo = () => {
@@ -53,7 +53,7 @@ const ProfilePage = () => {
   useEffect(() => {
     setIsRendered(true);
     getUserProfileInfo();
-  }, [userToken]);
+  }, [userToken, accountname]);
 
   if (!userProfileInfo) {
     <LoadingWrapper>
