@@ -22,7 +22,7 @@ const ProfilePost = () => {
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
   const [albumBtn, setAlbumBtn] = useState(false);
-  const [isRendered, setisRendered] = useState(true);
+  const [isRendered, setIsRendered] = useState(true);
   const [listClicked, onListClicked] = useState(true);
   const [albumClicked, onAlbumClicked] = useState(false);
   // 포스트 담기
@@ -58,7 +58,7 @@ const ProfilePost = () => {
   };
 
   useEffect(() => {
-    setisRendered(true);
+    setIsRendered(true);
     getMyPost();
   }, [userToken]);
 
@@ -101,7 +101,6 @@ const ProfilePost = () => {
       </>
     );
   }
-
 };
 
 export default ProfilePost;

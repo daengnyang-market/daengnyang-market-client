@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import { AuthContextStore } from '../../../context/AuthContext';
 import UserProfileBtns from './UserProfileBtns';
 import MyProfileBtns from './MyProfileBtns';
@@ -7,16 +8,16 @@ import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
-// followState : 버튼에 넘겨주기 위한 props => 팔로우 했을 경우 언팔 뜨게
 // profileData : 프로필 페이지에서 넘어오는 프로필 정보들
 
-const ProfileHeader = ({ followState, profileData }) => {
+const ProfileHeader = ({ profileData }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  let { accountname } = useParams();
-  const { userAccountname } = useContext(AuthContextStore);
+  const { userAccountname, userToken } = useContext(AuthContextStore);
+  const { accountname } = useParams();
+  const [isRendered, setIsRendered] = useState(true);
 
-  const onClickFollow = (followType) => {
+  const onClickFollowList = (followType) => {
     if (location.pathname === `/profile`) {
       navigate(`/follow/${userAccountname}/${followType}`);
     } else {
@@ -31,7 +32,7 @@ const ProfileHeader = ({ followState, profileData }) => {
       <>
         <ProfileWrapper>
           <h2 className='sr-only'>프로필 정보</h2>
-          <Followers onClick={() => onClickFollow('follower')}>
+          <Followers onClick={() => onClickFollowList('follower')}>
             <strong>{profileData.followerCount}</strong>
             <span>followers</span>
           </Followers>
@@ -40,11 +41,11 @@ const ProfileHeader = ({ followState, profileData }) => {
           <UserName>{profileData.username}</UserName>
           <UserID>@ {profileData.accountname}</UserID>
           <UserIntro>{profileData.intro}</UserIntro>
-          <Followings onClick={() => onClickFollow('following')}>
+          <Followings onClick={() => onClickFollowList('following')}>
             <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
-          {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns isFollowing={followState} />}
+          {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns profileData={profileData} />}
         </ProfileWrapper>
       </>
     );
