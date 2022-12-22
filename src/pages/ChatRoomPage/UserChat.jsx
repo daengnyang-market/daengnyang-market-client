@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
-import { WALK_ABLE_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
+import { WALKING_EASY_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
 
 const UserChat = ({ isImg }) => {
   return (
@@ -10,7 +10,7 @@ const UserChat = ({ isImg }) => {
       <Link to='/'>
         <ProfileImage src={PROFILE2_IMAGE} width='42' />
       </Link>
-      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALK_ABLE_IMAGE} />}
+      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
       <MessageDate>12:50</MessageDate>
     </MessageItem>
   );
