@@ -8,8 +8,7 @@ import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
 
 const CommunityWeatherPage = () => {
-  const [location, setLocation] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [location, setLocation] = useState({ longitude: 126.48911, latitude: 33.4698142 });
   const [walkScore, setWalkScore] = useState(8);
   const walkTextList = ['산책하기 좋은 날', '짧은 산책을 추천해요', '이불 속이 안전해'];
   const [dateInfo, setDateInfo] = useState({});
@@ -21,14 +20,12 @@ const CommunityWeatherPage = () => {
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
 
   const handleSuccess = ({ coords }) => {
-    const { latitude, longitude } = coords;
+    const { longitude, latitude } = coords;
 
     setLocation({
       longitude,
       latitude,
     });
-
-    setIsLoading(false);
   };
 
   const getLocation = () => {
@@ -120,34 +117,24 @@ const CommunityWeatherPage = () => {
       getUserDistrictData();
       getWeahterData();
       getDustData();
-
-      if (isLoading) {
-        setIsLoading(false);
-      }
     }
   }, [location]);
 
   return (
     <CommunityLayout currenttMenuId={1}>
       <WeatherSection>
-        {isLoading ? (
-          <LoadingWrapper>
-            <Loading />
-          </LoadingWrapper>
-        ) : (
-          <>
-            <h2 className='sr-only'>실시간 날씨 정보</h2>
-            <SummaryWeatherInfo
-              walkScore={walkScore}
-              walkTextList={walkTextList}
-              dateInfo={dateInfo}
-              districtInfo={districtInfo}
-              weather={weatherInfo.weather}
-              weatherIcon={weatherInfo.weatherIcon}
-            />
-            <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
-          </>
-        )}
+        <>
+          <h2 className='sr-only'>실시간 날씨 정보</h2>
+          <SummaryWeatherInfo
+            walkScore={walkScore}
+            walkTextList={walkTextList}
+            dateInfo={dateInfo}
+            districtInfo={districtInfo}
+            weather={weatherInfo.weather}
+            weatherIcon={weatherInfo.weatherIcon}
+          />
+          <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
+        </>
       </WeatherSection>
     </CommunityLayout>
   );
@@ -157,11 +144,4 @@ export default CommunityWeatherPage;
 
 const WeatherSection = styled.section`
   border-top: 1px solid var(--border-color);
-`;
-
-const LoadingWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 `;
