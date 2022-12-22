@@ -14,9 +14,10 @@ const InputAccountName = ({
   placeholder,
   maxLength,
   accountNameFunction,
-  disabledButtonFunction,
+  // disabledButtonFunction,
+  accountName,
 }) => {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(`${accountName ? accountName : ''}`);
 
   const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
@@ -56,7 +57,7 @@ const InputAccountName = ({
 
         if (regex.test(e.target.value)) {
           if (res.data.message === '이미 가입된 계정ID 입니다.') {
-            disabledButtonFunction(true);
+            // disabledButtonFunction(true);
             accountNameFunction('');
             setAlertID('* 이미 사용 중인 ID입니다.');
           } else {
@@ -83,13 +84,14 @@ const InputAccountName = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={accountName}
       />
       <InputAlert>{alertPattern}</InputAlert>
       <InputAlert>{alertID}</InputAlert>

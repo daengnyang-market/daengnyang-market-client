@@ -14,6 +14,7 @@ const InputUserName = ({
   placeholder,
   maxLength,
   userNameFunction,
+  userName,
 }) => {
   const [inputValue, setInputValue] = useState('');
 
@@ -43,13 +44,14 @@ const InputUserName = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={userName}
       />
       {!(inputValue.length === 0) && inputValue.length < 2 && <InputAlert>{children}</InputAlert>}
     </InputWrapper>
