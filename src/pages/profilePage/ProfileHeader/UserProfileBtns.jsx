@@ -3,16 +3,14 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../../components/common/Button/Button';
 import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
-
+// followState가 true면 팔로우된 사용자, false면 팔로잉하지 않은 사용자
 const UserProfileBtns = ({ followState }) => {
   const [isFollowing, setIsFollowing] = useState(followState);
-
   function handleFollow() {
     setIsFollowing(!isFollowing);
   }
   return (
     <UserProfileBtnsStyle>
-      {/* followState 에 따라 팔로우/언팔로우 버튼으로 나뉩니다*/}
       <ProfileBtn />
       <Button
         size='M'
@@ -21,7 +19,7 @@ const UserProfileBtns = ({ followState }) => {
         borderColor={isFollowing ? 'transparent' : 'var(--border-color)'}
         textColor={isFollowing ? 'var(--main-bg-color)' : 'var(--sub-text-color)'}
       >
-        {isFollowing ? '팔로우' : '언팔로우'}
+        {!isFollowing ? '팔로우' : '언팔로우'}
       </Button>
       <ProfileBtn isShare={true} />
     </UserProfileBtnsStyle>
