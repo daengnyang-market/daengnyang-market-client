@@ -14,7 +14,7 @@ const CommunityWeatherPage = () => {
   const [districtInfo, setDistrictInfo] = useState('');
   const [weatherInfo, setWeatherInfo] = useState({});
   const [dustInfo, setDustInfo] = useState({});
-  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
+  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
 
   const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
