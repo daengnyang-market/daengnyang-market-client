@@ -30,6 +30,7 @@ import REPLY_ICON from '../assets/icons/reply-icon.png';
 import RIGHT_ARROW_ICON from '../assets/icons/right-arrow-icon.png';
 import SEARCH_ICON from '../assets/icons/search-icon.png';
 import SHARE_ICON from '../assets/icons/share-icon.png';
+import UPDATE_ICON from '../assets/icons/update-icon.png';
 import USER_FILL_ICON from '../assets/icons/user-fill-icon.png';
 import USER_ICON from '../assets/icons/user-icon.png';
 import IMG_BUTTON_ICON from '../assets/icons/img-button-icon.png';
@@ -68,6 +69,7 @@ export {
   RIGHT_ARROW_ICON,
   SEARCH_ICON,
   SHARE_ICON,
+  UPDATE_ICON,
   USER_FILL_ICON,
   USER_ICON,
   IMG_BUTTON_ICON,
