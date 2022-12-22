@@ -60,7 +60,7 @@ const ProfilePost = () => {
   useEffect(() => {
     setIsRendered(true);
     getMyPost();
-  }, [userToken]);
+  }, [userToken, accountname]);
 
   if (!isRendered) {
     <Loading />;
