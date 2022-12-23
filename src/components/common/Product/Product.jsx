@@ -6,7 +6,7 @@ const Product = ({ onClick, productImg, productName, productPrice }) => {
     <>
       <WrapperDiv onClick={onClick}>
         <ProductImg src={productImg} alt={`${productName} 상품 이미지`} />
-        <ProductName>{productName}</ProductName>
+        <ProductName className='ellipsis'>{productName}</ProductName>
         <ProductPrice>{productPrice}</ProductPrice>
       </WrapperDiv>
     </>
