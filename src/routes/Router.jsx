@@ -12,6 +12,7 @@ import JoinMembershipPage from '../pages/JoinMembershipPage/JoinMembershipPage';
 import PostDetailPage from '../pages/PostDetailPage/PostDetailPage';
 import PostUploadPage from '../pages/PostUploadPage/PostUploadPage';
 import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
+import ProductModificationPage from '../pages/ProductModificationPage/ProductModificationPage';
 import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileModificationPage';
 import ProfilePage from '../pages/profilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
@@ -39,6 +40,7 @@ const Router = () => {
       <Route path='/post/:postid/edit' element={<></>} />
       <Route path='/post/upload' element={<PostUploadPage />} />
       <Route path='/product' element={<ProductRegistrationPage />} />
+      <Route path='/product/:productid/edit' element={<ProductModificationPage />} />
       <Route path='/community' element={<CommunityMainPage />} />
       <Route path='/community/weather' element={<CommunityWeatherPage />} />
       <Route path='/community/hospital' element={<CommunityHospitaMainlPage />} />
