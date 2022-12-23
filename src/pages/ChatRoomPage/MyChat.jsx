@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { WALK_ABLE_IMAGE } from '../../styles/CommonImages';
+import { WALKING_EASY_IMAGE } from '../../styles/CommonImages';
 
 const MyChat = ({ isImg }) => {
   return (
     <MessageItem>
       <MessageDate>12:50</MessageDate>
-      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALK_ABLE_IMAGE} />}
+      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
     </MessageItem>
   );
 };

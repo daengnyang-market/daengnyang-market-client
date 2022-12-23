@@ -8,13 +8,12 @@ import SummaryWeatherInfo from './SummaryWeatherInfo';
 
 const CommunityWeatherPage = () => {
   const [location, setLocation] = useState({ longitude: 126.48911, latitude: 33.4698142 });
-  const [walkScore, setWalkScore] = useState(8);
-  const walkTextList = ['산책하기 좋은 날', '짧은 산책을 추천해요', '이불 속이 안전해'];
   const [dateInfo, setDateInfo] = useState({});
   const [districtInfo, setDistrictInfo] = useState('');
   const [weatherInfo, setWeatherInfo] = useState({});
   const [dustInfo, setDustInfo] = useState({});
   const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+  const [walkingScore, setWalkingScore] = useState(0);
 
   const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
@@ -45,7 +44,14 @@ const CommunityWeatherPage = () => {
   }, []);
 
   useEffect(() => {
-    // TODO: 행정구역 정보 받아오기
+    const getDate = () => {
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      const day = today.getDate();
+      setDateInfo({ year, month, day });
+    };
+
     const getUserDistrictData = async () => {
       const header = { headers: { Authorization: `KakaoAK ${KAKAOMAP_API}` } };
 
@@ -80,7 +86,8 @@ const CommunityWeatherPage = () => {
 
     const getWeatherInfo = (resData) => {
       setWeatherInfo({
-        weather: WeatherDescription[resData.weather[0].id],
+        weather: WeatherDescription[resData.weather[0].id].title,
+        weatherScore: WeatherDescription[resData.weather[0].id].score,
         temp: resData.main.temp.toFixed(1),
         tempMax: resData.main.temp_max.toFixed(1),
         tempMin: resData.main.temp_min.toFixed(1),
@@ -108,14 +115,6 @@ const CommunityWeatherPage = () => {
         });
     };
 
-    const getDate = () => {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = today.getMonth() + 1;
-      const day = today.getDate();
-      setDateInfo({ year, month, day });
-    };
-
     if (Object.keys(location).length > 0) {
       getDate();
       getUserDistrictData();
@@ -124,20 +123,68 @@ const CommunityWeatherPage = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    const getWalkingScoreInfo = () => {
+      const calculateTempScore = () => {
+        if (weatherInfo.temp <= -9 || weatherInfo.temp >= 35) {
+          return 10;
+        }
+
+        if (weatherInfo.temp <= -2 || weatherInfo.temp >= 27) {
+          return 2;
+        }
+
+        if (weatherInfo.temp <= 6 || weatherInfo.temp >= 23) {
+          return 1;
+        }
+
+        return 0;
+      };
+
+      const calculateWeatherScore = () => {
+        return weatherInfo.weatherScore;
+      };
+
+      const calculateAirScore = () => {
+        if (dustInfo.aqa === 5) {
+          return 10;
+        }
+
+        if (dustInfo.aqi === 4) {
+          return 2;
+        }
+
+        if (dustInfo.aqi >= 2) {
+          return 1;
+        }
+
+        return 0;
+      };
+
+      let sumScore = 0;
+
+      sumScore += calculateTempScore();
+      sumScore += calculateWeatherScore();
+      sumScore += calculateAirScore();
+
+      setWalkingScore(sumScore);
+    };
+
+    if (Object.keys(weatherInfo).length > 0 && Object.keys(dustInfo).length) {
+      getWalkingScoreInfo();
+    }
+  }, [weatherInfo, dustInfo]);
+
   return (
     <CommunityLayout currenttMenuId={1}>
       <WeatherSection>
         <h2 className='sr-only'>실시간 날씨 정보</h2>
         <SummaryWeatherInfo
-          walkScore={walkScore}
-          walkTextList={walkTextList}
+          walkingScore={walkingScore}
           dateInfo={dateInfo}
           districtInfo={districtInfo}
           weather={weatherInfo.weather}
-          weatherIcon={weatherInfo.weatherIcon}
-          getLocation={getLocation}
-          isLocationUpdate={isLocationUpdate}
-          setIsLocationUpdate={setIsLocationUpdate}
+          locations={{ getLocation, isLocationUpdate, setIsLocationUpdate }}
         />
         <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
       </WeatherSection>

@@ -12,8 +12,9 @@ import MAIN_TITLE_IMAGE from '../assets/images/main-title-image.png';
 import PROFILE1_IMAGE from '../assets/images/profile1-image.png';
 import PROFILE2_IMAGE from '../assets/images/profile2-image.png';
 import SUB_TITLE_IMAGE from '../assets/images/sub-title-image.png';
-import WALK_ABLE_IMAGE from '../assets/images/walk-able-image.png';
-import WALK_DISABLE_IMAGE from '../assets/images/walk-disable-image.png';
+import WALKING_EASY_IMAGE from '../assets/images/walking-easy-image.png';
+import WALKING_NORMAL_IMAGE from '../assets/images/walking-normal-image.png';
+import WALKING_HARD_IMAGE from '../assets/images/walking-hard-image.png';
 
 export {
   ADVERTISING1_IMAGE,
@@ -30,6 +31,7 @@ export {
   PROFILE1_IMAGE,
   PROFILE2_IMAGE,
   SUB_TITLE_IMAGE,
-  WALK_ABLE_IMAGE,
-  WALK_DISABLE_IMAGE,
+  WALKING_EASY_IMAGE,
+  WALKING_NORMAL_IMAGE,
+  WALKING_HARD_IMAGE,
 };
