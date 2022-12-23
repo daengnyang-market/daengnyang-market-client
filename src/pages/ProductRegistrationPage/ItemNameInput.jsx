@@ -14,6 +14,8 @@ const ItemNameInput = ({
   maxLength,
   children,
   itemNameFunction,
+  itemNameModFunction,
+  itemNameMod,
 }) => {
   const [nameValid, setNameValid] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -35,7 +37,19 @@ const ItemNameInput = ({
       setNameValid(true);
     }
 
-    itemNameFunction(e.target.value);
+    if (itemNameModFunction) {
+      if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+        itemNameModFunction(e.target.value);
+      } else {
+        itemNameModFunction('');
+      }
+    } else {
+      if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+        itemNameFunction(e.target.value);
+      } else {
+        itemNameFunction('');
+      }
+    }
   };
 
   return (
@@ -45,12 +59,13 @@ const ItemNameInput = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={itemNameMod}
       />
       {nameValid ? '' : <InputAlert>{children}</InputAlert>}
     </InputWrapper>
