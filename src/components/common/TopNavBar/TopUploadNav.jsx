@@ -5,7 +5,7 @@ import { TopNavBar, LeftArrow } from './Styled';
 import { LEFT_ARROW_ICON } from '../../../styles/CommonIcons';
 import Button from '../Button/Button';
 
-const TopUploadNav = ({ onClick, activeButton }) => {
+const TopUploadNav = ({ onClick, activeButton, activeModButton }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,7 +13,7 @@ const TopUploadNav = ({ onClick, activeButton }) => {
       <button onClick={() => navigate(-1)}>
         <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기버튼' />
       </button>
-      <Button disabled={activeButton} onClickHandler={onClick} size='MS'>
+      <Button disabled={!activeModButton ? activeModButton : activeButton} onClickHandler={onClick} size='MS'>
         저장
       </Button>
     </TopNavBar>
