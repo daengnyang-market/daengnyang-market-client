@@ -41,11 +41,16 @@ const ProfileProduct = () => {
   if (!isRendered) {
     <Loading />;
   } else {
-    return (
-      <ProductWrapper>
-        <h2>판매 중인 상품</h2>
-        <MultiItemCarousel itemList={productList} />
-      </ProductWrapper>
+    return productList.length > 0 ? (
+      <>
+        <ProductWrapper>
+          <h2>판매 중인 상품</h2>
+          <MultiItemCarousel itemList={productList} />
+        </ProductWrapper>
+        <SectionBorder />
+      </>
+    ) : (
+      <></>
     );
   }
 };
@@ -60,4 +65,12 @@ const ProductWrapper = styled.section`
     font-size: 1.6em;
     font-weight: 700;
   }
+`;
+
+const SectionBorder = styled.div`
+  height: 6px;
+  width: 100%;
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
+  background-color: var(--chat-bg-color);
 `;
