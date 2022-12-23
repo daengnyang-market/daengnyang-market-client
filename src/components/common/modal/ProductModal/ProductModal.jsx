@@ -4,7 +4,7 @@ import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
-const ProductModal = ({ closeModal }) => {
+const ProductModal = ({ closeModal, productid }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
   const closeAlert = () => {
@@ -26,7 +26,16 @@ const ProductModal = ({ closeModal }) => {
             </button>
           </MenuItem>
           <MenuItem>
-            <Link to='#'>수정</Link>
+            <Link
+              to={{
+                pathname: `/product/${productid}/edit`,
+              }}
+              onClick={() => {
+                console.log('수정 페이지 입니다!!');
+              }}
+            >
+              수정
+            </Link>
           </MenuItem>
           <MenuItem>
             <Link to='#'>웹사이트에서 상품 보기</Link>
