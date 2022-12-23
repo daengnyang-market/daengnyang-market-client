@@ -26,19 +26,16 @@ const ProductRegistrationPage = ({
   const itemNameFunction = (value) => {
     setItemName(value);
   };
-  console.log(itemName);
 
   const [price, setPrice] = useState('');
   const priceFunction = (value) => {
     setPrice(parseInt(value));
   };
-  console.log(price);
 
   const [link, setLink] = useState('');
   const linkFunction = (value) => {
     setLink(value);
   };
-  console.log(link);
 
   const [itemImage, setItemImage] = useState('');
 
