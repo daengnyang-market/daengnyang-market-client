@@ -76,7 +76,7 @@ const ProfilePost = () => {
             <strong className='sr-only'>앨범으로 보기</strong>
           </AlbumIcon>
         </PostHeader>
-        {myPostList ? (
+        {myPostList.length > 0 ? (
           listBtn === true ? (
             <PostUl>
               <h3 className='sr-only'>리스트형 포스트 목록</h3>
