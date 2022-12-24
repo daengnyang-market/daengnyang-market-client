@@ -1,16 +1,72 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
+import { AuthContextStore } from '../../../context/AuthContext';
+import axios from 'axios';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../../styles/CommonImages';
+import { useNavigate } from 'react-router-dom';
 
-const Comment = () => {
+const Comment = ({ user, post }) => {
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [userData, setUserData] = useState();
+  const [postData, setPostData] = useState();
+  const [commentData, setCommentData] = useState('');
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (post && user) {
+      setUserData(user);
+      setPostData(post);
+    }
+  }, []);
+  const sendCommentData = () => {
+    axios
+      .post(
+        `https://mandarin.api.weniv.co.kr/post/${postData.id}/comments`,
+        {
+          comment: {
+            content: `${commentData}`,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then(navigate(`/post/${postData.id}`));
+  };
+  useEffect(() => {
+    if ((userData, postData)) {
+      sendCommentData();
+    }
+  }, []);
+  console.log(commentData);
+  console.log(postData);
+  const onClickUploadHandler = (e) => {
+    e.preventDefault();
+    sendCommentData();
+  };
   return (
-    <CommentForm>
-      <ProfileImage src={PROFILE1_IMAGE} alt='프로필 이미지'></ProfileImage>
-      <input type='text' placeholder='댓글 입력하기...' />
-      <Button disabled={true}>게시</Button>
-    </CommentForm>
+    <>
+      {userData ? (
+        <CommentForm>
+          <ProfileImage src={userData.image} alt='프로필 이미지'></ProfileImage>
+          <input
+            type='text'
+            placeholder='댓글 입력하기...'
+            onChange={(e) => {
+              setCommentData(e.target.value);
+            }}
+          />
+          <Button disabled={false} onClick={(e) => onClickUploadHandler(e)}>
+            게시
+          </Button>
+        </CommentForm>
+      ) : (
+        <div>로딩</div>
+      )}
+    </>
   );
 };
 

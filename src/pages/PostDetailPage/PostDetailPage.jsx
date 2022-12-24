@@ -6,14 +6,58 @@ import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
 import Comment from '../../components/common/Comment/Comment';
 import Loading from '../../components/common/Loading/Loading';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
-import Post from '../../components/common/Post/Post';
 import styled from 'styled-components';
 import PostComment from './PostComment';
+import DetailPost from './DetailPost';
 const PostDetailPage = () => {
+  // TODO : useParams 사용 가능하게 되면 변경
   // const { postId } = useParams;
-  const { userToken } = useContext(AuthContextStore);
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentsData, setCommentsData] = useState();
+  // const BASE_URL = 'https://mandarin.api.weniv.co.kr/';
+  // useEffect(() => {
+  //   if ((userToken, userAccountname)) {
+  //     const getData = async () => {
+  //       const header = { headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' } };
+
+  //       await axios
+  //         .all(
+  //           [axios.get(BASE_URL + `/profile/${userAccountname}`, header)][
+  //             axios.get(BASE_URL + 'post/63a2a5f317ae666581dc8f51', header)
+  //           ][axios.get(BASE_URL + 'post/63a2a5f317ae666581dc8f51/comments', header)],
+  //         )
+  //         .then(
+  //           axios.spread((res1, res2, res3) => {
+  //             setUserData(res1.data.profile);
+  //             setPostData(res2.data.post);
+  //             setCommentsData(res3.data.comments);
+  //           }),
+  //           console.log('pass'),
+  //         )
+  //         .catch((err) => console.log(err));
+  //     };
+  //     getData();
+  //   }
+  // }, [userToken, userAccountname]);
+  const getUserData = () => {
+    axios({
+      url: `https://mandarin.api.weniv.co.kr/profile/${userAccountname}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then((response) => {
+        setUserData(response.data.profile);
+        console.log(userData);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const getPostData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/63a2a5f317ae666581dc8f51`,
@@ -47,28 +91,25 @@ const PostDetailPage = () => {
       });
   };
   useEffect(() => {
-    if (userToken) {
-      getPostData();
+    if ((userToken, userAccountname)) {
       getCommentsData();
+      getPostData();
+      getUserData();
     }
-  }, [userToken]);
-  console.log(commentsData);
+  }, [userToken, userAccountname]);
+  console.log(userData);
   return (
     <>
-      {postData ? (
+      {commentsData && userData && postData ? (
         <ContentsLayout isTabMenu={true} padding='2rem 0 0 0'>
           <TopBasicNav />
           <PostViewer>
             <h2 className='sr-only'>Post Item</h2>
-            <Post post={postData} />
+            <DetailPost post={postData} />
           </PostViewer>
-          <PostCommentList>
-            <h2 className='sr-only'>PostComment</h2>
-            {commentsData.map((postId, i) => (
-              <PostComment key={i} post={postId} />
-            ))}
-          </PostCommentList>
-          <Comment />
+          <h2 className='sr-only'>PostComment</h2>
+          <PostComment post={commentsData} />
+          <Comment user={userData} post={postData} />
         </ContentsLayout>
       ) : (
         <LoadingWrapper>
@@ -85,13 +126,6 @@ const PostViewer = styled.section`
   height: auto;
   padding-bottom: 2rem;
   border-bottom: 1px solid var(--border-color);
-`;
-
-const PostCommentList = styled.ul`
-  height: auto;
-  margin-top: 2rem;
-  margin-left: 1.2rem;
-  margin-right: 2rem;
 `;
 
 const LoadingWrapper = styled.section`
