@@ -27,10 +27,12 @@ const PostComment = ({ post }) => {
     setIsOpenModal(true);
     if (userAccountname === data.author.accountname) {
       setIsMyComment(true);
+    } else {
+      setIsMyComment(false);
     }
   };
 
-  // TODO : 댓글작성 시간을 나타내는 함수
+  // TODO : 댓글작성 시간 로직
   const calcTime = (value) => {
     const today = new Date();
     const timeValue = new Date(value);
@@ -53,7 +55,6 @@ const PostComment = ({ post }) => {
 
     return `${Math.floor(betweenTimeDay / 365)}년전`;
   };
-  console.log(data);
   return (
     <PostCommentList>
       {data ? (
