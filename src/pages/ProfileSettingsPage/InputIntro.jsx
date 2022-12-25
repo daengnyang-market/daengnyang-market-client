@@ -6,7 +6,7 @@ import styled from 'styled-components';
 // inputType : input 태그의 타입 (생략시 기본값: text)
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
-const InputUserDescription = ({ children, labelText = 'label', inputType = 'text', id, placeholder, maxLength }) => {
+const InputIntro = ({ labelText = 'label', inputType = 'text', id, placeholder, maxLength, introFunction, intro }) => {
   const [inputValue, setInputValue] = useState('');
 
   const [isShowAlert, setIsShowAlert] = useState(false);
@@ -20,6 +20,8 @@ const InputUserDescription = ({ children, labelText = 'label', inputType = 'text
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
+
+    introFunction(e.target.value);
   };
 
   return (
@@ -29,19 +31,20 @@ const InputUserDescription = ({ children, labelText = 'label', inputType = 'text
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={intro}
       />
     </InputWrapper>
   );
 };
 
-export default InputUserDescription;
+export default InputIntro;
 
 const InputWrapper = styled.div`
   display: flex;

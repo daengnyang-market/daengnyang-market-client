@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios';
+import { AuthContextStore } from '../../../context/AuthContext';
 import Post from '../../../components/common/Post/Post';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   POST_ALBUM_OFF_ICON,
   POST_ALBUM_ON_ICON,
@@ -10,83 +11,96 @@ import {
   LAYERS_ICON,
 } from '../../../styles/CommonIcons';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
+import Loading from '../../../components/common/Loading/Loading';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
-const ProfilePost = ({ postState }) => {
+const ProfilePost = () => {
+  let { accountname } = useParams();
+  const navigate = useNavigate();
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const location = useLocation();
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
   const [albumBtn, setAlbumBtn] = useState(false);
-
+  const [isRendered, setIsRendered] = useState(true);
   const [listClicked, onListClicked] = useState(true);
   const [albumClicked, onAlbumClicked] = useState(false);
+  // 포스트 담기
+  const [myPostList, setMyPost] = useState([]);
+
   const handleListBtn = () => {
     setListBtn(true);
     setAlbumBtn(false);
     onListClicked(true);
     onAlbumClicked(false);
   };
-
   const handleAlbumBtn = () => {
     setListBtn(false);
     setAlbumBtn(true);
     onAlbumClicked(true);
     onListClicked(false);
   };
+  const getMyPost = () => {
+    const url = `https://mandarin.api.weniv.co.kr`;
 
-  const testPost = {
-    author: {
-      accountname: 'test',
-      image: 'https://mandarin.api.weniv.co.kr/Ellipse.png',
-      username: '테스트',
-    },
-    commentCount: 0,
-    content: '테스트용 객체',
-    createdAt: '2022-07-18T06:15:39.035Z',
-    heartCount: 0,
-    id: '62d4fa8b82fdcc712f4c98a5',
+    axios({
+      url: url + `/post/${accountname ? accountname : userAccountname}/userpost`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => {
+        setMyPost(res.data.post);
+      })
+      .catch((err) => console.log(err));
   };
 
-  return (
-    <>
-      <h2 className='sr-only'>게시물 리스트</h2>
-      <PostHeader>
-        <ListIcon onClick={handleListBtn} clicked={listClicked}>
-          <strong className='sr-only'>리스트로 보기</strong>
-        </ListIcon>
-        <AlbumIcon onClick={handleAlbumBtn} clicked={albumClicked}>
-          <strong className='sr-only'>앨범으로 보기</strong>
-        </AlbumIcon>
-      </PostHeader>
+  useEffect(() => {
+    setIsRendered(true);
+    getMyPost();
+  }, [userToken, accountname]);
 
-      {postState ? (
-        listBtn === true ? (
-          <PostUl>
-            <h3 className='sr-only'>리스트형 포스트 목록</h3>
-            <Post post={testPost} />
-            <Post post={testPost} />
-            <Post post={testPost} />
-          </PostUl>
+  if (!isRendered) {
+    <Loading />;
+  } else {
+    return (
+      <>
+        <h2 className='sr-only'>게시물 리스트</h2>
+        <PostHeader>
+          <ListIcon onClick={handleListBtn} clicked={listClicked}>
+            <strong className='sr-only'>리스트로 보기</strong>
+          </ListIcon>
+          <AlbumIcon onClick={handleAlbumBtn} clicked={albumClicked}>
+            <strong className='sr-only'>앨범으로 보기</strong>
+          </AlbumIcon>
+        </PostHeader>
+        {myPostList.length > 0 ? (
+          listBtn === true ? (
+            <PostUl>
+              <h3 className='sr-only'>리스트형 포스트 목록</h3>
+              {myPostList.map((post) => (
+                <Post key={post.id} post={post} />
+              ))}
+            </PostUl>
+          ) : (
+            <PostGrid>
+              <h3 className='sr-only'>앨범형 포스트 목록</h3>
+              {myPostList.map((post) => {
+                return post.image ? <img key={post.id} src={post.image} alt='썸네일 이미지'></img> : null;
+              })}
+            </PostGrid>
+          )
         ) : (
-          <PostGrid>
-            <h3 className='sr-only'>앨범형 포스트 목록</h3>
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-            <img src='https://picsum.photos/250/250' alt='게시물 썸네일 이미지' />
-          </PostGrid>
-        )
-      ) : (
-        <NoPost>
-          <img src={EMPTY_POST_IMAGE} alt='포스트가 존재하지 않습니다' />
-          <span>아직 작성된 게시글이 없어요.</span>
-        </NoPost>
-      )}
-    </>
-  );
+          <NoPost>
+            <img src={EMPTY_POST_IMAGE} alt='포스트가 존재하지 않습니다' />
+            <span>아직 작성된 게시글이 없어요.</span>
+          </NoPost>
+        )}
+      </>
+    );
+  }
 };
 
 export default ProfilePost;

@@ -4,10 +4,21 @@ import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../styles/CommonImages';
 import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
 import InputUserName from './InputUserName';
-import InputUserId from './InputUserId';
-import InputUserDescription from './InputUserDescription';
+import InputAccountName from './InputAccountName';
+import InputIntro from './InputIntro';
 
-const ProfileInfo = () => {
+const ProfileInfo = ({
+  userNameFunction,
+  accountNameFunction,
+  introFunction,
+  imageFunction,
+  // disabledButtonFunction,
+
+  userName,
+  accountName,
+  intro,
+  image,
+}) => {
   // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
 
@@ -24,6 +35,9 @@ const ProfileInfo = () => {
       if (thumbnailImgUrl) {
         setThumbnailImg([thumbnailImgUrl]);
       }
+
+      imageFunction(thumbnailImgUrl);
+      // console.log(thumbnailImgUrl);
     };
   };
 
@@ -33,6 +47,8 @@ const ProfileInfo = () => {
         <WrapperImg>
           {thumbnailImg ? (
             <ProfileImage src={thumbnailImg} alt='업로드 이미지' width='110' />
+          ) : image ? (
+            <ProfileImage src={image} alt='업로드 이미지' width='110' />
           ) : (
             <ProfileImage src={PROFILE1_IMAGE} alt='업로드 이미지' width='110' />
           )}
@@ -51,23 +67,28 @@ const ProfileInfo = () => {
           placeholder='2~10자 이내여야 합니다.'
           maxLength='10'
           children={'* 2~10자 이내여야 합니다.'}
+          userNameFunction={userNameFunction}
+          userName={userName}
         />
-        <InputUserId
+        <InputAccountName
           labelText='계정 ID'
           inputType='text'
           id='userIdInput'
           placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
-          children1={'* 영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.'}
-          children2={'* 이미 사용 중인 ID입니다.'}
           maxLength='10'
+          accountNameFunction={accountNameFunction}
+          // disabledButtonFunction={disabledButtonFunction}
+          accountName={accountName}
         />
-        <InputUserDescription
+        <InputIntro
           labelText='소개'
           inputType='text'
           id='userIntroInput'
           placeholder='자신과 판매할 상품에 대해 소개해 주세요.'
           maxLength='25'
-        ></InputUserDescription>
+          introFunction={introFunction}
+          intro={intro}
+        ></InputIntro>
       </Form>
     </>
   );

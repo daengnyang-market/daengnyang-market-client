@@ -6,7 +6,16 @@ import styled from 'styled-components';
 // inputType : input 태그의 타입 (생략시 기본값: text)
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
-const InputUserName = ({ children, labelText = 'label', inputType = 'text', id, placeholder, maxLength }) => {
+const InputUserName = ({
+  children,
+  labelText = 'label',
+  inputType = 'text',
+  id,
+  placeholder,
+  maxLength,
+  userNameFunction,
+  userName,
+}) => {
   const [inputValue, setInputValue] = useState('');
 
   const [isShowAlert, setIsShowAlert] = useState(false);
@@ -20,6 +29,12 @@ const InputUserName = ({ children, labelText = 'label', inputType = 'text', id, 
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
+
+    if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+      userNameFunction(e.target.value);
+    } else {
+      userNameFunction('');
+    }
   };
 
   return (
@@ -29,13 +44,14 @@ const InputUserName = ({ children, labelText = 'label', inputType = 'text', id, 
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={userName}
       />
       {!(inputValue.length === 0) && inputValue.length < 2 && <InputAlert>{children}</InputAlert>}
     </InputWrapper>

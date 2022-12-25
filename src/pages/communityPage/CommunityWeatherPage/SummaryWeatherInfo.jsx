@@ -1,23 +1,40 @@
 import React from 'react';
-import styled from 'styled-components';
-import { WALK_ABLE_IMAGE, WALK_DISABLE_IMAGE } from '../../../styles/CommonImages';
+import styled, { css } from 'styled-components';
+import { WALKING_EASY_IMAGE, WALKING_NORMAL_IMAGE, WALKING_HARD_IMAGE } from '../../../styles/CommonImages';
+import { UPDATE_ICON } from '../../../styles/CommonIcons';
+import { spin } from '../../../components/common/Animation/Animation';
 
-const SummaryWeatherInfo = ({ walkScore, walkTextList }) => {
+const SummaryWeatherInfo = ({ walkingScore, dateInfo, districtInfo, weather, locations }) => {
+  const updateLocation = () => {
+    locations.setIsLocationUpdate(true);
+    locations.getLocation();
+  };
+
   return (
     <SummaryInfoWrapper>
       <SummaryInfo>
-        <Date dateTime='2022-11-06'>2022년 11월 6일</Date>
-        <Location>제주도 제주시 무슨읍</Location>
-        <CurrentWeather>구름 많음</CurrentWeather>
+        <Date dateTime='2022-11-06'>
+          {dateInfo.year}년 {dateInfo.month}월 {dateInfo.day}일
+        </Date>
+        <DistrictWrapper>
+          <LocationUpdateButton onClick={updateLocation} isUpdate={locations.isLocationUpdate}>
+            <span className='sr-only'>현재 위치 갱신하기</span>
+          </LocationUpdateButton>
+          <District>{districtInfo}</District>
+        </DistrictWrapper>
+        <CurrentWeather>{weather}</CurrentWeather>
       </SummaryInfo>
       <div>
-        <WalkImage src={walkScore >= 8 ? WALK_DISABLE_IMAGE : WALK_ABLE_IMAGE} alt='' />
+        <WalkImage
+          src={walkingScore >= 5 ? WALKING_HARD_IMAGE : walkingScore >= 2 ? WALKING_NORMAL_IMAGE : WALKING_EASY_IMAGE}
+          alt=''
+        />
         <WalkText>
-          <WalkLevel walkScore={walkScore}>
-            산책 난이도 : <em>{walkScore >= 8 ? '어려움' : walkScore >= 5 ? '보통' : '쉬움'}</em>
+          <WalkLevel walkingScore={walkingScore}>
+            산책 난이도 : <em>{walkingScore >= 5 ? '어려움' : walkingScore >= 2 ? '보통' : '쉬움'}</em>
           </WalkLevel>
           <WalkDescription>
-            {walkScore >= 8 ? walkTextList[2] : walkScore >= 5 ? walkTextList[1] : walkTextList[0]}
+            {walkingScore >= 5 ? '이불 밖은 위험하댕' : walkingScore >= 2 ? '산책 가도 괜찮댕' : '빨리 나가면 안댕?'}
           </WalkDescription>
         </WalkText>
       </div>
@@ -28,12 +45,12 @@ const SummaryWeatherInfo = ({ walkScore, walkTextList }) => {
 export default SummaryWeatherInfo;
 
 const SummaryInfoWrapper = styled.div`
-  padding: 5.3rem 3.5rem;
+  padding: 4.5rem 3.5rem;
   text-align: center;
 `;
 
 const SummaryInfo = styled.div`
-  margin-bottom: 5rem;
+  margin-bottom: 3.5rem;
 `;
 
 const Date = styled.time`
@@ -43,15 +60,33 @@ const Date = styled.time`
   color: var(--sub-text-color);
 `;
 
-const Location = styled.strong`
+const DistrictWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-bottom: 1.8rem;
+`;
+
+const LocationUpdateButton = styled.button`
+  min-width: 1.8rem;
+  min-height: 1.8rem;
+  margin-right: 0.7rem;
+  background: no-repeat center/contain url(${UPDATE_ICON});
+  animation: ${(props) =>
+    props.isUpdate &&
+    css`
+      ${spin} 2000ms linear infinite
+    `};
+`;
+
+const District = styled.strong`
   display: block;
-  margin-bottom: 1.3rem;
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 500;
 `;
 
 const CurrentWeather = styled.p`
-  font-size: 2rem;
+  font-size: var(--fs-xl);
   color: #3f3f3f;
 `;
 
@@ -74,7 +109,7 @@ const WalkLevel = styled.strong`
   font-weight: 500;
 
   & em {
-    color: ${(props) => (props.walkScore >= 8 ? '#eb5757' : props.walkScore >= 5 ? '#766eeb' : '#0280ff')};
+    color: ${(props) => (props.walkingScore >= 5 ? '#eb5757' : props.walkingScore >= 2 ? '#54B435' : '#0280ff')};
   }
 `;
 

@@ -5,3 +5,6 @@
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
   background: var(--login-bg-color);
 }
+img {
+  object-fit: cover;
+}

@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 
 // * 사용법 - 아래의 4가지 props를 전달해줘야 합니다 *
@@ -6,19 +7,24 @@ import styled from 'styled-components';
 // inputType : input 태그의 타입 (생략시 기본값: text)
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
-const InputUserId = ({ children1, children2, labelText = 'label', inputType = 'text', id, placeholder, maxLength }) => {
-  // dummyData
-  const dummyData = 'test0106';
-
-  const [inputValue, setInputValue] = useState('');
-
-  // test
-  const [idPatternValid, setIdPatternValid] = useState(false);
-
-  const [idValid, setIdValid] = useState(true);
+const InputAccountName = ({
+  labelText = 'label',
+  inputType = 'text',
+  id,
+  placeholder,
+  maxLength,
+  accountNameFunction,
+  // disabledButtonFunction,
+  accountName,
+}) => {
+  const [inputValue, setInputValue] = useState(`${accountName ? accountName : ''}`);
 
   const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
+
+  // alert
+  const [alertPattern, setAlertPattern] = useState('');
+  const [alertID, setAlertID] = useState('');
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -29,21 +35,46 @@ const InputUserId = ({ children1, children2, labelText = 'label', inputType = 't
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    if (e.target.value === dummyData) {
-      setIdValid(false);
-      console.log(e.target.value);
-      console.log('이미 사용중인 아이디!!');
-    } else {
-      setIdValid(true);
-    }
-
     const regex = /^[._a-zA-z0-9]{0,10}$/;
 
-    if (regex.test(e.target.value)) {
-      setIdPatternValid(true);
-    } else {
-      setIdPatternValid(false);
-    }
+    const option = {
+      url: 'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      data: {
+        user: {
+          accountname: e.target.value,
+        },
+      },
+    };
+
+    axios(option)
+      .then((res) => {
+        // console.log(res);
+        // console.log(res.data.message);
+
+        if (regex.test(e.target.value)) {
+          if (res.data.message === '이미 가입된 계정ID 입니다.') {
+            // disabledButtonFunction(true);
+            accountNameFunction('');
+            setAlertID('* 이미 사용 중인 ID입니다.');
+          } else {
+            setAlertID('');
+            accountNameFunction(e.target.value);
+          }
+
+          setAlertPattern('');
+        } else {
+          accountNameFunction('');
+          setAlertPattern('* 영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.');
+          setAlertID('');
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   return (
@@ -53,21 +84,22 @@ const InputUserId = ({ children1, children2, labelText = 'label', inputType = 't
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
+        defaultValue={accountName}
       />
-      {!idPatternValid && inputValue.length > 0 && <InputAlert>{children1}</InputAlert>}
-      {!idValid && inputValue.length > 0 && <InputAlert>{children2}</InputAlert>}
+      <InputAlert>{alertPattern}</InputAlert>
+      <InputAlert>{alertID}</InputAlert>
     </InputWrapper>
   );
 };
 
-export default InputUserId;
+export default InputAccountName;
 
 const InputWrapper = styled.div`
   display: flex;

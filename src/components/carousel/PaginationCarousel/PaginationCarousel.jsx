@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import './paginationCarousel.css';
 
 const PaginationCarousel = ({ itemList }) => {
   return (
