@@ -65,9 +65,7 @@ const ProfilePage = () => {
         <TopBasicNav />
         <ContentsLayout padding='2rem 0 0 0'>
           <ProfileHeader profileData={userProfileInfo} />
-          <SectionBorder />
           <ProfileProduct />
-          <SectionBorder />
           <ProfilePost postState={true} />
         </ContentsLayout>
         <TabMenu currentMenuId={4} />
