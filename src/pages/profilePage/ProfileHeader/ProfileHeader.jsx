@@ -46,6 +46,7 @@ const ProfileHeader = ({ profileData }) => {
           </Followings>
           {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns profileData={profileData} />}
         </ProfileWrapper>
+        <SectionBorder />
       </>
     );
   }
@@ -120,4 +121,11 @@ const Followings = styled.button`
     color: var(--sub-text-color);
     font-size: 1em;
   }
+`;
+const SectionBorder = styled.div`
+  height: 6px;
+  width: 100%;
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
+  background-color: var(--chat-bg-color);
 `;
