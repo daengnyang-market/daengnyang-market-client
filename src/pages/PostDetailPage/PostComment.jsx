@@ -8,18 +8,18 @@ import Loading from '../../components/common/Loading/Loading';
 
 const PostComment = ({ post }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isMyComment, setIsMyComment] = useState(false); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
+  const [isMyComment, setIsMyComment] = useState(true); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
   const [data, setData] = useState();
   useEffect(() => {
     if (post) {
       setData(post);
     }
   }, []);
+
   const closeModal = () => {
     setIsOpenModal(false);
   };
-  console.log(data);
-
+  // TODO : 댓글작성 시간을 나타내는 함수
   const calcTime = (value) => {
     const today = new Date();
     const timeValue = new Date(value);

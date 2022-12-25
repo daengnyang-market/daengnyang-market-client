@@ -16,6 +16,7 @@ const PostDetailPage = () => {
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentsData, setCommentsData] = useState();
+  //TODO : 멀티블 axios 한번 다뤄보기
   // const BASE_URL = 'https://mandarin.api.weniv.co.kr/';
   // useEffect(() => {
   //   if ((userToken, userAccountname)) {
@@ -41,6 +42,7 @@ const PostDetailPage = () => {
   //     getData();
   //   }
   // }, [userToken, userAccountname]);
+
   const getUserData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/profile/${userAccountname}`,
@@ -52,12 +54,12 @@ const PostDetailPage = () => {
     })
       .then((response) => {
         setUserData(response.data.profile);
-        console.log(userData);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const getPostData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/63a2a5f317ae666581dc8f51`,
@@ -74,6 +76,7 @@ const PostDetailPage = () => {
         console.log(error);
       });
   };
+
   const getCommentsData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/63a2a5f317ae666581dc8f51/comments`,
@@ -90,6 +93,7 @@ const PostDetailPage = () => {
         console.log(error);
       });
   };
+  // TODO : 세개의 get 요청을 상태관리
   useEffect(() => {
     if ((userToken, userAccountname)) {
       getCommentsData();
@@ -97,7 +101,6 @@ const PostDetailPage = () => {
       getUserData();
     }
   }, [userToken, userAccountname]);
-  console.log(userData);
   return (
     <>
       {commentsData && userData && postData ? (

@@ -3,21 +3,23 @@ import styled, { css } from 'styled-components';
 import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
 import ProfileImage from '../ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../../styles/CommonImages';
-import { useNavigate } from 'react-router-dom';
+import { EffectFlip } from 'swiper';
 
+// 유저의 정보와, 댓글을 작성할 post의 정보를 props로 받는다.
 const Comment = ({ user, post }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentData, setCommentData] = useState('');
-  const navigate = useNavigate();
+  const [isValidate, setIsValidate] = useState(true);
+  // TODO : props 의 정보를 받아오면, 상태변화
   useEffect(() => {
     if (post && user) {
       setUserData(user);
       setPostData(post);
     }
   }, []);
+  // TODO : POST 요청하여 댓글 데이터 전송
   const sendCommentData = () => {
     axios
       .post(
@@ -34,18 +36,24 @@ const Comment = ({ user, post }) => {
           },
         },
       )
-      .then(navigate(`/post/${postData.id}`));
+      .then(() => {
+        window.location.reload(false);
+      });
   };
+  // TODO : 댓글존재 여부에 따라, 버튼 활성화 상태변경
   useEffect(() => {
+    if (commentData !== '') {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
+    }
+  }, [commentData]);
+  // TODO : userData와 postData 가 존재한다면, 클릭이 발생하면 sendCommentData() 실행
+  const onClickUploadHandler = (e) => {
+    e.preventDefault();
     if ((userData, postData)) {
       sendCommentData();
     }
-  }, []);
-  console.log(commentData);
-  console.log(postData);
-  const onClickUploadHandler = (e) => {
-    e.preventDefault();
-    sendCommentData();
   };
   return (
     <>
@@ -59,7 +67,7 @@ const Comment = ({ user, post }) => {
               setCommentData(e.target.value);
             }}
           />
-          <Button disabled={false} onClick={(e) => onClickUploadHandler(e)}>
+          <Button disabled={isValidate} onClick={onClickUploadHandler}>
             게시
           </Button>
         </CommentForm>
