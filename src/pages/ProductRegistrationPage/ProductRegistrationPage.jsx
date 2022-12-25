@@ -10,13 +10,24 @@ import PriceInput from './PriceInput';
 import ItemLinkInput from './ItemLinkInput';
 import { AuthContextStore } from '../../context/AuthContext';
 
-const ProductRegistrationPage = () => {
+const ProductRegistrationPage = ({
+  activeModButton,
+  onClickProductModificationHandler,
+  itemNameModFunction,
+  priceModFunction,
+  linkModFunction,
+  itemImageModFunction,
+  itemNameMod,
+  priceMod,
+  linkMod,
+  itemImageMod,
+}) => {
   const [itemName, setItemName] = useState('');
   const itemNameFunction = (value) => {
     setItemName(value);
   };
 
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState('');
   const priceFunction = (value) => {
     setPrice(parseInt(value));
   };
@@ -32,7 +43,7 @@ const ProductRegistrationPage = () => {
 
   const [disabledButton, setDisabledButton] = useState(true);
 
-  const productRegistration = () => {
+  const onClickProductRegistrationHandler = () => {
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/product',
       method: 'POST',
@@ -76,7 +87,11 @@ const ProductRegistrationPage = () => {
         setThumbnailImg([thumbnailImgUrl]);
       }
 
-      setItemImage(thumbnailImgUrl);
+      if (itemImageModFunction) {
+        itemImageModFunction(thumbnailImgUrl);
+      } else {
+        setItemImage(thumbnailImgUrl);
+      }
     };
   };
 
@@ -94,18 +109,34 @@ const ProductRegistrationPage = () => {
   return (
     <>
       <Link to='/profile'>
-        <TopUploadNav activeButton={disabledButton} onClick={productRegistration} />
+        <TopUploadNav
+          activeModButton={activeModButton}
+          activeButton={disabledButton}
+          onClick={() => {
+            if (onClickProductModificationHandler) {
+              // console.log('onClickProductModificationHandler가 있습니다!');
+              onClickProductModificationHandler();
+            } else {
+              // console.log('tonClickProductModificationHandler가 없습니다!');
+              onClickProductRegistrationHandler();
+            }
+          }}
+        />
       </Link>
 
       <ContentsLayout isTabMenu='false' padding='0'>
         <Section>
           <h2 className='sr-only'>상품 정보</h2>
           <P>이미지 등록</P>
-          <Label htmlFor='productImg'>{thumbnailImg ? <Img src={thumbnailImg} alt='' /> : ''}</Label>
+          <Label htmlFor='productImg'>
+            {thumbnailImg ? <Img src={thumbnailImg} alt='' /> : itemImageMod ? <Img src={itemImageMod} alt='' /> : ''}
+          </Label>
           <input onChange={onChangeInputHandler} className='sr-only' id='productImg' type='file' accept='image/*' />
           <Form>
             <ItemNameInput
               itemNameFunction={itemNameFunction}
+              itemNameModFunction={itemNameModFunction}
+              itemNameMod={itemNameMod}
               labelText='상품명'
               inputType='text'
               id='itemNameInput'
@@ -115,6 +146,8 @@ const ProductRegistrationPage = () => {
             />
             <PriceInput
               priceFunction={priceFunction}
+              priceModFunction={priceModFunction}
+              priceMod={priceMod}
               labelText='가격'
               inputType='text'
               id='priceInput'
@@ -122,6 +155,8 @@ const ProductRegistrationPage = () => {
             />
             <ItemLinkInput
               linkFunction={linkFunction}
+              linkModFunction={linkModFunction}
+              linkMod={linkMod}
               labelText='판매 링크'
               inputType='url'
               id='itemLinkInput'

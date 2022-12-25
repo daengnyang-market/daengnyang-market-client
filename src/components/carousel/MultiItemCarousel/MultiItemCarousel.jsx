@@ -20,6 +20,19 @@ export default function MultiItemCarousel({ itemList }) {
     window.open(url);
   };
 
+  const [productId, setProductId] = useState();
+  // console.log(productId);
+
+  const isMyProductFunction = () => {
+    isMyProduct ? setIsOpenModal(true) : moveProductUrl('https://www.naver.com');
+  };
+
+  const productIdFunction = (value) => {
+    // console.log('productIdFunction 입니다.');
+    // console.log(value);
+    setProductId(value);
+  };
+
   return (
     <>
       <Swiper
@@ -33,15 +46,19 @@ export default function MultiItemCarousel({ itemList }) {
         {itemList.map((item) => (
           <SwiperSlide key={item.id}>
             <Product
+              productid={item.id}
               productImg={item.itemImage}
               productName={item.itemName}
               productPrice={item.price}
-              onClick={() => (isMyProduct ? setIsOpenModal(true) : moveProductUrl('https://www.naver.com'))}
+              onClick={() => {
+                isMyProductFunction();
+                productIdFunction(item.id);
+              }}
             />
           </SwiperSlide>
         ))}
       </Swiper>
-      {isOpenModal ? <ProductModal closeModal={closeModal} /> : <></>}
+      {isOpenModal ? <ProductModal productid={productId} closeModal={closeModal} /> : <></>}
     </>
   );
 }

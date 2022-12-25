@@ -6,7 +6,15 @@ import styled from 'styled-components';
 // inputType : input 태그의 타입 (생략시 기본값: text)
 // id : input 태그의 아이디
 // placeholder : input 태그에 적용할 placeholder
-const PriceInput = ({ labelText = 'label', inputType = 'text', id, placeholder, priceFunction }) => {
+const PriceInput = ({
+  labelText = 'label',
+  inputType = 'text',
+  id,
+  placeholder,
+  priceFunction,
+  priceModFunction,
+  priceMod,
+}) => {
   const [price, setprice] = useState('true');
   const [inputValue, setInputValue] = useState('');
   const [isShowAlert, setIsShowAlert] = useState(false);
@@ -29,7 +37,11 @@ const PriceInput = ({ labelText = 'label', inputType = 'text', id, placeholder, 
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    priceFunction(e.target.value.replace(/[^0-9]/g, ''));
+    if (priceModFunction) {
+      priceModFunction(e.target.value.replace(/[^0-9]/g, ''));
+    } else {
+      priceFunction(e.target.value.replace(/[^0-9]/g, ''));
+    }
   };
 
   return (
@@ -39,11 +51,12 @@ const PriceInput = ({ labelText = 'label', inputType = 'text', id, placeholder, 
         type={inputType}
         id={id}
         placeholder={placeholder}
-        value={inputValue}
+        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
         autoComplete='off'
         spellCheck='false'
+        defaultValue={priceMod}
       />
       {isShowAlert ? <InputAlert>이미 가입된 이메일 주소입니다</InputAlert> : <></>}
     </InputWrapper>
