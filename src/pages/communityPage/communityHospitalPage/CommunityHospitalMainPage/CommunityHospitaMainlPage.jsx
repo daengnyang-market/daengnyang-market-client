@@ -5,16 +5,20 @@ import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
 import HospitalList from './HospitalList';
 import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
+import useCurrentLocation from '../../../../hooks/useCurrentLocation';
 
 const CommunityHospitaMainlPage = () => {
   const [isShowFilterMenu, setIsShowFilterMenu] = useState(false);
   const [selectFilterId, setSelectFilterId] = useState(0);
   const filterList = [
-    { id: 0, title: '5km 이내' },
-    { id: 1, title: '10km 이내' },
-    { id: 2, title: '20km 이내' },
-    { id: 3, title: '30km 이내' },
+    { id: 0, title: '1km 이내', radius: 1000 },
+    { id: 1, title: '5km 이내', radius: 5000 },
+    { id: 2, title: '10km 이내', radius: 10000 },
+    { id: 3, title: '20km 이내', radius: 20000 },
   ];
+
+  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+  const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   const onClickBackgroundHandler = () => {
     setIsShowFilterMenu(!isShowFilterMenu);
@@ -26,10 +30,10 @@ const CommunityHospitaMainlPage = () => {
   };
 
   return (
-    <CommunityLayout padding='0' currenttMenuId={2}>
+    <CommunityLayout padding='0' currentMenuId={2}>
       <section>
         <h2 className='sr-only'>내 근처 동물병원 찾기</h2>
-        <CurrentLocationBar />
+        <CurrentLocationBar locations={{ isLocationUpdate, setIsLocationUpdate }} />
 
         <HospitalInfoWrapper>
           <FilterButton onClick={onClickBackgroundHandler}>{filterList[selectFilterId].title}</FilterButton>
@@ -42,7 +46,7 @@ const CommunityHospitaMainlPage = () => {
           ) : (
             <></>
           )}
-          <HospitalList />
+          <HospitalList radius={filterList[selectFilterId].radius} />
         </HospitalInfoWrapper>
       </section>
     </CommunityLayout>

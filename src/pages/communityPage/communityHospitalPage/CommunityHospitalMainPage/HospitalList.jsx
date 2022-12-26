@@ -1,38 +1,59 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { UserLocationContextStore } from '../../../../context/UserLocationContext';
 import { ANIMAL_HOSPITAL_ICON, RIGHT_ARROW_ICON } from '../../../../styles/CommonIcons';
 
-const HospitalList = () => {
+const HospitalList = ({ radius }) => {
+  const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
+  const [hospitalList, setHospitalList] = useState([]);
+
+  const { longitude, latitude } = useContext(UserLocationContextStore);
+
+  useEffect(() => {
+    if (!latitude || !longitude) {
+      return;
+    }
+
+    const getHospital = async () => {
+      const header = { headers: { Authorization: `KakaoAK ${KAKAOMAP_API}` } };
+
+      await axios
+        .get(
+          `https://dapi.kakao.com/v2/local/search/keyword.json?x=${longitude}&y=${latitude}&radius=${radius}&sort=distance&query=동물병원`,
+          header,
+        )
+        .then((res) => {
+          setHospitalList(res.data.documents);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    getHospital();
+  }, [longitude, latitude, radius]);
+
   return (
     <HospitalListWrapper>
-      <HospitalItem>
-        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
-          <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
-          <HospitalInfo>
-            <HospitalTitle>어쩌구 동물병원</HospitalTitle>
-            <HospitalDistance>5km</HospitalDistance>
-          </HospitalInfo>
-        </HospitalLink>
-      </HospitalItem>
-      <HospitalItem>
-        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
-          <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
-          <HospitalInfo>
-            <HospitalTitle>어쩌구 동물병원</HospitalTitle>
-            <HospitalDistance>5km</HospitalDistance>
-          </HospitalInfo>
-        </HospitalLink>
-      </HospitalItem>
-      <HospitalItem>
-        <HospitalLink to='/community/hospital/1' aria-label='어쩌구 동물병원 상세 정보'>
-          <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
-          <HospitalInfo>
-            <HospitalTitle>어쩌구 동물병원</HospitalTitle>
-            <HospitalDistance>5km</HospitalDistance>
-          </HospitalInfo>
-        </HospitalLink>
-      </HospitalItem>
+      {hospitalList.length > 0 ? (
+        hospitalList.map(({ id, place_name, distance }) => (
+          <HospitalItem key={id}>
+            <HospitalLink to={`/community/hospital/${id}`} aria-label={`${place_name} 상세 정보`}>
+              <HospitalIcon src={ANIMAL_HOSPITAL_ICON} alt='' />
+              <HospitalInfo>
+                <HospitalTitle>{place_name}</HospitalTitle>
+                <HospitalDistance>
+                  {distance > 1000 ? (distance / 1000).toFixed(2) + ' km' : distance + ' m'}
+                </HospitalDistance>
+              </HospitalInfo>
+            </HospitalLink>
+          </HospitalItem>
+        ))
+      ) : (
+        <>없음</>
+      )}
     </HospitalListWrapper>
   );
 };

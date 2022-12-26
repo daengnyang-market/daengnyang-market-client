@@ -25,7 +25,9 @@ const ProfileHeader = ({ profileData }) => {
   };
 
   if (!profileData) {
-    <Loading />;
+    <LoadingWrapper>
+      <Loading />
+    </LoadingWrapper>;
   } else {
     return (
       <>
@@ -46,12 +48,20 @@ const ProfileHeader = ({ profileData }) => {
           </Followings>
           {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns profileData={profileData} />}
         </ProfileWrapper>
+        <SectionBorder />
       </>
     );
   }
 };
 
 export default ProfileHeader;
+
+const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 const ProfileWrapper = styled.header`
   display: flex;
@@ -120,4 +130,11 @@ const Followings = styled.button`
     color: var(--sub-text-color);
     font-size: 1em;
   }
+`;
+const SectionBorder = styled.div`
+  height: 6px;
+  width: 100%;
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
+  background-color: var(--chat-bg-color);
 `;
