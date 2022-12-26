@@ -1,16 +1,80 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-
+import { AuthContextStore } from '../../../context/AuthContext';
+import axios from 'axios';
 import ProfileImage from '../ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../../styles/CommonImages';
+import { EffectFlip } from 'swiper';
 
-const Comment = () => {
+// 유저의 정보와, 댓글을 작성할 post의 정보를 props로 받는다.
+const Comment = ({ user, post }) => {
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [userData, setUserData] = useState();
+  const [postData, setPostData] = useState();
+  const [commentData, setCommentData] = useState('');
+  const [isValidate, setIsValidate] = useState(true);
+  // TODO : props 의 정보를 받아오면, 상태변화
+  useEffect(() => {
+    if (post && user) {
+      setUserData(user);
+      setPostData(post);
+    }
+  }, []);
+  // TODO : POST 요청하여 댓글 데이터 전송
+  const sendCommentData = () => {
+    axios
+      .post(
+        `https://mandarin.api.weniv.co.kr/post/${postData.id}/comments`,
+        {
+          comment: {
+            content: `${commentData}`,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then(() => {
+        window.location.reload(false);
+      });
+  };
+  // TODO : 댓글존재 여부에 따라, 버튼 활성화 상태변경
+  useEffect(() => {
+    if (commentData !== '') {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
+    }
+  }, [commentData]);
+  // TODO : userData와 postData 가 존재한다면, 클릭이 발생하면 sendCommentData() 실행
+  const onClickUploadHandler = (e) => {
+    e.preventDefault();
+    if ((userData, postData)) {
+      sendCommentData();
+    }
+  };
   return (
-    <CommentForm>
-      <ProfileImage src={PROFILE1_IMAGE} alt='프로필 이미지'></ProfileImage>
-      <input type='text' placeholder='댓글 입력하기...' />
-      <Button disabled={true}>게시</Button>
-    </CommentForm>
+    <>
+      {userData ? (
+        <CommentForm>
+          <ProfileImage src={userData.image} alt='프로필 이미지'></ProfileImage>
+          <input
+            type='text'
+            placeholder='댓글 입력하기...'
+            onChange={(e) => {
+              setCommentData(e.target.value);
+            }}
+          />
+          <Button disabled={isValidate} onClick={onClickUploadHandler}>
+            게시
+          </Button>
+        </CommentForm>
+      ) : (
+        <div>로딩</div>
+      )}
+    </>
   );
 };
 

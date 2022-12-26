@@ -1,38 +1,94 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { AuthContextStore } from '../../context/AuthContext';
 import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
 import { MORE_SMALL_ICON } from '../../styles/CommonIcons';
 import CommentModal from '../../components/common/modal/CommentModal/CommentModal';
-const PostComment = () => {
+import Loading from '../../components/common/Loading/Loading';
+
+const PostComment = ({ post }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyComment, setIsMyComment] = useState(false); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
+  const { userAccountname } = useContext(AuthContextStore);
+  const [data, setData] = useState();
+  useEffect(() => {
+    if (post) {
+      setData(post);
+    }
+  }, []);
 
   const closeModal = () => {
     setIsOpenModal(false);
   };
 
+  // TODO : 내댓글인지 아닌지 판단하여, 각 상황에 맞게 모달 오픈
+  const onClickButtonHandler = (data) => {
+    setIsOpenModal(true);
+    if (userAccountname === data.author.accountname) {
+      setIsMyComment(true);
+    } else {
+      setIsMyComment(false);
+    }
+  };
+
+  // TODO : 댓글작성 시간 로직
+  const calcTime = (value) => {
+    const today = new Date();
+    const timeValue = new Date(value);
+
+    const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+    if (betweenTime < 1) return '방금전';
+    if (betweenTime < 60) {
+      return `${betweenTime}분전`;
+    }
+
+    const betweenTimeHour = Math.floor(betweenTime / 60);
+    if (betweenTimeHour < 24) {
+      return `${betweenTimeHour}시간전`;
+    }
+
+    const betweenTimeDay = Math.floor(betweenTime / 60 / 24);
+    if (betweenTimeDay < 365) {
+      return `${betweenTimeDay}일전`;
+    }
+
+    return `${Math.floor(betweenTimeDay / 365)}년전`;
+  };
   return (
-    <>
-      <CommentItem>
-        <AuthorInfo>
-          <Link to='/'>
-            <ProfileImg src={PROFILE1_IMAGE} alt='프로필 이미지' />
-          </Link>
-          <Link to='/'>
-            <strong>testID</strong>
-          </Link>
-          <span>3주전</span>
-        </AuthorInfo>
-        <CommentText>테스트 텍스트입니다.</CommentText>
-        <MoreButton onClick={() => setIsOpenModal(true)} />
-      </CommentItem>
+    <PostCommentList>
+      {data ? (
+        data.map((data) => (
+          <CommentItem key={data.id}>
+            <AuthorInfo>
+              <Link to={`/profile/${data.author.accountname}`}>
+                <ProfileImg src={data.author.image} alt='프로필 이미지' />
+              </Link>
+              <Link to='/'>
+                <strong>{data.author.username}</strong>
+              </Link>
+              <span>{calcTime(data.createdAt)}</span>
+            </AuthorInfo>
+            <CommentText>{data.content}</CommentText>
+            <MoreButton onClick={() => onClickButtonHandler(data)} />
+          </CommentItem>
+        ))
+      ) : (
+        <Loading />
+      )}
       {isOpenModal ? <CommentModal closeModal={closeModal} isMyComment={isMyComment} /> : <></>}
-    </>
+    </PostCommentList>
   );
 };
 
 export default PostComment;
+
+const PostCommentList = styled.ul`
+  height: auto;
+  margin-top: 2rem;
+  margin-left: 1.2rem;
+  margin-right: 2rem;
+`;
 
 const CommentItem = styled.li`
   position: relative;
