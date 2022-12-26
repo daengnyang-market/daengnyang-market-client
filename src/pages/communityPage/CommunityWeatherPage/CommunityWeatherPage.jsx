@@ -136,7 +136,7 @@ const CommunityWeatherPage = () => {
   }, [weatherInfo, dustInfo]);
 
   return (
-    <CommunityLayout currenttMenuId={1}>
+    <CommunityLayout currentMenuId={1}>
       <WeatherSection>
         <h2 className='sr-only'>실시간 날씨 정보</h2>
         <SummaryWeatherInfo

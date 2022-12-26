@@ -29,7 +29,7 @@ const CommunityMainPage = () => {
   };
 
   return (
-    <CommunityLayout currenttMenuId={0} fillHeight={isLoading ? true : isEmpty ? true : false}>
+    <CommunityLayout currentMenuId={0} fillHeight={isLoading ? true : isEmpty ? true : false}>
       <PaginationCarousel itemList={advertisingImageList} />
       <PopularPosts
         isLoading={isLoading}
