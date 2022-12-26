@@ -8,7 +8,6 @@ import ProductModal from '../../common/modal/ProductModal/ProductModal';
 import { useNavigate } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { useContext } from 'react';
-import { type } from '@testing-library/user-event/dist/type';
 
 export default function MultiItemCarousel({ itemList }) {
   const { userAccountname } = useContext(AuthContextStore);
