@@ -28,7 +28,6 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
       },
     })
       .then((res) => {
-        console.log('삭제완료');
         window.location.replace('/profile');
       })
       .catch((err) => console.error(err));
@@ -36,7 +35,23 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
   };
 
   const reportPost = () => {
-    console.log('게시글 신고 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
+    axios({
+      url: url + `/post/${postID}/report`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then((res) => {
+        <Alert
+          summary={'게시글 신고 완료 알림창'}
+          title={'게시글이 신고되었습니다'}
+          trigger={'확인'}
+          closeAlert={closeAlert}
+        />;
+      })
+      .catch((err) => console.error(err));
     closeModal();
   };
 
