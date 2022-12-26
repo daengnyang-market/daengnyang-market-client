@@ -11,7 +11,7 @@ import PostComment from './PostComment';
 import DetailPost from './DetailPost';
 const PostDetailPage = () => {
   // TODO : useParams 사용 가능하게 되면 변경
-  // const { postId } = useParams;
+  const { postid } = useParams();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
@@ -62,7 +62,7 @@ const PostDetailPage = () => {
 
   const getPostData = () => {
     axios({
-      url: `https://mandarin.api.weniv.co.kr/post/63a2a5f317ae666581dc8f51`,
+      url: `https://mandarin.api.weniv.co.kr/post/${postid}`,
       method: 'get',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -79,7 +79,7 @@ const PostDetailPage = () => {
 
   const getCommentsData = () => {
     axios({
-      url: `https://mandarin.api.weniv.co.kr/post/63a2a5f317ae666581dc8f51/comments`,
+      url: `https://mandarin.api.weniv.co.kr/post/${postid}/comments`,
       method: 'get',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -95,12 +95,13 @@ const PostDetailPage = () => {
   };
   // TODO : 세개의 get 요청을 상태관리
   useEffect(() => {
-    if ((userToken, userAccountname)) {
+    if ((userToken, userAccountname, postid)) {
       getCommentsData();
       getPostData();
       getUserData();
     }
-  }, [userToken, userAccountname]);
+  }, [userToken, userAccountname, postid]);
+  console.log(postid);
   return (
     <>
       {commentsData && userData && postData ? (
