@@ -3,8 +3,8 @@ import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
-import { MenuList, MenuItem } from './../Styled';
 import { AuthContextStore } from '../../../../context/AuthContext';
+import { MenuList, MenuItem } from './../Styled';
 
 const PostModal = ({ closeModal, isMyPost, postID }) => {
   const location = useLocation();

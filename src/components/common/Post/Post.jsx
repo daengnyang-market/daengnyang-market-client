@@ -1,11 +1,12 @@
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
-import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
-import PostModal from '../modal/PostModal/PostModal';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
+import PostModal from '../modal/PostModal/PostModal';
+
+import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
+import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 
 const Post = ({ post = {} }) => {
   const navigate = useNavigate();
