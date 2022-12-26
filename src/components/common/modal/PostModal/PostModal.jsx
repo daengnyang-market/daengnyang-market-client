@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
 const PostModal = ({ closeModal, isMyPost }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const { postid } = useParams();
+  const navigate = useNavigate();
 
   const closeAlert = () => {
     setIsOpenAlert(false);
@@ -20,7 +22,9 @@ const PostModal = ({ closeModal, isMyPost }) => {
     console.log('게시글 신고 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
     closeModal();
   };
-
+  const onClickPageHandler = () => {
+    navigate(`/post/${postid}/edit`);
+  };
   return (
     <>
       <ModalLayout closeModal={closeModal} isOpenAlert={isOpenAlert}>
@@ -33,7 +37,7 @@ const PostModal = ({ closeModal, isMyPost }) => {
                 </button>
               </MenuItem>
               <MenuItem>
-                <Link to='#'>수정</Link>
+                <button onClick={onClickPageHandler}>수정</button>
               </MenuItem>
             </>
           ) : (
