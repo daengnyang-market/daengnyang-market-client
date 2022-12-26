@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
+import { AuthContextStore } from './../../../../context/AuthContext';
 
 const ProductModal = ({ closeModal, productid }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
@@ -11,8 +13,26 @@ const ProductModal = ({ closeModal, productid }) => {
     setIsOpenAlert(false);
   };
 
+  const { userToken } = useContext(AuthContextStore);
+
   const deleteProduct = () => {
-    console.log('상품 삭제 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
+    const option = {
+      url: `https://mandarin.api.weniv.co.kr/product/${productid}`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    };
+
+    axios(option)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
     closeModal();
   };
 
