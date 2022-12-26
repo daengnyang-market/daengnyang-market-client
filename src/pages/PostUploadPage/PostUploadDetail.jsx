@@ -136,7 +136,7 @@ const PostUploadDetail = ({ className }) => {
             },
           )
           .then(() => {
-            navigate('/profile');
+            navigate(`/post/${postid}`);
           });
       } catch (error) {
         console.log(error);
