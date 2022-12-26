@@ -9,13 +9,23 @@ import { AuthContextStore } from '../../../../context/AuthContext';
 const PostModal = ({ closeModal, isMyPost, postID }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const { userToken } = useContext(AuthContextStore);
 
   const [isOpenAlert, setIsOpenAlert] = useState(false);
+
+  const [isReport, setIsReport] = useState(false);
+  const [isReportSuccess, setIsReportSuccess] = useState(null);
+
   const url = `https://mandarin.api.weniv.co.kr`;
 
   const closeAlert = () => {
     setIsOpenAlert(false);
+  };
+
+  const handleReportClear = () => {
+    setIsReport(false);
+    setIsReportSuccess(null);
+    closeModal();
   };
 
   const deletePost = () => {
@@ -31,7 +41,6 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
         window.location.replace('/profile');
       })
       .catch((err) => console.error(err));
-    closeModal();
   };
 
   const reportPost = () => {
@@ -44,10 +53,15 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
       },
     })
       .then((res) => {
-        alert('신고되었습니다');
+        setIsReport(true);
+
+        if (postID === res.data.report.post) {
+          setIsReportSuccess(true);
+        } else {
+          setIsReportSuccess(false);
+        }
       })
       .catch((err) => console.error(err));
-    closeModal();
   };
 
   return (
@@ -81,6 +95,16 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
           trigger={isMyPost ? '삭제' : '신고'}
           tiggerFunc={isMyPost ? deletePost : reportPost}
           closeAlert={closeAlert}
+        />
+      ) : (
+        <></>
+      )}
+      {isReport ? (
+        <Alert
+          summary={isReportSuccess ? '게시글 신고 완료 알림창' : '게시글 신고 실패 알림창'}
+          title={isReportSuccess ? '게시글이 신고되었습니다.' : '게시글 신고에 실패하였습니다.'}
+          trigger={'확인'}
+          tiggerFunc={handleReportClear}
         />
       ) : (
         <></>
