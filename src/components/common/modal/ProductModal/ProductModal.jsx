@@ -6,7 +6,7 @@ import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 import { AuthContextStore } from './../../../../context/AuthContext';
 
-const ProductModal = ({ closeModal, productid }) => {
+const ProductModal = ({ closeModal, productid, productLink }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
   const closeAlert = () => {
@@ -58,7 +58,9 @@ const ProductModal = ({ closeModal, productid }) => {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to='#'>웹사이트에서 상품 보기</Link>
+            <a rel='noopener noreferrer' target='_blank' href={productLink}>
+              웹사이트에서 상품 보기
+            </a>
           </MenuItem>
         </MenuList>
       </ModalLayout>
