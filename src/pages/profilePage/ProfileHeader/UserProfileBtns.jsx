@@ -1,20 +1,48 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import axios from 'axios';
+import styled from 'styled-components';
 import { useState, useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import axios from 'axios';
+import { AuthContextStore } from '../../../context/AuthContext';
+
 import Button from '../../../components/common/Button/Button';
 import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
-import { AuthContextStore } from '../../../context/AuthContext';
 
 const UserProfileBtns = ({ profileData }) => {
   const [isFollowing, setIsFollowing] = useState(profileData.isfollow);
   const { userToken } = useContext(AuthContextStore);
   const { accountname } = useParams();
   const navigate = useNavigate();
-  
   const handleGoChat = () => {
     navigate(`/chat/${accountname}`);
+  };
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => document.body.removeChild(script);
+  });
+
+  const shareToKakaotalk = () => {
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+      if (!kakao.isInitialized()) {
+        kakao.init('e2720c89d4c69853e40e7494239554f2');
+      }
+      kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: '가져도댕냥',
+          description: '우리집 댕냥이를 위한 따뜻한 선물',
+          imageUrl: '',
+          link: {
+            webUrl: 'http://localhost:3000/',
+          },
+        },
+      });
+    }
   };
 
   const handleFollow = async () => {
@@ -45,7 +73,7 @@ const UserProfileBtns = ({ profileData }) => {
       >
         {isFollowing ? '언팔로우' : '팔로우'}
       </Button>
-      <ShareBtn />
+      <ShareBtn onClick={shareToKakaotalk} />
     </UserProfileBtnsStyle>
   );
 };
