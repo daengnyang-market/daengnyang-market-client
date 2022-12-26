@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { UserLocationContextStore } from '../../../context/UserLocationContext';
-import useLocation from '../../../hooks/useLocation';
+import useCurrentLocation from '../../../hooks/useCurrentLocation';
 import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
 import DetailWeatherInfo from './DetailWeatherInfo';
@@ -19,7 +19,7 @@ const CommunityWeatherPage = () => {
   const [isLocationUpdate, setIsLocationUpdate] = useState(true);
   const [walkingScore, setWalkingScore] = useState(0);
 
-  const checkUserLocation = useLocation({ isLocationUpdate, setIsLocationUpdate });
+  const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   useEffect(() => {
     const getDate = () => {
