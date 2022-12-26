@@ -8,7 +8,6 @@ import ProductModal from '../../common/modal/ProductModal/ProductModal';
 import { useNavigate } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { useContext } from 'react';
-import { type } from '@testing-library/user-event/dist/type';
 
 export default function MultiItemCarousel({ itemList }) {
   const { userAccountname } = useContext(AuthContextStore);
@@ -26,6 +25,8 @@ export default function MultiItemCarousel({ itemList }) {
   const [productId, setProductId] = useState();
   // console.log(productId);
 
+  const [productLink, setProductLink] = useState();
+
   const isMyProductFunction = () => {
     isMyProduct ? setIsOpenModal(true) : moveProductUrl('https://www.naver.com');
   };
@@ -34,6 +35,10 @@ export default function MultiItemCarousel({ itemList }) {
     // console.log('productIdFunction 입니다.');
     // console.log(value);
     setProductId(value);
+  };
+
+  const productLinkFunction = (value) => {
+    setProductLink(value);
   };
 
   return (
@@ -56,12 +61,13 @@ export default function MultiItemCarousel({ itemList }) {
               onClick={() => {
                 isMyProductFunction();
                 productIdFunction(item.id);
+                productLinkFunction(item.link);
               }}
             />
           </SwiperSlide>
         ))}
       </Swiper>
-      {isOpenModal ? <ProductModal productid={productId} closeModal={closeModal} /> : <></>}
+      {isOpenModal ? <ProductModal productid={productId} productLink={productLink} closeModal={closeModal} /> : <></>}
     </>
   );
 }
