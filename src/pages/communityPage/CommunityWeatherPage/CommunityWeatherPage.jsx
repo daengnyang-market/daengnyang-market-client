@@ -9,9 +9,8 @@ import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
 
 const CommunityWeatherPage = () => {
-  const { longitude, latitude, setDistrict } = useContext(UserLocationContextStore);
+  const { longitude, latitude } = useContext(UserLocationContextStore);
 
-  const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
 
   const [dateInfo, setDateInfo] = useState({});
@@ -40,14 +39,8 @@ const CommunityWeatherPage = () => {
     }
 
     const getFetch = async () => {
-      const districtHeader = { headers: { Authorization: `KakaoAK ${KAKAOMAP_API}` } };
-
       await axios
         .all([
-          axios.get(
-            `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${longitude}&y=${latitude}`,
-            districtHeader,
-          ),
           axios.get(
             `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_MAP_API}&units=metric`,
           ),
@@ -56,16 +49,11 @@ const CommunityWeatherPage = () => {
           ),
         ])
         .then(
-          axios.spread((districtRes, weatherRes, dustRes) => {
-            updateDistrictInfo(districtRes);
+          axios.spread((weatherRes, dustRes) => {
             updateWeatherInfo(weatherRes);
             updateDustInfo(dustRes);
           }),
         );
-    };
-
-    const updateDistrictInfo = (res) => {
-      setDistrict(res.data.documents[1].address_name);
     };
 
     const updateWeatherInfo = (res) => {
