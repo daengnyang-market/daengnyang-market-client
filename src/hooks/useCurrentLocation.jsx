@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useContext, useEffect } from 'react';
 import { UserLocationContextStore } from '../context/UserLocationContext';
 
-const useLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
+const useCurrentLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
   const { setLongitude, setLatitude, setDistrict, longitude, latitude } = useContext(UserLocationContextStore);
   const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
 
@@ -44,4 +44,4 @@ const useLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
   }, [longitude, latitude]);
 };
 
-export default useLocation;
+export default useCurrentLocation;

@@ -5,7 +5,7 @@ import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
 import HospitalList from './HospitalList';
 import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
-import useLocation from '../../../../hooks/useLocation';
+import useCurrentLocation from '../../../../hooks/useCurrentLocation';
 
 const CommunityHospitaMainlPage = () => {
   const [isShowFilterMenu, setIsShowFilterMenu] = useState(false);
@@ -18,7 +18,7 @@ const CommunityHospitaMainlPage = () => {
   ];
 
   const [isLocationUpdate, setIsLocationUpdate] = useState(true);
-  const checkUserLocation = useLocation({ isLocationUpdate, setIsLocationUpdate });
+  const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   const onClickBackgroundHandler = () => {
     setIsShowFilterMenu(!isShowFilterMenu);
