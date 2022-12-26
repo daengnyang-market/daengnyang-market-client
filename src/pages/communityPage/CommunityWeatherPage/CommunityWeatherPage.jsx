@@ -1,47 +1,25 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { UserLocationContextStore } from '../../../context/UserLocationContext';
+import useLocation from '../../../hooks/useLocation';
 import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
 import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
 
 const CommunityWeatherPage = () => {
-  const [location, setLocation] = useState({ longitude: 126.48911, latitude: 33.4698142 });
+  const { longitude, latitude } = useContext(UserLocationContextStore);
+
+  const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
+
   const [dateInfo, setDateInfo] = useState({});
-  const [districtInfo, setDistrictInfo] = useState('');
   const [weatherInfo, setWeatherInfo] = useState({});
   const [dustInfo, setDustInfo] = useState({});
   const [isLocationUpdate, setIsLocationUpdate] = useState(true);
   const [walkingScore, setWalkingScore] = useState(0);
 
-  const KAKAOMAP_API = process.env.REACT_APP_KAKAOMAP_API;
-  const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
-
-  const handleSuccess = ({ coords }) => {
-    const { longitude, latitude } = coords;
-
-    setLocation({
-      longitude,
-      latitude,
-    });
-
-    setTimeout(() => {
-      setIsLocationUpdate(false);
-    }, 300);
-  };
-
-  const getLocation = () => {
-    if (!navigator.geolocation) {
-      throw new Error('위치 정보가 지원되지 않습니다.');
-    }
-
-    navigator.geolocation.getCurrentPosition(handleSuccess);
-  };
-
-  useEffect(() => {
-    getLocation();
-  }, []);
+  const checkUserLocation = useLocation({ isLocationUpdate, setIsLocationUpdate });
 
   useEffect(() => {
     const getDate = () => {
@@ -52,76 +30,58 @@ const CommunityWeatherPage = () => {
       setDateInfo({ year, month, day });
     };
 
-    const getUserDistrictData = async () => {
-      const header = { headers: { Authorization: `KakaoAK ${KAKAOMAP_API}` } };
+    getDate();
+  }, []);
 
+  useEffect(() => {
+    if (!longitude || !latitude) {
+      return;
+    }
+
+    const getFetch = async () => {
       await axios
-        .get(
-          `https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?x=${location.longitude}&y=${location.latitude}`,
-          header,
-        )
-        .then((res) => {
-          setDistrictInfo(res.data.documents[1].address_name);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+        .all([
+          axios.get(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_MAP_API}&units=metric`,
+          ),
+          axios.get(
+            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${latitude}&lon=${longitude}&appid=${OPEN_WEATHER_MAP_API}`,
+          ),
+        ])
+        .then(
+          axios.spread((weatherRes, dustRes) => {
+            updateWeatherInfo(weatherRes);
+            updateDustInfo(dustRes);
+          }),
+        );
     };
 
-    // TODO: 날씨 정보 받아오기
-    const getWeahterData = async () => {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${OPEN_WEATHER_MAP_API}&units=metric`,
-        )
-        .then((res) => {
-          const resData = res.data;
+    const updateWeatherInfo = (res) => {
+      const weatherData = res.data;
 
-          getWeatherInfo(resData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-
-    const getWeatherInfo = (resData) => {
       setWeatherInfo({
-        weather: WeatherDescription[resData.weather[0].id].title,
-        weatherScore: WeatherDescription[resData.weather[0].id].score,
-        temp: resData.main.temp.toFixed(1),
-        tempMax: resData.main.temp_max.toFixed(1),
-        tempMin: resData.main.temp_min.toFixed(1),
-        windSpeed: resData.wind.speed.toFixed(1),
-        humidity: resData.main.humidity,
+        weather: WeatherDescription[weatherData.weather[0].id].title,
+        weatherScore: WeatherDescription[weatherData.weather[0].id].score,
+        temp: weatherData.main.temp.toFixed(1),
+        tempMax: weatherData.main.temp_max.toFixed(1),
+        tempMin: weatherData.main.temp_min.toFixed(1),
+        windSpeed: weatherData.wind.speed.toFixed(1),
+        humidity: weatherData.main.humidity,
       });
     };
 
-    const getDustData = async () => {
-      await axios
-        .get(
-          `https://api.openweathermap.org/data/2.5/air_pollution?lat=${location.latitude}&lon=${location.longitude}&appid=${OPEN_WEATHER_MAP_API}`,
-        )
-        .then((res) => {
-          const resData = res.data.list[0];
+    const updateDustInfo = (res) => {
+      const dustData = res.data.list[0];
 
-          setDustInfo({
-            aqi: resData.main.aqi,
-            pm2_5: Math.round(resData.components.pm2_5),
-            pm10: Math.round(resData.components.pm10),
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      setDustInfo({
+        aqi: dustData.main.aqi,
+        pm2_5: Math.round(dustData.components.pm2_5),
+        pm10: Math.round(dustData.components.pm10),
+      });
     };
 
-    if (Object.keys(location).length > 0) {
-      getDate();
-      getUserDistrictData();
-      getWeahterData();
-      getDustData();
-    }
-  }, [location]);
+    getFetch();
+  }, [longitude, latitude]);
 
   useEffect(() => {
     const getWalkingScoreInfo = () => {
@@ -176,15 +136,14 @@ const CommunityWeatherPage = () => {
   }, [weatherInfo, dustInfo]);
 
   return (
-    <CommunityLayout currenttMenuId={1}>
+    <CommunityLayout currentMenuId={1}>
       <WeatherSection>
         <h2 className='sr-only'>실시간 날씨 정보</h2>
         <SummaryWeatherInfo
           walkingScore={walkingScore}
           dateInfo={dateInfo}
-          districtInfo={districtInfo}
           weather={weatherInfo.weather}
-          locations={{ getLocation, isLocationUpdate, setIsLocationUpdate }}
+          locations={{ isLocationUpdate, setIsLocationUpdate }}
         />
         <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
       </WeatherSection>
