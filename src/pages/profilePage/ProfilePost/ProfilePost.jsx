@@ -63,7 +63,9 @@ const ProfilePost = () => {
   }, [userToken, accountname]);
 
   if (!isRendered) {
-    <Loading />;
+    <LoadingWrapper>
+      <Loading />
+    </LoadingWrapper>;
   } else {
     return (
       <>
@@ -105,6 +107,12 @@ const ProfilePost = () => {
 
 export default ProfilePost;
 
+const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+`;
 const PostHeader = styled.section`
   display: flex;
   justify-content: flex-end;
