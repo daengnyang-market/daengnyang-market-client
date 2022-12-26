@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { WALKING_EASY_IMAGE, WALKING_NORMAL_IMAGE, WALKING_HARD_IMAGE } from '../../../styles/CommonImages';
 import { UPDATE_ICON } from '../../../styles/CommonIcons';
 import { spin } from '../../../components/common/Animation/Animation';
+import { UserLocationContextStore } from '../../../context/UserLocationContext';
 
-const SummaryWeatherInfo = ({ walkingScore, dateInfo, districtInfo, weather, locations }) => {
+const SummaryWeatherInfo = ({ walkingScore, dateInfo, weather, locations }) => {
+  const { district } = useContext(UserLocationContextStore);
+
   const updateLocation = () => {
     locations.setIsLocationUpdate(true);
-    locations.getLocation();
   };
 
   return (
@@ -17,10 +19,10 @@ const SummaryWeatherInfo = ({ walkingScore, dateInfo, districtInfo, weather, loc
           {dateInfo.year}년 {dateInfo.month}월 {dateInfo.day}일
         </Date>
         <DistrictWrapper>
-          <LocationUpdateButton onClick={updateLocation} isUpdate={locations.isLocationUpdate}>
+          <LocationUpdateButton onClick={updateLocation} isLocationUpdate={locations.isLocationUpdate}>
             <span className='sr-only'>현재 위치 갱신하기</span>
           </LocationUpdateButton>
-          <District>{districtInfo}</District>
+          <District>{district}</District>
         </DistrictWrapper>
         <CurrentWeather>{weather}</CurrentWeather>
       </SummaryInfo>
@@ -73,7 +75,7 @@ const LocationUpdateButton = styled.button`
   margin-right: 0.7rem;
   background: no-repeat center/contain url(${UPDATE_ICON});
   animation: ${(props) =>
-    props.isUpdate &&
+    props.isLocationUpdate &&
     css`
       ${spin} 2000ms linear infinite
     `};
