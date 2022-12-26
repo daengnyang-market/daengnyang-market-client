@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileInfo from './ProfileInfo';
 import Button from '../../components/common/Button/Button';
-import { PROFILE1_IMAGE } from '../../styles/CommonImages';
+import { defaultImage } from './DefaultImage';
 
 const ProfileSettingsPage = () => {
   const location = useLocation();
@@ -55,7 +55,7 @@ const ProfileSettingsPage = () => {
   };
 
   if (!image) {
-    setImage(PROFILE1_IMAGE);
+    setImage(defaultImage);
   }
 
   const [disabledButton, setDisabledButton] = useState(true);
