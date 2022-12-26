@@ -25,7 +25,9 @@ const ProfileHeader = ({ profileData }) => {
   };
 
   if (!profileData) {
-    <Loading />;
+    <LoadingWrapper>
+      <Loading />
+    </LoadingWrapper>;
   } else {
     return (
       <>
@@ -53,6 +55,13 @@ const ProfileHeader = ({ profileData }) => {
 };
 
 export default ProfileHeader;
+
+const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 const ProfileWrapper = styled.header`
   display: flex;
