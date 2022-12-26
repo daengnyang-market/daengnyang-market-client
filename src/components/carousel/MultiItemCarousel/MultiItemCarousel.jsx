@@ -6,12 +6,15 @@ import './multiItemCarousel.css';
 import { useState } from 'react';
 import ProductModal from '../../common/modal/ProductModal/ProductModal';
 import { useNavigate } from 'react-router-dom';
+import { AuthContextStore } from '../../../context/AuthContext';
+import { useContext } from 'react';
+import { type } from '@testing-library/user-event/dist/type';
 
 export default function MultiItemCarousel({ itemList }) {
+  const { userAccountname } = useContext(AuthContextStore);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isMyProduct, setIsMyProduct] = useState(true); // 모달 테스트용으로 넣어둔 코드입니다. true인 경우에만 모달 출력, false인 경우(다른 사람의 상품인 경우) 상품 링크로 바로 이동되어야 합니다.
+  const [isMyProduct, setIsMyProduct] = useState(itemList[0].author.accountname.indexOf(userAccountname) !== -1);
   const navigate = useNavigate();
-
   const closeModal = () => {
     setIsOpenModal(false);
   };
