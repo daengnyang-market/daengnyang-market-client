@@ -1,20 +1,22 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
 import PostModal from '../modal/PostModal/PostModal';
 import { Link, useNavigate } from 'react-router-dom';
+import { AuthContextStore } from '../../../context/AuthContext';
 
 const Post = ({ post = {} }) => {
   const navigate = useNavigate();
+  const { userAccountname } = useContext(AuthContextStore);
 
   const year = new Date(post.createdAt).getFullYear();
   const month = new Date(post.createdAt).getMonth() + 1;
   const date = new Date(post.createdAt).getDate();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isMyPost, setIsMyPost] = useState(true); // 내 게시글인 경우 true, 다른 사람의 게시글인 경우 false가 들어갑니다. (true인 경우 - 삭제/수정 출력, false인 경우 - 신고 출력)
+  const [isMyPost, setIsMyPost] = useState(post.author.accountname.indexOf(userAccountname) !== -1);
 
   const [like, setLike] = useState(false);
 
@@ -63,7 +65,7 @@ const Post = ({ post = {} }) => {
               </DateP>
             </ContentWrapperDiv>
           </WrapperDiv>
-          {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} /> : <></>}
+          {isOpenModal ? <PostModal closeModal={closeModal} isMyPost={isMyPost} postID={post.id} /> : <></>}
         </>
       ) : (
         <></>
