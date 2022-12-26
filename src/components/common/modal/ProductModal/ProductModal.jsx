@@ -50,9 +50,6 @@ const ProductModal = ({ closeModal, productid, productLink }) => {
               to={{
                 pathname: `/product/${productid}/edit`,
               }}
-              onClick={() => {
-                console.log('수정 페이지 입니다!!');
-              }}
             >
               수정
             </Link>
