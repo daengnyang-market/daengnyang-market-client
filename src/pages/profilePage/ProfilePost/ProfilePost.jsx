@@ -18,6 +18,7 @@ const ProfilePost = () => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [test, setTest] = useState([]);
   const location = useLocation();
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
@@ -62,6 +63,15 @@ const ProfilePost = () => {
     getMyPost();
   }, [userToken, accountname]);
 
+  // useEffect(() => {
+  //   testFunction(myPostList);
+  // }, [myPostList]);
+  // const test1 = test.split(',');
+  // const test = myPostList.image.split(',');
+  useEffect(() => {
+    setTest(testFunction(myPostList));
+  }, [myPostList]);
+  console.log(test);
   if (!isRendered) {
     <Loading />;
   } else {
@@ -87,8 +97,8 @@ const ProfilePost = () => {
           ) : (
             <PostGrid>
               <h3 className='sr-only'>앨범형 포스트 목록</h3>
-              {myPostList.map((post) => {
-                return post.image ? <img key={post.id} src={post.image} alt='썸네일 이미지'></img> : null;
+              {myPostList.map((post, i) => {
+                return post.image ? <img key={post.id} src={test[i][0]} alt='썸네일 이미지'></img> : null;
               })}
             </PostGrid>
           )
@@ -104,6 +114,17 @@ const ProfilePost = () => {
 };
 
 export default ProfilePost;
+
+const testFunction = (myPostList) => {
+  let arr = [];
+  // let imgArr = myPostList[]
+  for (let i = 0; i < myPostList.length; i++) {
+    for (let j = 0; j < myPostList[i].image.length; j++) {
+      arr[i] = myPostList[i].image.split(',');
+    }
+  }
+  return arr;
+};
 
 const PostHeader = styled.section`
   display: flex;
