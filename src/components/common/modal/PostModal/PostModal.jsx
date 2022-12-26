@@ -44,12 +44,7 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
       },
     })
       .then((res) => {
-        <Alert
-          summary={'게시글 신고 완료 알림창'}
-          title={'게시글이 신고되었습니다'}
-          trigger={'확인'}
-          closeAlert={closeAlert}
-        />;
+        alert('신고되었습니다');
       })
       .catch((err) => console.error(err));
     closeModal();
