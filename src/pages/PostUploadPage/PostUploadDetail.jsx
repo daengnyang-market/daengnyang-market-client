@@ -2,21 +2,55 @@ import React, { useCallback, useContext, useEffect, useRef, useState } from 'rea
 import axios from 'axios';
 import { AuthContextStore } from '../../context/AuthContext';
 import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 import ImageUploadButton from './ImageUploadButton';
 
-const PostUploadDetail = () => {
+const PostUploadDetail = ({ className }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [userImg, setUserImg] = useState([]);
   const [uploadImg, setUploadImg] = useState([]);
   const [text, setText] = useState('');
+  const [postData, setPostData] = useState('');
+  const [postImages, setPostImages] = useState('');
   const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
   const inputRef = useRef();
+  const { postid } = useParams();
 
+  const getPostData = () => {
+    if (postid) {
+      axios({
+        url: `https://mandarin.api.weniv.co.kr/post/${postid}`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((response) => {
+          setPostData(response.data.post);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
+  if (postData !== '') {
+  }
+  useEffect(() => {
+    getPostData();
+  }, []);
+
+  useEffect(() => {
+    if (postid && postData) {
+      setText(postData.content);
+      setPostImages(postData.image);
+    }
+  }, [postid, postData]);
   // TODO : 유저 이미지 저장
   useEffect(() => {
     if (userAccountname) {
@@ -54,17 +88,26 @@ const PostUploadDetail = () => {
   const uploadImgData = async () => {
     let formData = new FormData();
     let imgData = uploadImg;
+    // test(imgData);
     for (let i = 0; i < imgData.length; i++) {
       const file = imgData[i];
-      formData.append('image', file);
+      if (String(file).indexOf('http') === -1) {
+        formData.append('image', file);
+      }
+      console.log('뭘까', file);
+      console.log('폼데이터', formData);
     }
     const res = await axios({
       method: 'post',
       url: 'https://mandarin.api.weniv.co.kr/image/uploadfiles',
       data: formData,
     });
-
-    const imgUrls = res.data.map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename).join();
+    console.log('test:', test(imgData));
+    let imgUrls = res.data
+      .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
+      .concat(String(test(imgData)))
+      .join();
+    console.log('imgUrls:', imgUrls);
     return imgUrls;
   };
 
@@ -74,67 +117,120 @@ const PostUploadDetail = () => {
     const url = 'https://mandarin.api.weniv.co.kr';
     const resImage = await uploadImgData();
     console.log(resImage);
-    try {
-      await axios
-        .post(
-          `${url}/post`,
-          {
-            post: {
-              content: `${text}`,
-              image: await resImage,
+    if (postid) {
+      try {
+        await axios
+          .put(
+            `${url}/post/${postid}`,
+            {
+              post: {
+                content: `${text}`,
+                image: await resImage,
+              },
             },
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-              'Content-type': 'application/json',
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                'Content-type': 'application/json',
+              },
             },
-          },
-        )
-        .then(() => {
-          navigate('/profile');
-        });
-    } catch (error) {
-      console.log(error);
+          )
+          .then(() => {
+            navigate('/profile');
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        await axios
+          .post(
+            `${url}/post`,
+            {
+              post: {
+                content: `${text}`,
+                image: await resImage,
+              },
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+                'Content-type': 'application/json',
+              },
+            },
+          )
+          .then(() => {
+            navigate('/profile');
+          });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
   // TODO : 텍스트,이미지 유무에 따른 버튼활성화
   useEffect(() => {
-    if (text !== '' || uploadImg.length > 0) {
+    if (text !== '') {
       setIsValidate(false);
     } else {
       setIsValidate(true);
     }
-  }, [text, uploadImg]);
+  }, [text]);
 
   return (
     <>
-      <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
-      <UploadMain>
-        <h2 className='sr-only'>게시글 작성 메인화면</h2>
-        <ProfileImage src={userImg} width='42' />
-        <PostWrite>
-          <h3 className='sr-only'>게시글 작성</h3>
-          <PostForm onSubmit={handleSubmit}>
-            <PostTextInput
-              name='text'
-              placeholder='게시글 입력하기...'
-              data-value='0'
-              autoComplete='off'
-              ref={textRef}
-              onChange={handleChangeText}
-              maxLength='200'
-            />
-            <ImgUploadButton setUploadImg={setUploadImg} inputRef={inputRef} />
-          </PostForm>
-        </PostWrite>
-      </UploadMain>
+      {uploadImg ? (
+        <>
+          <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
+          <UploadMain>
+            <h2 className='sr-only'>게시글 작성 메인화면</h2>
+            <ProfileImage src={userImg} width='42' />
+            <PostWrite>
+              <h3 className='sr-only'>게시글 작성</h3>
+              <PostForm onSubmit={handleSubmit}>
+                <PostTextInput
+                  name='text'
+                  placeholder='게시글 입력하기...'
+                  data-value='0'
+                  autoComplete='off'
+                  ref={textRef}
+                  defaultValue={text}
+                  onChange={handleChangeText}
+                  maxLength='200'
+                />
+                <ImgUploadButton
+                  uploadImg={postImages}
+                  setUploadImg={setUploadImg}
+                  className={className}
+                  inputRef={inputRef}
+                />
+              </PostForm>
+            </PostWrite>
+          </UploadMain>
+        </>
+      ) : (
+        <div>로딩중</div>
+      )}
     </>
   );
 };
 
 export default PostUploadDetail;
+
+const test = (uploadImg) => {
+  let test = uploadImg;
+  let index = [];
+  console.log('테스트값', test[0].indexOf('http'));
+  for (let i = 0; i < test.length; i++) {
+    if (String(test[i]).indexOf('http') !== -1) {
+      index[i] = test[i];
+    } else {
+      index[i] = '';
+    }
+  }
+  console.log(index);
+  return index.join('');
+};
 
 const ImgUploadButton = styled(ImageUploadButton)`
   position: fixed;
