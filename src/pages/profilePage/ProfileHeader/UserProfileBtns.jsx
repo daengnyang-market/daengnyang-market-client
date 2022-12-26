@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import Button from '../../../components/common/Button/Button';
@@ -11,6 +11,11 @@ const UserProfileBtns = ({ profileData }) => {
   const [isFollowing, setIsFollowing] = useState(profileData.isfollow);
   const { userToken } = useContext(AuthContextStore);
   const { accountname } = useParams();
+  const navigate = useNavigate();
+  
+  const handleGoChat = () => {
+    navigate(`/chat/${accountname}`);
+  };
 
   const handleFollow = async () => {
     const option = {
@@ -30,7 +35,7 @@ const UserProfileBtns = ({ profileData }) => {
 
   return (
     <UserProfileBtnsStyle>
-      <ProfileBtn />
+      <ChatBtn onClick={handleGoChat} />
       <Button
         size='M'
         onClickHandler={handleFollow}
@@ -40,7 +45,7 @@ const UserProfileBtns = ({ profileData }) => {
       >
         {isFollowing ? '언팔로우' : '팔로우'}
       </Button>
-      <ProfileBtn isShare={true} />
+      <ShareBtn />
     </UserProfileBtnsStyle>
   );
 };
@@ -56,9 +61,17 @@ const UserProfileBtnsStyle = styled.div`
   margin-bottom: 2.6em;
 `;
 
-const ProfileBtn = styled.button`
-  background: ${(props) =>
-    props.isShare ? `url(${SHARE_ICON}) no-repeat center / 15px` : `url(${CHAT_ICON}) no-repeat center / 15px`};
+const ShareBtn = styled.button`
+  background: url(${SHARE_ICON}) no-repeat center / 15px;
+  width: 34px;
+  height: 34px;
+  color: var(--sub-text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+`;
+
+const ChatBtn = styled.button`
+  background: url(${CHAT_ICON}) no-repeat center / 15px;
   width: 34px;
   height: 34px;
   color: var(--sub-text-color);
