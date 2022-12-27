@@ -2,17 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CLOSE_ICON } from '../../styles/CommonIcons';
 
-const isEmptyArr = (arr) => {
-  if (Array.isArray(arr) && arr.length === 0) {
-    return true;
-  }
-
-  return false;
-};
 const testFunction = (postImages) => {
   const newPostImages = postImages.split(',');
   return newPostImages;
 };
+
 const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => {
   const [image, setImgfile] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
@@ -27,9 +21,9 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
         setUploadImg(newUploadImg);
         setImgfile(newUploadImg);
       } else {
-        setImageUrl([newUploadImg]);
-        setUploadImg([newUploadImg]);
-        setImgfile([newUploadImg]);
+        setImageUrl(newUploadImg);
+        setUploadImg(newUploadImg);
+        setImgfile(newUploadImg);
       }
     }
     return () => {

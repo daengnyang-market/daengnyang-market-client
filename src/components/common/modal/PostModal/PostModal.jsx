@@ -1,4 +1,3 @@
-
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
@@ -14,9 +13,6 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
   const { userToken } = useContext(AuthContextStore);
 
   const [isOpenAlert, setIsOpenAlert] = useState(false);
-  const { postid } = useParams();
-  const navigate = useNavigate();
-
   const [isReport, setIsReport] = useState(false);
   const [isReportSuccess, setIsReportSuccess] = useState(null);
 
@@ -58,7 +54,6 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
     })
       .then((res) => {
         setIsReport(true);
-
         if (postID === res.data.report.post) {
           setIsReportSuccess(true);
         } else {
@@ -68,8 +63,9 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
       .catch((err) => console.error(err));
   };
   const onClickPageHandler = () => {
-    navigate(`/post/${postid}/edit`);
+    navigate(`/post/${postID}/edit`);
   };
+  console.log('내포스트', isMyPost);
   return (
     <>
       <ModalLayout closeModal={closeModal} isOpenAlert={isOpenAlert}>

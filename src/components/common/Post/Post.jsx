@@ -1,17 +1,11 @@
-
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { Link, useNavigate } from 'react-router-dom';
 import PostModal from '../modal/PostModal/PostModal';
 import { AuthContextStore } from '../../../context/AuthContext';
-
-import styled from 'styled-components';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
-import PostModal from '../modal/PostModal/PostModal';
-import { Link, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css';
@@ -24,6 +18,7 @@ const Post = ({ post = {} }) => {
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
+  const { userToken, userAccountname } = useContext(AuthContextStore);
 
   useEffect(() => {
     if (post) {
