@@ -103,12 +103,18 @@ const PostUploadDetail = ({ className }) => {
       data: formData,
     });
     console.log('test:', test(imgData));
-    let imgUrls = res.data
-      .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
-      .concat(String(test(imgData)))
-      .join();
-    console.log('imgUrls:', imgUrls);
-    return imgUrls;
+    if (test(imgData) !== '') {
+      let imgUrls = res.data
+        .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
+        .concat([String(test(imgData))])
+        .join();
+      console.log('imgUrls:', imgUrls);
+      return imgUrls;
+    } else {
+      let imgUrls = res.data.map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename).join();
+      console.log('imgUrls:', imgUrls);
+      return imgUrls;
+    }
   };
 
   // TODO : 업로드 버튼이 클릭되면 POST 요청
@@ -220,16 +226,19 @@ export default PostUploadDetail;
 const test = (uploadImg) => {
   let test = uploadImg;
   let index = [];
-  console.log('테스트값', test[0].indexOf('http'));
-  for (let i = 0; i < test.length; i++) {
-    if (String(test[i]).indexOf('http') !== -1) {
-      index[i] = test[i];
-    } else {
-      index[i] = '';
+  if (!test.length) {
+    return '';
+  } else {
+    for (let i = 0; i < test.length; i++) {
+      if (String(test[i]).indexOf('http') !== -1) {
+        index[i] = test[i];
+      } else {
+        index[i] = null;
+      }
     }
+    console.log('테스트함수결과:', index.join());
+    return index.join().replace(/,,/g, '').replace(/,$/, '');
   }
-  console.log(index);
-  return index.join('');
 };
 
 const ImgUploadButton = styled(ImageUploadButton)`

@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import ProfileImage from '../ProfileImage/ProfileImage';
+import { Link, useNavigate } from 'react-router-dom';
+import PostModal from '../modal/PostModal/PostModal';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
@@ -19,8 +21,9 @@ const Post = ({ post = {} }) => {
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
+  const { userToken, userAccountname } = useContext(AuthContextStore);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     if (post) {
       return setData({ ...post });
