@@ -57,7 +57,7 @@ export default function MultiItemCarousel({ itemList }) {
               productid={item.id}
               productImg={item.itemImage}
               productName={item.itemName}
-              productPrice={`${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}원`}
+              productPrice={`${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 냥`}
               onClick={() => {
                 isMyProductFunction();
                 productIdFunction(item.id);
