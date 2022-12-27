@@ -63,11 +63,6 @@ const ProfilePost = () => {
     getMyPost();
   }, [userToken, accountname]);
 
-  // useEffect(() => {
-  //   testFunction(myPostList);
-  // }, [myPostList]);
-  // const test1 = test.split(',');
-  // const test = myPostList.image.split(',');
   useEffect(() => {
     setTest(testFunction(myPostList));
   }, [myPostList]);
@@ -116,7 +111,6 @@ const ProfilePost = () => {
 };
 
 export default ProfilePost;
-
 
 const testFunction = (myPostList) => {
   let arr = [];

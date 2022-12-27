@@ -1,36 +1,29 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-
+import { Link, useNavigate, useLocation, useParams } from 'react-router-dom';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { AuthContextStore } from '../../../../context/AuthContext';
 import { MenuList, MenuItem } from './../Styled';
-
-const PostModal = ({ closeModal, isMyPost, postID }) => {
+const PostModal = ({ closeModal, isMyPost }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userToken } = useContext(AuthContextStore);
-
   const [isOpenAlert, setIsOpenAlert] = useState(false);
   const [isReport, setIsReport] = useState(false);
   const [isReportSuccess, setIsReportSuccess] = useState(null);
-
   const url = `https://mandarin.api.weniv.co.kr`;
-
   const closeAlert = () => {
     setIsOpenAlert(false);
   };
-
   const handleReportClear = () => {
     setIsReport(false);
     setIsReportSuccess(null);
     closeModal();
   };
-
   const deletePost = () => {
     axios({
-      url: url + `/post/${postID}`,
+      url: url + `/post/${postid}`,
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -42,10 +35,9 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
       })
       .catch((err) => console.error(err));
   };
-
   const reportPost = () => {
     axios({
-      url: url + `/post/${postID}/report`,
+      url: url + `/post/${postid}/report`,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -54,7 +46,7 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
     })
       .then((res) => {
         setIsReport(true);
-        if (postID === res.data.report.post) {
+        if (postid === res.data.report.post) {
           setIsReportSuccess(true);
         } else {
           setIsReportSuccess(false);

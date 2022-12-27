@@ -10,16 +10,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import ProfileImage from '../ProfileImage/ProfileImage';
+import PostModal from '../modal/PostModal/PostModal';
 import Loading from '../Loading/Loading';
 
 const Post = ({ post = {} }) => {
-  const navigate = useNavigate();
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+
   const [like, setLike] = useState(false);
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
   const { userToken, userAccountname } = useContext(AuthContextStore);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     if (post) {
       return setData({ ...post });

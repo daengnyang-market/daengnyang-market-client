@@ -37,7 +37,7 @@ const Router = () => {
       <Route path='/profile/edit' element={<ProfileModificationPage />} />
       <Route path='/follow/:accountname/:type' element={<FollowListPage />} />
       <Route path='/post/:postid' element={<PostDetailPage />} />
-      <Route path='/post/:postid/edit' element={<></>} />
+      <Route path='/post/:postid/edit' element={<PostUploadPage />} />
       <Route path='/post/upload' element={<PostUploadPage />} />
       <Route path='/product' element={<ProductRegistrationPage />} />
       <Route path='/product/:productid/edit' element={<ProductModificationPage />} />
