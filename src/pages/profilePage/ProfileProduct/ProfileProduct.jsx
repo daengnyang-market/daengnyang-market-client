@@ -36,10 +36,12 @@ const ProfileProduct = () => {
   useEffect(() => {
     setisRendered(true);
     getProduct();
-  }, [userToken, accountname]);
+  }, [userToken, accountname, productList]);
 
   if (!isRendered) {
-    <Loading />;
+    <LoadingWrapper>
+      <Loading />;
+    </LoadingWrapper>;
   } else {
     return productList.length > 0 ? (
       <>
@@ -56,6 +58,13 @@ const ProfileProduct = () => {
 };
 
 export default ProfileProduct;
+
+const LoadingWrapper = styled.div`
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -45%);
+`;
 
 const ProductWrapper = styled.section`
   padding: 2em 0;

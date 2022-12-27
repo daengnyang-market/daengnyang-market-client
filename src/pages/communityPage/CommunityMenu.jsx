@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const CommunityMenu = ({ currenttMenuId }) => {
+const CommunityMenu = ({ currentMenuId }) => {
   const navigate = useNavigate();
   const menuList = [
     { id: 0, title: '홈', to: '#' },
@@ -31,7 +31,7 @@ const CommunityMenu = ({ currenttMenuId }) => {
   return (
     <MenuList>
       {menuList.map(({ id, title, to }) => (
-        <MenuItem key={id} id={id} currenttMenuId={currenttMenuId}>
+        <MenuItem key={id} id={id} currentMenuId={currentMenuId}>
           <MenuButton onClick={() => changeMenu(id)}>{title}</MenuButton>
         </MenuItem>
       ))}
@@ -55,8 +55,8 @@ const MenuItem = styled.li`
   width: 100%;
   height: 100%;
   font-size: var(--fs-lg);
-  font-weight: ${(props) => (props.id === props.currenttMenuId ? '500' : '400')};
-  color: ${(props) => (props.id === props.currenttMenuId ? 'var(--login-bg-color)' : 'var(--text-color)')};
+  font-weight: ${(props) => (props.id === props.currentMenuId ? '500' : '400')};
+  color: ${(props) => (props.id === props.currentMenuId ? 'var(--login-bg-color)' : 'var(--text-color)')};
 `;
 
 const MenuButton = styled.button`

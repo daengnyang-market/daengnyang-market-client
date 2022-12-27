@@ -1,15 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 import TopMainNav from './../../components/common/TopNavBar/TopMainNav';
-import ContentsLayout from './../../components/layout/ContentsLayout/ContentsLayout';
 import TabMenu from './../../components/common/TabMenu/TabMenu';
 import CommunityMenu from './CommunityMenu';
 import TopTitleNav from '../../components/common/TopNavBar/TopTitleNav';
-import styled from 'styled-components';
 
 const CommunityLayout = ({
   children,
   navType = 'mainNav',
-  currenttMenuId,
+  currentMenuId,
   isViewTabMenu = true,
   fillHeight = false,
 }) => {
@@ -24,7 +23,7 @@ const CommunityLayout = ({
       )}
 
       <CommunityMain fillHeight={fillHeight}>
-        <CommunityMenu currenttMenuId={currenttMenuId} />
+        <CommunityMenu currentMenuId={currentMenuId} />
         {children}
       </CommunityMain>
       {isViewTabMenu ? <TabMenu currentMenuId={3} /> : <></>}

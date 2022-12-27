@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Alert = ({ summary, title, trigger, closeAlert, tiggerFunc }) => {
+const Alert = ({ summary, title, trigger, closeAlert = '', tiggerFunc }) => {
   return (
     <Section>
       <h2 className='sr-only'>{summary}</h2>
@@ -9,7 +9,7 @@ const Alert = ({ summary, title, trigger, closeAlert, tiggerFunc }) => {
       <ContentsWrapper>
         <Title>{title}</Title>
         <ButtonWrapper>
-          <button onClick={closeAlert}>취소</button>
+          {closeAlert ? <button onClick={closeAlert}>취소</button> : <></>}
           <button onClick={tiggerFunc}>{trigger}</button>
         </ButtonWrapper>
       </ContentsWrapper>
