@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // * 사용법 - 아래의 4가지 props를 전달해줘야 합니다 *
@@ -15,21 +15,21 @@ const PriceInput = ({
   priceModFunction,
   priceMod,
 }) => {
-  const [price, setprice] = useState('true');
   const [inputValue, setInputValue] = useState('');
-  const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
+
+  // 상품 수정 페이지 / 등록 페이지
+  const [value, setValue] = useState('');
+  useEffect(() => {
+    if (priceMod) {
+      setValue(priceMod);
+    } else {
+      setValue(inputValue);
+    }
+  }, [inputValue, priceMod]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value.replace(/[^0-9]/g, ''));
-
-    const regex = /^[0-9]/g;
-
-    if (regex.test(e.target.value)) {
-      setprice(true);
-    } else {
-      setprice(false);
-    }
 
     if (e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
@@ -37,6 +37,7 @@ const PriceInput = ({
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
+    //상품 수정 페이지 / 등록 페이지
     if (priceModFunction) {
       priceModFunction(e.target.value.replace(/[^0-9]/g, ''));
     } else {
@@ -51,14 +52,12 @@ const PriceInput = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        // value={inputValue}
+        value={value}
         onChange={handleChange}
         ref={inputRef}
         autoComplete='off'
         spellCheck='false'
-        defaultValue={priceMod}
       />
-      {isShowAlert ? <InputAlert>이미 가입된 이메일 주소입니다</InputAlert> : <></>}
     </InputWrapper>
   );
 };
@@ -81,21 +80,10 @@ const InputLabel = styled.label`
 const InputText = styled.input`
   padding-bottom: 0.8rem;
   font-size: var(--fs-md);
-  border-bottom: 1px solid ${(props) => (props.isShowAlert ? 'var(--main-color)' : 'var(--border-color)')};
+  border-bottom: 1px solid var(--border-color);
   outline: none;
 
   &::placeholder {
     color: var(--border-color);
-  }
-`;
-
-const InputAlert = styled.strong`
-  margin-top: 6px;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--alert-color);
-
-  &::before {
-    content: '* ';
   }
 `;
