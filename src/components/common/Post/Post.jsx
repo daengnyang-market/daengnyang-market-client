@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import ProfileImage from '../ProfileImage/ProfileImage';
 import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import PostModal from '../modal/PostModal/PostModal';
+import Loading from '../Loading/Loading';
+import ProfileImage from '../ProfileImage/ProfileImage';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
@@ -10,7 +11,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import Loading from '../Loading/Loading';
 
 const Post = ({ post = {} }) => {
   const [like, setLike] = useState(false);
