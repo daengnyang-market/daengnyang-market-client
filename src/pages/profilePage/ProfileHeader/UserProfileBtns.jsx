@@ -26,10 +26,11 @@ const UserProfileBtns = ({ profileData }) => {
   });
 
   const shareToKakaotalk = () => {
+    const KAKAO_SHARE_API = process.env.REACT_APP_KAKAO_SHARE_API;
     if (window.Kakao) {
       const kakao = window.Kakao;
       if (!kakao.isInitialized()) {
-        kakao.init('e2720c89d4c69853e40e7494239554f2');
+        kakao.init(KAKAO_SHARE_API);
       }
       kakao.Link.sendDefault({
         objectType: 'feed',
