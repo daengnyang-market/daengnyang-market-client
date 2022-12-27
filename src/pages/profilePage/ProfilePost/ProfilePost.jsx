@@ -20,27 +20,13 @@ const ProfilePost = () => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [test, setTest] = useState([]);
   const location = useLocation();
+  const [isRendered, setIsRendered] = useState(true);
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
-  const [albumBtn, setAlbumBtn] = useState(false);
-  const [isRendered, setIsRendered] = useState(true);
-  const [listClicked, onListClicked] = useState(true);
-  const [albumClicked, onAlbumClicked] = useState(false);
+
   // 포스트 담기
   const [myPostList, setMyPost] = useState([]);
 
-  const handleListBtn = () => {
-    setListBtn(true);
-    setAlbumBtn(false);
-    onListClicked(true);
-    onAlbumClicked(false);
-  };
-  const handleAlbumBtn = () => {
-    setListBtn(false);
-    setAlbumBtn(true);
-    onAlbumClicked(true);
-    onListClicked(false);
-  };
   const getMyPost = () => {
     const url = `https://mandarin.api.weniv.co.kr`;
 
@@ -66,7 +52,7 @@ const ProfilePost = () => {
   useEffect(() => {
     setTest(testFunction(myPostList));
   }, [myPostList]);
-  console.log(test);
+
   if (!isRendered) {
     <LoadingWrapper>
       <Loading />
@@ -76,10 +62,10 @@ const ProfilePost = () => {
       <>
         <h2 className='sr-only'>게시물 리스트</h2>
         <PostHeader>
-          <ListIcon onClick={handleListBtn} clicked={listClicked}>
+          <ListIcon onClick={() => setListBtn(!listBtn)} show={listBtn}>
             <strong className='sr-only'>리스트로 보기</strong>
           </ListIcon>
-          <AlbumIcon onClick={handleAlbumBtn} clicked={albumClicked}>
+          <AlbumIcon onClick={() => setListBtn(!listBtn)} show={listBtn}>
             <strong className='sr-only'>앨범으로 보기</strong>
           </AlbumIcon>
         </PostHeader>
@@ -95,7 +81,18 @@ const ProfilePost = () => {
             <PostGrid>
               <h3 className='sr-only'>앨범형 포스트 목록</h3>
               {myPostList.map((post, i) => {
-                return post.image ? <img key={post.id} src={test[i][0]} alt='썸네일 이미지'></img> : null;
+                return post.image ? (
+                  post.image.includes(',') ? (
+                    <li>
+                      <img key={post.id} src={post.image.split(',')[0]} alt='썸네일 이미지' />
+                      <img className='layer-icon' src={LAYERS_ICON} alt='레이어 아이콘' />
+                    </li>
+                  ) : (
+                    <>
+                      <img key={post.id} src={post.image} alt='썸네일 이미지'></img>
+                    </>
+                  )
+                ) : null;
               })}
             </PostGrid>
           )
@@ -144,13 +141,13 @@ const ListIcon = styled.button`
   background: no-repeat center / 20px;
   width: 26px;
   height: 26px;
-  background-image: ${(props) => (props.clicked ? `url(${POST_LIST_ON_ICON})` : `url(${POST_LIST_OFF_ICON})`)};
+  background-image: ${(props) => (props.show ? `url(${POST_LIST_ON_ICON})` : `url(${POST_LIST_OFF_ICON})`)};
 `;
 const AlbumIcon = styled.button`
   background: no-repeat center / 20px;
   width: 26px;
   height: 26px;
-  background-image: ${(props) => (props.clicked ? `url(${POST_ALBUM_ON_ICON})` : `url(${POST_ALBUM_OFF_ICON})`)};
+  background-image: ${(props) => (props.show ? `url(${POST_ALBUM_OFF_ICON})` : `url(${POST_ALBUM_ON_ICON})`)};
 `;
 
 const PostUl = styled.ul`
@@ -162,11 +159,22 @@ const PostGrid = styled.ul`
   gap: 0.8em;
   padding: 1.6em;
   margin-bottom: 3em;
-
+  & li {
+    display: block;
+    width: min-content;
+    position: relative;
+  }
   & img {
     width: 114px;
     height: 114px;
-    position: relative;
+  }
+  .layer-icon {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: no-repeat center / 20px;
+    top: 5px;
+    right: 5px;
   }
 `;
 
