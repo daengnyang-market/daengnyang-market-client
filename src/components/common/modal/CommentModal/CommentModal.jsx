@@ -1,24 +1,64 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { AuthContextStore } from '../../../../context/AuthContext';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
-const CommentModal = ({ closeModal, isMyComment }) => {
+const CommentModal = ({ closeModal, isMyComment, commentID }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
+  const [isReport, setIsReport] = useState(false);
+  const [isReportSuccess, setIsReportSuccess] = useState(null);
+  const { postid } = useParams();
+  const { userToken } = useContext(AuthContextStore);
+  const navigate = useNavigate();
+  const URL = `https://mandarin.api.weniv.co.kr`;
+  console.log('코멘트아이디', commentID);
+
+  // const onClickPageHandler = () => {
+  //   navigate(`/post/${postid}`);
+  // };
 
   const closeAlert = () => {
     setIsOpenAlert(false);
   };
-
-  const deleteComment = () => {
-    console.log('댓글 삭제 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
+  const handleReportClear = () => {
+    setIsReport(false);
+    setIsReportSuccess(false);
     closeModal();
+  };
+  const deleteComment = () => {
+    axios({
+      url: URL + `/post/${postid}/comments/${commentID}`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then(() => {
+        closeModal();
+        window.location.reload();
+      })
+      .catch((err) => console.error(err));
   };
 
   const reportComment = () => {
-    console.log('댓글 신고 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
-    closeModal();
+    axios({
+      url: URL + `/post/${postid}/comments/${commentID}/report`,
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then(() => {
+        setIsReport(true);
+        setIsReportSuccess(true);
+        console.log('성공!!');
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
@@ -39,6 +79,16 @@ const CommentModal = ({ closeModal, isMyComment }) => {
           trigger={isMyComment ? '삭제' : '신고'}
           tiggerFunc={isMyComment ? deleteComment : reportComment}
           closeAlert={closeAlert}
+        />
+      ) : (
+        <></>
+      )}
+      {isReport ? (
+        <Alert
+          summary={isReportSuccess ? '게시글 신고 완료 알림창' : '게시글 신고 실패 알림창'}
+          title={isReportSuccess ? '게시글이 신고되었습니다.' : '게시글 신고에 실패하였습니다.'}
+          trigger={'확인'}
+          tiggerFunc={handleReportClear}
         />
       ) : (
         <></>
