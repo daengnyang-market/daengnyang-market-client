@@ -1,29 +1,25 @@
-
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
-
-import ProfileImage from '../ProfileImage/ProfileImage';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import PostModal from '../modal/PostModal/PostModal';
-import { AuthContextStore } from '../../../context/AuthContext';
-
 import styled from 'styled-components';
+import { AuthContextStore } from '../../../context/AuthContext';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
-import PostModal from '../modal/PostModal/PostModal';
-import { Link, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
+import ProfileImage from '../ProfileImage/ProfileImage';
+import PostModal from '../modal/PostModal/PostModal';
 import Loading from '../Loading/Loading';
 
 const Post = ({ post = {} }) => {
-  const navigate = useNavigate();
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+
   const [like, setLike] = useState(false);
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (post) {
