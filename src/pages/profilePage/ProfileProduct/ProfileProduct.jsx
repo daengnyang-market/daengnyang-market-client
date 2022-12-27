@@ -36,7 +36,7 @@ const ProfileProduct = () => {
   useEffect(() => {
     setisRendered(true);
     getProduct();
-  }, [userToken, accountname, productList]);
+  }, [userToken, accountname]);
 
   if (!isRendered) {
     <LoadingWrapper>
