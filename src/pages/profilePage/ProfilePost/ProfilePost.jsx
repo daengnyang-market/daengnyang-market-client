@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import React, { useContext, useState, useEffect } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContextStore } from '../../../context/AuthContext';
 import Post from '../../../components/common/Post/Post';
-import React, { useContext, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import {
   POST_ALBUM_OFF_ICON,
   POST_ALBUM_ON_ICON,
@@ -12,7 +13,6 @@ import {
 } from '../../../styles/CommonIcons';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
 const ProfilePost = () => {
   let { accountname } = useParams();
