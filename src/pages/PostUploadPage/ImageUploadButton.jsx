@@ -1,10 +1,41 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CLOSE_ICON } from '../../styles/CommonIcons';
 
-const ImageUploadButton = ({ className, setUploadImg, inputRef }) => {
+const isEmptyArr = (arr) => {
+  if (Array.isArray(arr) && arr.length === 0) {
+    return true;
+  }
+
+  return false;
+};
+const testFunction = (postImages) => {
+  const newPostImages = postImages.split(',');
+  return newPostImages;
+};
+const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => {
   const [image, setImgfile] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
+  const [copyUploadImg, setCopyUploadImg] = useState([]);
+
+  console.log('처음', uploadImg);
+  useEffect(() => {
+    if (uploadImg) {
+      const newUploadImg = testFunction(uploadImg);
+      if (newUploadImg.length > 1) {
+        setImageUrl(newUploadImg);
+        setUploadImg(newUploadImg);
+        setImgfile(newUploadImg);
+      } else {
+        setImageUrl([newUploadImg]);
+        setUploadImg([newUploadImg]);
+        setImgfile([newUploadImg]);
+      }
+    }
+    return () => {
+      console.log('끝');
+    };
+  }, [uploadImg]);
 
   // 이미지 상대경로 저장
   const handleAddImages = (e) => {
@@ -22,6 +53,9 @@ const ImageUploadButton = ({ className, setUploadImg, inputRef }) => {
     };
   };
 
+  console.log('url', imageUrl);
+  console.log('image', image);
+
   // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (index) => {
     const imgArr = image.filter((image, i) => i !== index);
@@ -29,31 +63,30 @@ const ImageUploadButton = ({ className, setUploadImg, inputRef }) => {
 
     setImgfile([...imgArr]);
     setImageUrl([...imgNameArr]);
+    // setUploadImg([...imgArr]);
   };
 
   // 부모요소에 이미지 전달
   setUploadImg(image);
   return (
     <>
-      {imageUrl.length > 0 && (
+      {imageUrl.length === 0 ? null : (
         <PreviewImgItem>
-          {imageUrl.length > 1
-            ? imageUrl.map((image, i) => {
-                return (
-                  <MultipleImgList key={i}>
-                    <PreviewImg src={image} alt={`${image}-${i}`} />
-                    <DeletButton onClick={() => handleDeleteImage(i)}></DeletButton>
-                  </MultipleImgList>
-                );
-              })
-            : imageUrl.map((image, i) => {
-                return (
-                  <ImgList key={i}>
-                    <PreviewImg src={image} alt={`${image}-${i}`} />
-                    <DeletButton onClick={() => handleDeleteImage(i)}></DeletButton>
-                  </ImgList>
-                );
-              })}
+          {imageUrl.length > 1 ? (
+            imageUrl.map((image, i) => {
+              return (
+                <MultipleImgList key={i}>
+                  <PreviewImg src={image} alt={`${image}-${i}`} />
+                  <DeletButton onClick={() => handleDeleteImage(i)}></DeletButton>
+                </MultipleImgList>
+              );
+            })
+          ) : (
+            <ImgList>
+              <PreviewImg src={imageUrl} alt={`${imageUrl}`} />
+              <DeletButton onClick={() => handleDeleteImage(0)}></DeletButton>
+            </ImgList>
+          )}
         </PreviewImgItem>
       )}
       <div>

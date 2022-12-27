@@ -8,7 +8,7 @@ import Loading from '../../components/common/Loading/Loading';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import styled from 'styled-components';
 import PostComment from './PostComment';
-import DetailPost from './DetailPost';
+import Post from '../../components/common/Post/Post';
 const PostDetailPage = () => {
   // TODO : useParams 사용 가능하게 되면 변경
   const { postid } = useParams();
@@ -109,7 +109,7 @@ const PostDetailPage = () => {
           <TopBasicNav />
           <PostViewer>
             <h2 className='sr-only'>Post Item</h2>
-            <DetailPost post={postData} />
+            <Post post={postData} />
           </PostViewer>
           <h2 className='sr-only'>PostComment</h2>
           <PostComment post={commentsData} />
