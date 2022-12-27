@@ -12,6 +12,7 @@ const PostComment = ({ post }) => {
   const [isMyComment, setIsMyComment] = useState(false); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
   const { userAccountname } = useContext(AuthContextStore);
   const [data, setData] = useState();
+  const [commentId, SetCommentId] = useState('');
   useEffect(() => {
     if (post) {
       setData(post);
@@ -24,6 +25,7 @@ const PostComment = ({ post }) => {
 
   // TODO : 내댓글인지 아닌지 판단하여, 각 상황에 맞게 모달 오픈
   const onClickButtonHandler = (data) => {
+    SetCommentId(data.id);
     setIsOpenModal(true);
     if (userAccountname === data.author.accountname) {
       setIsMyComment(true);
@@ -76,7 +78,7 @@ const PostComment = ({ post }) => {
       ) : (
         <Loading />
       )}
-      {isOpenModal ? <CommentModal closeModal={closeModal} isMyComment={isMyComment} /> : <></>}
+      {isOpenModal ? <CommentModal closeModal={closeModal} isMyComment={isMyComment} commentID={commentId} /> : <></>}
     </PostCommentList>
   );
 };
