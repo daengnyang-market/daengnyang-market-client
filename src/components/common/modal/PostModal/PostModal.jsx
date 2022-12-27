@@ -5,7 +5,7 @@ import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { AuthContextStore } from '../../../../context/AuthContext';
 import { MenuList, MenuItem } from './../Styled';
-const PostModal = ({ closeModal, isMyPost }) => {
+const PostModal = ({ closeModal, isMyPost, postID }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { userToken } = useContext(AuthContextStore);
@@ -23,7 +23,7 @@ const PostModal = ({ closeModal, isMyPost }) => {
   };
   const deletePost = () => {
     axios({
-      url: url + `/post/${postid}`,
+      url: url + `/post/${postID}`,
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -37,7 +37,7 @@ const PostModal = ({ closeModal, isMyPost }) => {
   };
   const reportPost = () => {
     axios({
-      url: url + `/post/${postid}/report`,
+      url: url + `/post/${postID}/report`,
       method: 'POST',
       headers: {
         Authorization: `Bearer ${userToken}`,
@@ -46,7 +46,7 @@ const PostModal = ({ closeModal, isMyPost }) => {
     })
       .then((res) => {
         setIsReport(true);
-        if (postid === res.data.report.post) {
+        if (postID === res.data.report.post) {
           setIsReportSuccess(true);
         } else {
           setIsReportSuccess(false);
