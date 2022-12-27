@@ -18,8 +18,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountname } = useParams();
-  // state 랜더링 위해 추가
-  const [isRendered, setIsRendered] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
@@ -45,46 +44,45 @@ const ProfilePage = () => {
       },
     })
       .then((res) => {
+        setIsLoading(false);
         setUserProfileInfo(res.data.profile);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setIsLoading(false);
+        console.error(err);
+      });
   };
 
   useEffect(() => {
-    setIsRendered(true);
     getUserProfileInfo();
   }, [userToken, accountname]);
 
-  if (!userProfileInfo) {
-    <LoadingWrapper>
-      <Loading />;
-    </LoadingWrapper>;
-  } else {
-    return (
-      <>
-        <TopBasicNav />
-        <ContentsLayout padding='2rem 0 0 0'>
-          <ProfileHeader profileData={userProfileInfo} />
-          <ProfileProduct />
-          <ProfilePost postState={true} />
-        </ContentsLayout>
-        <TabMenu currentMenuId={4} />
-      </>
-    );
-  }
+  return (
+    <>
+      {isLoading ? (
+        <LoadingWrapper>
+          <Loading />
+        </LoadingWrapper>
+      ) : (
+        <>
+          <TopBasicNav />
+          <ContentsLayout padding='2rem 0 0 0'>
+            <ProfileHeader profileData={userProfileInfo} />
+            <ProfileProduct />
+            <ProfilePost postState={true} />
+          </ContentsLayout>
+          <TabMenu currentMenuId={4} />
+        </>
+      )}
+    </>
+  );
 };
 
 export default ProfilePage;
+
 const LoadingWrapper = styled.div`
   position: fixed;
   top: 45%;
   left: 50%;
   transform: translate(-50%, -45%);
-`;
-const SectionBorder = styled.div`
-  height: 6px;
-  width: 100%;
-  border-top: 0.5px solid var(--border-color);
-  border-bottom: 0.5px solid var(--border-color);
-  background-color: var(--chat-bg-color);
 `;
