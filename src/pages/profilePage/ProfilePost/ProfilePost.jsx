@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import axios from 'axios';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import React, { useContext, useState, useEffect } from 'react';
 import Post from '../../../components/common/Post/Post';
 import { AuthContextStore } from '../../../context/AuthContext';
+import Loading from '../../../components/common/Loading/Loading';
 import {
   POST_ALBUM_OFF_ICON,
   POST_ALBUM_ON_ICON,
@@ -12,14 +13,12 @@ import {
   LAYERS_ICON,
 } from '../../../styles/CommonIcons';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
-import Loading from '../../../components/common/Loading/Loading';
 
 const ProfilePost = () => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [test, setTest] = useState([]);
-  const location = useLocation();
   const [isRendered, setIsRendered] = useState(true);
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
