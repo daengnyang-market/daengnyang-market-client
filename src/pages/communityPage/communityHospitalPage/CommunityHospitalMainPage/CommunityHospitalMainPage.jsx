@@ -7,7 +7,7 @@ import FilterMenu from './FilterMenu';
 import useCurrentLocation from '../../../../hooks/useCurrentLocation';
 import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
 
-const CommunityHospitaMainPage = () => {
+const CommunityHospitalMainPage = () => {
   const [isShowFilterMenu, setIsShowFilterMenu] = useState(false);
   const [selectFilterId, setSelectFilterId] = useState(0);
   const filterList = [
@@ -53,7 +53,7 @@ const CommunityHospitaMainPage = () => {
   );
 };
 
-export default CommunityHospitaMainPage;
+export default CommunityHospitalMainPage;
 
 const HospitalInfoWrapper = styled.div`
   padding: 3rem 3.5rem;
