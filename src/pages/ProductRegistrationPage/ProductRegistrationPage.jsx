@@ -233,7 +233,7 @@ const Label = styled.label`
 
 // IE 미지원
 const Img = styled.img`
-  object-fit: scale-down;
+  object-fit: cover;
 `;
 
 const Form = styled.form`
