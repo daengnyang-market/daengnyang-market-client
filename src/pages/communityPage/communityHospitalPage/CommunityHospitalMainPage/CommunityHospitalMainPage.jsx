@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CommunityLayout from './../../CommunityLayout';
-import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
+import CommunityLayout from '../../CommunityLayout';
 import HospitalList from './HospitalList';
 import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
 import useCurrentLocation from '../../../../hooks/useCurrentLocation';
+import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
 
-const CommunityHospitaMainlPage = () => {
+const CommunityHospitalMainPage = () => {
   const [isShowFilterMenu, setIsShowFilterMenu] = useState(false);
   const [selectFilterId, setSelectFilterId] = useState(0);
   const filterList = [
@@ -53,7 +53,7 @@ const CommunityHospitaMainlPage = () => {
   );
 };
 
-export default CommunityHospitaMainlPage;
+export default CommunityHospitalMainPage;
 
 const HospitalInfoWrapper = styled.div`
   padding: 3rem 3.5rem;
