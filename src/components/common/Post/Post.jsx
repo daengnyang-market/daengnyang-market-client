@@ -10,20 +10,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import ProfileImage from '../ProfileImage/ProfileImage';
-import PostModal from '../modal/PostModal/PostModal';
 import Loading from '../Loading/Loading';
 
 const Post = ({ post = {} }) => {
-  const { userToken, userAccountname } = useContext(AuthContextStore);
-
   const [like, setLike] = useState(false);
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (post) {
       return setData({ ...post });
@@ -50,7 +46,6 @@ const Post = ({ post = {} }) => {
   const closeModal = () => {
     setIsOpenModal(false);
   };
-
   return (
     <>
       {data ? (
@@ -71,26 +66,31 @@ const Post = ({ post = {} }) => {
             <ContentWrapperDiv>
               <PostDetailLink to={`/post/${data.id}`} type='content'>
                 <ContentText>{data.content}</ContentText>
-                <SwiperWrapper>
-                  <Swiper
-                    spaceBetween={30}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className='mySwiper'
-                  >
-                    {imageFile ? (
-                      imageFile.map((img, i) => (
-                        <SwiperSlide key={i}>
-                          <ContentImg src={img} alt='' />
-                        </SwiperSlide>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </Swiper>
-                </SwiperWrapper>
+                {/* TODO : 이미지파일이 없으면 <></>대체한다. */}
+                {imageFile[0] ? (
+                  <SwiperWrapper>
+                    <Swiper
+                      spaceBetween={30}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      modules={[Pagination]}
+                      className='mySwiper'
+                    >
+                      {imageFile ? (
+                        imageFile.map((img, i) => (
+                          <SwiperSlide key={i}>
+                            <ContentImg src={img} alt='' />
+                          </SwiperSlide>
+                        ))
+                      ) : (
+                        <></>
+                      )}
+                    </Swiper>
+                  </SwiperWrapper>
+                ) : (
+                  <></>
+                )}
               </PostDetailLink>
               <Div>
                 <LikeButton like={like} onClick={onClickLikeButtonHandler}>

@@ -1,44 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import CommunityLayout from './../../CommunityLayout';
-import CurrentLocationBar from './../CurrentLocationBar';
-import Button from './../../../../components/common/Button/Button';
-import { LOCATION_BLACK_ICON } from '../../../../styles/CommonIcons';
+import { useSearchParams } from 'react-router-dom';
+import CommunityLayout from '../../CommunityLayout';
+import Loading from '../../../../components/common/Loading/Loading';
+import HospitalDetail from './HospitalDetail';
 
 const CommunityHospitalDetailPage = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasNullData, setHasNullData] = useState(false);
+  const [hospitalInfo, setHospitalInfo] = useState({});
+
+  useEffect(() => {
+    setHospitalInfo({
+      address: searchParams.get('road_address'),
+      name: searchParams.get('place_name'),
+      phone: searchParams.get('phone'),
+      x: searchParams.get('x'),
+      y: searchParams.get('y'),
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!hospitalInfo) {
+      return;
+    }
+
+    setIsLoading(false);
+
+    for (let info in hospitalInfo) {
+      if (hospitalInfo[info] === null) {
+        setHasNullData(true);
+      }
+    }
+  }, [hospitalInfo]);
+
   return (
-    <CommunityLayout padding='0' navType='titleNav' currenttMenuId={2} isViewTabMenu={false}>
-      <CurrentLocationBar />
+    <CommunityLayout
+      padding='0'
+      navType='titleNav'
+      currentMenuId={2}
+      isViewTabMenu={false}
+      fillHeight={true}
+      title={hospitalInfo.name}
+    >
       <HospitalDetailWrapper>
-        <h2 className='sr-only'>어쩌구 동물병원 상세 정보</h2>
-        <HospitalMap>지도 들어갈 자리</HospitalMap>
-
-        <HospitalAddressWrapper>
-          <HospitalTitle>어쩌구 동물병원</HospitalTitle>
-          <HospitalAddress>제주도 제주시 무슨읍 무슨로 291-1</HospitalAddress>
-          <HospitalTel>
-            <a href='tel:02-1111-1111'>02-1111-1111</a>
-          </HospitalTel>
-        </HospitalAddressWrapper>
-
-        <ButtonWrapper>
-          <Button
-            size='M'
-            backgroundColor='var(--main-bg-color)'
-            borderColor='var(--border-color)'
-            textColor='var(--text-color)'
-          >
-            전화
-          </Button>
-          <Button
-            size='M'
-            backgroundColor='var(--main-bg-color)'
-            borderColor='var(--border-color)'
-            textColor='var(--text-color)'
-          >
-            주소 복사
-          </Button>
-        </ButtonWrapper>
+        {isLoading ? (
+          <>
+            <Loading />
+          </>
+        ) : hasNullData ? (
+          <>페이지 출력에 실패했습니다. 다시 접속해주세요.</>
+        ) : (
+          <HospitalDetail hospitalInfo={hospitalInfo} />
+        )}
       </HospitalDetailWrapper>
     </CommunityLayout>
   );
@@ -47,57 +62,7 @@ const CommunityHospitalDetailPage = () => {
 export default CommunityHospitalDetailPage;
 
 const HospitalDetailWrapper = styled.section`
-  padding: 3rem 3.5rem;
-`;
-
-const HospitalMap = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 25.5rem;
-  margin-bottom: 2.5rem;
-  font-size: var(--fs-xl);
-  background-color: var(--border-color);
-`;
-
-const HospitalAddressWrapper = styled.address`
-  margin-bottom: 2.5rem;
-  text-align: center;
-
-  &::before {
-    display: inline-block;
-    content: '';
-    width: 25px;
-    height: 25px;
-    margin-bottom: 1.5rem;
-    background: no-repeat center/cover url(${LOCATION_BLACK_ICON});
-  }
-`;
-
-const HospitalTitle = styled.strong`
-  display: block;
-  margin-bottom: 1.5rem;
-  font-size: var(--fs-xl);
-`;
-
-const HospitalAddress = styled.p`
-  margin-bottom: 1rem;
-  font-size: var(--fs-lg);
-`;
-
-const HospitalTel = styled.p`
-  font-size: var(--fs-lg);
-  color: var(--sub-text-color);
-
-  &::before {
-    content: 'TEL. ';
-    font-weight: 500;
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
+  flex: 1;
+  height: 100%;
+  border-top: 1px solid var(--border-color);
 `;

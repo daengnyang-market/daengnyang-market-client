@@ -19,9 +19,10 @@ import LAYERS_ICON from '../assets/icons/layers-icon.png';
 import LEFT_ARROW_ICON from '../assets/icons/left-arrow-icon.png';
 import LOADING_ICON from '../assets/icons/loading-icon.png';
 import LOCATION_ICON from '../assets/icons/location-icon.png';
-import LOCATION_BLACK_ICON from '../assets/icons/location-black-icon.png';
+import LOCATION_BORDER_ICON from '../assets/icons/location-border-icon.png';
 import MORE_ICON from '../assets/icons/more-icon.png';
 import MORE_SMALL_ICON from '../assets/icons/more-small-icon.png';
+import PHONE_ICON from '../assets/icons/phone-icon.png';
 import POST_ALBUM_OFF_ICON from '../assets/icons/post-album-off-icon.png';
 import POST_ALBUM_ON_ICON from '../assets/icons/post-album-on-icon.png';
 import POST_LIST_OFF_ICON from '../assets/icons/post-list-off-icon.png';
@@ -59,9 +60,10 @@ export {
   LEFT_ARROW_ICON,
   LOADING_ICON,
   LOCATION_ICON,
-  LOCATION_BLACK_ICON,
+  LOCATION_BORDER_ICON,
   MORE_ICON,
   MORE_SMALL_ICON,
+  PHONE_ICON,
   POST_ALBUM_OFF_ICON,
   POST_ALBUM_ON_ICON,
   POST_LIST_OFF_ICON,
