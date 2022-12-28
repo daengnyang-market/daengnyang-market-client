@@ -31,31 +31,30 @@ const ProfilePage = () => {
     if (location.pathname === `/profile/${userAccountname}`) {
       navigate('/profile');
     }
-  }, [location, accountname]);
-
-  // 유저 프로필 불러오기
-  const getUserProfileInfo = () => {
-    axios({
-      url: url + `/profile/${accountname ? accountname : userAccountname}`,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        'Content-type': 'application/json',
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        setUserProfileInfo(res.data.profile);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.error(err);
-      });
-  };
+  }, [location, userAccountname, navigate]);
 
   useEffect(() => {
+    // 유저 프로필 불러오기
+    const getUserProfileInfo = () => {
+      axios({
+        url: url + `/profile/${accountname ? accountname : userAccountname}`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((res) => {
+          setIsLoading(false);
+          setUserProfileInfo(res.data.profile);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.error(err);
+      });
+    };
     getUserProfileInfo();
-  }, [userToken, accountname]);
+  }, [url, accountname, userAccountname, userToken]);
 
   return (
     <>

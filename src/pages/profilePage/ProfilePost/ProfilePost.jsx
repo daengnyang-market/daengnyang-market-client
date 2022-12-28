@@ -27,30 +27,28 @@ const ProfilePost = () => {
   // 포스트 담기
   const [myPostList, setMyPost] = useState([]);
 
-  const getMyPost = () => {
-    const url = `https://mandarin.api.weniv.co.kr`;
-
-    axios({
-      url: url + `/post/${accountname ? accountname : userAccountname}/userpost`,
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${userToken}`,
-        'Content-type': 'application/json',
-      },
-    })
-      .then((res) => {
-        setIsLoading(false);
-        setMyPost(res.data.post);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
+    const getMyPost = () => {
+      const url = `https://mandarin.api.weniv.co.kr`;
+      axios({
+        url: url + `/post/${accountname ? accountname : userAccountname}/userpost`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((res) => {
+          setIsLoading(false);
+          setMyPost(res.data.post);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          console.log(err);
+        });
+      };
     getMyPost();
-  }, [userToken, accountname]);
+  }, [userToken, accountname, userAccountname]);
 
   // useEffect(() => {
   //   setTest(testFunction(myPostList));
