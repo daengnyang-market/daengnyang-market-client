@@ -97,7 +97,7 @@ const Post = ({ post = {} }) => {
                   <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
                 </LikeButton>
                 <LikeSpan>{data.heartCount}</LikeSpan>
-                <PostDetailLink to={`/data/${data.id}`} type='comment'>
+                <PostDetailLink to={`/post/${post.id}`} type='comment'>
                   <ChatImg src={REPLY_ICON} alt='댓글 보기' />
                   <ChatSpan>{data.commentCount}</ChatSpan>
                 </PostDetailLink>
