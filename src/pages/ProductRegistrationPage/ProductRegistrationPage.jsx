@@ -9,6 +9,7 @@ import ItemNameInput from './ItemNameInput';
 import PriceInput from './PriceInput';
 import ItemLinkInput from './ItemLinkInput';
 import { AuthContextStore } from '../../context/AuthContext';
+import imageCompression from 'browser-image-compression';
 
 const ProductRegistrationPage = ({
   activeModButton,
@@ -38,6 +39,33 @@ const ProductRegistrationPage = ({
   };
 
   const [itemImage, setItemImage] = useState('');
+
+  // 이미지 리사이징
+  const onChangeInputHandler = (event) => {
+    const [file] = event.target.files;
+
+    imageCompression(file, {
+      maxSizeMB: 0.08,
+      maxWidthOrHeight: 320,
+    }).then((compressedFile) => {
+      const newFile = new File([compressedFile], file.name, { type: file.type });
+
+      // Blob to Base64
+      const readerBlob = new FileReader();
+      readerBlob.readAsDataURL(compressedFile);
+      readerBlob.onloadend = () => {
+        if (itemImageModFunction) {
+          itemImageModFunction(readerBlob.result);
+        } else {
+          setItemImage(readerBlob.result);
+        }
+        // console.log(readerBlob.result);
+        // console.log(compressedFile);
+      };
+      encodeFile(newFile);
+      setThumbnailImg(newFile);
+    });
+  };
 
   const { userToken } = useContext(AuthContextStore);
 
@@ -73,26 +101,16 @@ const ProductRegistrationPage = ({
   // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
 
-  const onChangeInputHandler = (e) => {
+  const encodeFile = (file) => {
     const reader = new FileReader();
-
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-
-    reader.onloadend = () => {
-      const thumbnailImgUrl = reader.result;
-
-      if (thumbnailImgUrl) {
-        setThumbnailImg([thumbnailImgUrl]);
-      }
-
-      if (itemImageModFunction) {
-        itemImageModFunction(thumbnailImgUrl);
-      } else {
-        setItemImage(thumbnailImgUrl);
-      }
-    };
+    reader.readAsDataURL(file);
+    return new Promise((resolve) => {
+      reader.onloadend = () => {
+        const thumbnailImgUrl = reader.result;
+        setThumbnailImg(thumbnailImgUrl);
+        resolve();
+      };
+    });
   };
 
   // 버튼 활성화
@@ -102,8 +120,6 @@ const ProductRegistrationPage = ({
     } else {
       setDisabledButton(true);
     }
-    // console.log('render!!');
-    // console.log(link);
   }, [thumbnailImg, itemName, price, link]);
 
   return (
@@ -114,10 +130,8 @@ const ProductRegistrationPage = ({
           activeButton={disabledButton}
           onClick={() => {
             if (onClickProductModificationHandler) {
-              // console.log('onClickProductModificationHandler가 있습니다!');
               onClickProductModificationHandler();
             } else {
-              // console.log('tonClickProductModificationHandler가 없습니다!');
               onClickProductRegistrationHandler();
             }
           }}
@@ -131,7 +145,15 @@ const ProductRegistrationPage = ({
           <Label htmlFor='productImg'>
             {thumbnailImg ? <Img src={thumbnailImg} alt='' /> : itemImageMod ? <Img src={itemImageMod} alt='' /> : ''}
           </Label>
-          <input onChange={onChangeInputHandler} className='sr-only' id='productImg' type='file' accept='image/*' />
+          <input
+            onChange={(event) => {
+              onChangeInputHandler(event);
+            }}
+            className='sr-only'
+            id='productImg'
+            type='file'
+            accept='image/*'
+          />
           <Form>
             <ItemNameInput
               itemNameFunction={itemNameFunction}
