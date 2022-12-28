@@ -17,7 +17,7 @@ const PostComment = ({ post }) => {
     if (post) {
       setData(post);
     }
-  }, []);
+  }, [post]);
 
   const closeModal = () => {
     setIsOpenModal(false);

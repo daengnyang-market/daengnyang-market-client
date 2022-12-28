@@ -24,7 +24,7 @@ const Post = ({ post = {} }) => {
     if (post) {
       return setData({ ...post });
     }
-  }, []);
+  }, [post]);
 
   useEffect(() => {
     if (data) {
