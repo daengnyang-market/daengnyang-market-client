@@ -18,18 +18,31 @@ const PriceInput = ({
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
 
-  // 상품 수정 페이지 / 등록 페이지
+  // 콤마 찍기, 콤마 없애기
+  const commaFunction = (value) => {
+    const comma = (value) => {
+      value = String(value);
+      return value.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+    };
+    const uncomma = (value) => {
+      value = String(value);
+      return value.replace(/[^\d]+/g, '');
+    };
+    return comma(uncomma(value));
+  };
+
+  // 상품 수정 페이지, 등록 페이지
   const [value, setValue] = useState('');
   useEffect(() => {
     if (priceMod) {
-      setValue(priceMod);
+      setValue(commaFunction(priceMod));
     } else {
-      setValue(inputValue);
+      setValue(commaFunction(inputValue));
     }
   }, [inputValue, priceMod]);
 
   const handleChange = (e) => {
-    setInputValue(e.target.value.replace(/[^0-9]/g, ''));
+    setInputValue(commaFunction(e.target.value.replace(/[^0-9]/g, '')));
 
     if (e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
@@ -37,7 +50,7 @@ const PriceInput = ({
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    //상품 수정 페이지 / 등록 페이지
+    //상품 수정 페이지, 등록 페이지
     if (priceModFunction) {
       priceModFunction(e.target.value.replace(/[^0-9]/g, ''));
     } else {
