@@ -46,7 +46,6 @@ const Post = ({ post = {} }) => {
   const closeModal = () => {
     setIsOpenModal(false);
   };
-
   return (
     <>
       {data ? (
@@ -67,26 +66,31 @@ const Post = ({ post = {} }) => {
             <ContentWrapperDiv>
               <PostDetailLink to={`/post/${data.id}`} type='content'>
                 <ContentText>{data.content}</ContentText>
-                <SwiperWrapper>
-                  <Swiper
-                    spaceBetween={30}
-                    pagination={{
-                      clickable: true,
-                    }}
-                    modules={[Pagination]}
-                    className='mySwiper'
-                  >
-                    {imageFile ? (
-                      imageFile.map((img, i) => (
-                        <SwiperSlide key={i}>
-                          <ContentImg src={img} alt='' />
-                        </SwiperSlide>
-                      ))
-                    ) : (
-                      <></>
-                    )}
-                  </Swiper>
-                </SwiperWrapper>
+                {/* TODO : 이미지파일이 없으면 <></>대체한다. */}
+                {imageFile[0] ? (
+                  <SwiperWrapper>
+                    <Swiper
+                      spaceBetween={30}
+                      pagination={{
+                        clickable: true,
+                      }}
+                      modules={[Pagination]}
+                      className='mySwiper'
+                    >
+                      {imageFile ? (
+                        imageFile.map((img, i) => (
+                          <SwiperSlide key={i}>
+                            <ContentImg src={img} alt='' />
+                          </SwiperSlide>
+                        ))
+                      ) : (
+                        <></>
+                      )}
+                    </Swiper>
+                  </SwiperWrapper>
+                ) : (
+                  <></>
+                )}
               </PostDetailLink>
               <Div>
                 <LikeButton like={like} onClick={onClickLikeButtonHandler}>
