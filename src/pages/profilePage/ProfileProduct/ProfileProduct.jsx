@@ -12,7 +12,7 @@ const ProfileProduct = () => {
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
 
-  const [isRendered, setisRendered] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   // 상품 담기
   const [productList, setProductList] = useState([]);
 
@@ -29,41 +29,47 @@ const ProfileProduct = () => {
       },
     })
       .then((res) => {
+        setIsLoading(false);
         setProductList(res.data.product);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        setIsLoading(false);
+        console.error(err);
+      });
   };
   useEffect(() => {
-    setisRendered(true);
     getProduct();
   }, [userToken, accountname]);
 
-  if (!isRendered) {
-    <LoadingWrapper>
-      <Loading />;
-    </LoadingWrapper>;
-  } else {
-    return productList.length > 0 ? (
-      <>
-        <ProductWrapper>
-          <h2>판매 중인 상품</h2>
-          <MultiItemCarousel itemList={productList} />
-        </ProductWrapper>
-        <SectionBorder />
-      </>
-    ) : (
-      <></>
-    );
-  }
+  return (
+    <>
+      {isLoading ? (
+        <LoadingWrapper>
+          <Loading />
+        </LoadingWrapper>
+      ) : productList.length > 0 ? (
+        <>
+          <ProductWrapper>
+            <h2>판매 중인 상품</h2>
+            <MultiItemCarousel itemList={productList} />
+          </ProductWrapper>
+          <SectionBorder />
+        </>
+      ) : (
+        <></>
+      )}
+    </>
+  );
 };
 
 export default ProfileProduct;
 
 const LoadingWrapper = styled.div`
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -45%);
+  display: flex;
+  height: 208px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ProductWrapper = styled.section`

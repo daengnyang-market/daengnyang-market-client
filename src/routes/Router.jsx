@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import ChatRoomPage from '../pages/ChatRoomPage/ChatRoomPage';
-import CommunityHospitalDetailPage from '../pages/communityPage/communityHospitalPage/CommunityHospitalDetailPage/CommunityHospitalDetailPage';
-import CommunityHospitaMainlPage from '../pages/communityPage/communityHospitalPage/CommunityHospitalMainPage/CommunityHospitaMainlPage';
 import CommunityMainPage from '../pages/communityPage/CommunityMainPage/CommunityMainPage';
 import CommunityWeatherPage from '../pages/communityPage/CommunityWeatherPage/CommunityWeatherPage';
 import EmailLoginPage from '../pages/EmailLoginPage/EmailLoginPage';
@@ -20,6 +18,7 @@ import SplashScreen from '../pages/SplashScreen/SplashScreen';
 import ChatListPage from '../pages/chatListPage/ChatListPage';
 import ProfileSettingsPage from '../pages/ProfileSettingsPage/ProfileSettingsPage';
 import Error404Page from '../pages/Error404Page/Error404Page';
+import CommunityHospitalPage from '../pages/communityPage/CommunityHospitalPage/CommunityHospitalPage';
 
 const Router = () => {
   return (
@@ -43,8 +42,7 @@ const Router = () => {
       <Route path='/product/:productid/edit' element={<ProductModificationPage />} />
       <Route path='/community' element={<CommunityMainPage />} />
       <Route path='/community/weather' element={<CommunityWeatherPage />} />
-      <Route path='/community/hospital' element={<CommunityHospitaMainlPage />} />
-      <Route path='/community/hospital/:hospitalid' element={<CommunityHospitalDetailPage />} />
+      <Route path='/community/hospital' element={<CommunityHospitalPage />} />
       <Route path='/chat' element={<ChatListPage />} />
       <Route path='/chat/:accountname' element={<ChatRoomPage />} />
       <Route path='*' element={<Error404Page />} />
