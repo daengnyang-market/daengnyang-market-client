@@ -57,10 +57,10 @@ const ProfileHeader = ({ profileData }) => {
 export default ProfileHeader;
 
 const LoadingWrapper = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ProfileWrapper = styled.header`
