@@ -26,7 +26,7 @@ const FeedPage = () => {
   };
 
   // 무한 스크롤
-  const [numFeed, setNumFeed] = useState(20);
+  const [numFeed, setNumFeed] = useState(10);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
