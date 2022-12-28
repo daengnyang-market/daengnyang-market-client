@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContext, AuthContextStore } from '../../context/AuthContext';
+import { useInView } from 'react-intersection-observer';
 
 import TopMainNav from '../.././components/common/TopNavBar/TopMainNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
@@ -18,42 +19,56 @@ const FeedPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   const url = 'https://mandarin.api.weniv.co.kr';
-  // const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
   const { userToken } = useContext(AuthContextStore);
 
   const goSearch = () => {
     navigate('/search');
   };
 
+  // 무한 스크롤
+  const [numFeed, setNumFeed] = useState(20);
+  const [loading, setLoading] = useState(false);
+  const [ref, inView] = useInView();
+
+  const getUserFeed = useCallback(async () => {
+    setLoading(true);
+    const option = {
+      url: url + `/post/feed/?limit=${numFeed}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    };
+    await axios(option)
+      .then((res) => {
+        setIsLoading(false);
+        setLoading(false);
+        setIsFollowingPost(res.data.posts);
+        // console.log('useEffect 확인코드');
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.error(err);
+      });
+  }, [numFeed]);
+
   useEffect(() => {
     if (userToken) {
-      const getUserFeed = async () => {
-        const option = {
-          url: url + `/post/feed`,
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            'Content-type': 'application/json',
-          },
-        };
-
-        await axios(option)
-          .then((res) => {
-            setIsLoading(false);
-            setIsFollowingPost(res.data.posts);
-          })
-          .catch((err) => {
-            setIsLoading(false);
-            console.error(err);
-          });
-      };
-
       getUserFeed();
+      // console.log('useEffect 확인코드2');
     } else {
       navigate('/');
       return;
     }
-  }, [userToken]);
+  }, [userToken, getUserFeed]);
+
+  useEffect(() => {
+    if (inView && !loading) {
+      setNumFeed((current) => current + 10);
+      // console.log('useEffect 확인코드3');
+    }
+  }, [inView, loading]);
 
   return (
     <>
@@ -67,13 +82,15 @@ const FeedPage = () => {
           {isFollowingPost.length > 0 ? (
             <ContentsLayout>
               <div>
-                {isFollowingPost.map((post) => {
-                  return (
+                {isFollowingPost.map((post,i) => 
+                  isFollowingPost.length -1 === i ? (
+                    <div ref={ref}/>
+                  ) : (
                     <div key={post.id}>
-                      <Post post={post} />
-                    </div>
-                  );
-                })}
+                    <Post post={post} />
+                  </div>
+                  )
+                )}
               </div>
             </ContentsLayout>
           ) : (
