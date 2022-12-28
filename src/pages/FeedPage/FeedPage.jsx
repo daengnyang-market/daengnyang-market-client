@@ -82,14 +82,14 @@ const FeedPage = () => {
           {isFollowingPost.length > 0 ? (
             <ContentsLayout>
               <div>
-                {isFollowingPost.map((post,i) => 
-                  isFollowingPost.length -1 === i ? (
-                    <div ref={ref}/>
+                {isFollowingPost.map((post, i) =>
+                  isFollowingPost.length - 1 === i ? (
+                    <div key={post.id} ref={ref} />
                   ) : (
                     <div key={post.id}>
-                    <Post post={post} />
-                  </div>
-                  )
+                      <Post post={post} />
+                    </div>
+                  ),
                 )}
               </div>
             </ContentsLayout>
