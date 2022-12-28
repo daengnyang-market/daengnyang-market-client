@@ -119,7 +119,7 @@ const EmailLoginPage = () => {
         </Button>
       </form>
 
-      <JoinLink to='#'>이메일로 회원가입</JoinLink>
+      <JoinLink to='/join'>이메일로 회원가입</JoinLink>
     </Main>
   );
 };
