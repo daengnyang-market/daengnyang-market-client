@@ -13,9 +13,19 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const { accountname } = useParams();
   const [opponentData, setOpponentData] = useState();
-  const [isValidate, setIsValidate] = useState(true);
+  const [isValidate, setIsValidate] = useState(false);
   const navigate = useNavigate();
   const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;
+
+  const handleGoChat = () => {
+    if (isValidate === true) {
+      createChatroom();
+    } else if (isValidate === false) {
+      alert('이미 존재하는 방입니다.');
+      console.log('false', isValidate);
+    }
+  };
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
@@ -43,10 +53,6 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
     };
     getMyPost();
   }, [userToken]);
-  // useEffect(()=>{
-
-  // },[opponentData])
-  console.log('확인', opponentData);
 
   const createChatroom = () => {
     axios
@@ -107,6 +113,7 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
         console.error(err);
       });
   };
+
   const getUserContent = (opponentData, profileUserAccountname, userAccountname) => {
     for (let i = 0; i < opponentData.length; i++) {
       if (
@@ -119,24 +126,13 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
       }
     }
   };
+
   useEffect(() => {
     if (opponentData) {
       setIsValidate(getUserContent(opponentData, profileUserAccountname, userAccountname));
     }
   }, [opponentData]);
 
-  const handleGoChat = (e) => {
-    e.preventDefault();
-    if (isValidate === true) {
-      createChatroom();
-    } else if (isValidate === false) {
-      alert('이미 존재하는 방입니다.');
-      console.log('false', isValidate);
-    }
-  };
-  // const test = getUserContent(opponentData, profileUserAccountname, accountname);
-  console.log('과연?데이터는', opponentData);
-  console.log('과연?', isValidate);
   return (
     <UserProfileBtnsStyle>
       <ChatBtn onClick={handleGoChat} />
