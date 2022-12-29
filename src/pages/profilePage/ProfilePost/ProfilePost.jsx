@@ -14,7 +14,7 @@ import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
-const ProfilePost = ({ setEmptyPost }) => {
+const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -107,7 +107,7 @@ const ProfilePost = ({ setEmptyPost }) => {
               </PostGrid>
             )
           ) : (
-            <NoPost>
+            <NoPost emptyProduct={emptyProduct}>
               <img src={EMPTY_POST_IMAGE} alt='포스트가 존재하지 않습니다' />
               <span>아직 작성된 게시글이 없어요.</span>
             </NoPost>
@@ -146,8 +146,6 @@ const PostHeader = styled.section`
   padding: 0.9em 2em;
   border-bottom: 0.5px solid var(--border-color);
 `;
-
-const PostContents = styled.div``;
 
 const ListIcon = styled.button`
   background: no-repeat center / 20px;
@@ -196,6 +194,7 @@ const NoPost = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  ${(props) => (props.emptyProduct ? '' : 'min-height: 60em;')}
   background-color: var(--chat-bg-color);
 
   & img {

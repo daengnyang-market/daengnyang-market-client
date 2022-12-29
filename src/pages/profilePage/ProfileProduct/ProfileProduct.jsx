@@ -7,7 +7,7 @@ import { AuthContextStore } from '../../../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
-const ProfileProduct = () => {
+const ProfileProduct = ({ setEmptyProduct }) => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -30,6 +30,11 @@ const ProfileProduct = () => {
     })
       .then((res) => {
         setIsLoading(false);
+
+        if (res.data.product.length === 0) {
+          setEmptyProduct(true);
+        }
+
         setProductList(res.data.product);
       })
       .catch((err) => {

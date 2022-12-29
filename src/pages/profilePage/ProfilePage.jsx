@@ -20,6 +20,7 @@ const ProfilePage = () => {
   let { accountname } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [emptyPost, setEmptyPost] = useState(false);
+  const [emptyProduct, setEmptyProduct] = useState(false);
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
@@ -66,10 +67,13 @@ const ProfilePage = () => {
       ) : (
         <>
           <TopBasicNav />
-          <ContentsLayout padding='2rem 0 0 0' isFill={emptyPost}>
+          <ContentsLayout
+            padding='2rem 0 0 0'
+            emptyProfileState={emptyPost && emptyProduct ? 'twice' : emptyPost ? 'post' : null}
+          >
             <ProfileHeader profileData={userProfileInfo} profileUserAccountname={accountname} />
-            <ProfileProduct />
-            <ProfilePost setEmptyPost={setEmptyPost} />
+            <ProfileProduct setEmptyProduct={setEmptyProduct} />
+            <ProfilePost setEmptyPost={setEmptyPost} emptyProduct={emptyProduct} />
           </ContentsLayout>
           <TabMenu currentMenuId={4} />
         </>
