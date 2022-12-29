@@ -12,7 +12,7 @@ import {
 } from '../../../styles/CommonIcons';
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
 const ProfilePost = ({ setEmptyPost }) => {
   let { accountname } = useParams();
@@ -90,12 +90,16 @@ const ProfilePost = ({ setEmptyPost }) => {
                   return post.image ? (
                     post.image.includes(',') ? (
                       <li>
-                        <img key={post.id} src={post.image.split(',')[0]} alt='썸네일 이미지' />
-                        <img className='layer-icon' src={LAYERS_ICON} alt='레이어 아이콘' />
+                        <Link to={`/post/${post.id}`}>
+                          <img key={post.id} src={post.image.split(',')[0]} alt='썸네일 이미지' />
+                          <img className='layer-icon' src={LAYERS_ICON} alt='레이어 아이콘' />
+                        </Link>
                       </li>
                     ) : (
                       <>
-                        <img key={post.id} src={post.image} alt='썸네일 이미지'></img>
+                        <Link to={`/post/${post.id}`}>
+                          <img key={post.id} src={post.image} alt='썸네일 이미지'></img>
+                        </Link>
                       </>
                     )
                   ) : null;
