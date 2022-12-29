@@ -6,40 +6,56 @@ import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
 import InputUserName from './InputUserName';
 import InputAccountName from './InputAccountName';
 import InputIntro from './InputIntro';
+import imageCompression from 'browser-image-compression';
 
 const ProfileInfo = ({
   userNameFunction,
   accountNameFunction,
   introFunction,
   imageFunction,
-  // disabledButtonFunction,
-
   userName,
   defaultAcconutName,
   accountName,
   intro,
   image,
 }) => {
+  const onChangeInputHandler = (event) => {
+    const [file] = event.target.files;
+
+    imageCompression(file, {
+      maxSizeMB: 0.08,
+      maxWidthOrHeight: 320,
+    }).then((compressedFile) => {
+      const newFile = new File([compressedFile], file.name, { type: file.type });
+
+      // Blob to Base64
+      const readerBlob = new FileReader();
+      readerBlob.readAsDataURL(compressedFile);
+      readerBlob.onloadend = () => {
+        if (imageFunction) {
+          imageFunction(readerBlob.result);
+        } else {
+          setThumbnailImg(readerBlob.result);
+        }
+      };
+      encodeFile(newFile);
+      setThumbnailImg(newFile);
+    });
+  };
+
   // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
 
-  const onChangeInputHandler = (e) => {
+  const encodeFile = (file) => {
     const reader = new FileReader();
-
-    if (e.target.files[0]) {
-      reader.readAsDataURL(e.target.files[0]);
-    }
-
-    reader.onloadend = () => {
-      const thumbnailImgUrl = reader.result;
-
-      if (thumbnailImgUrl) {
-        setThumbnailImg([thumbnailImgUrl]);
-      }
-
-      imageFunction(thumbnailImgUrl);
-      // console.log(thumbnailImgUrl);
-    };
+    reader.readAsDataURL(file);
+    return new Promise((resolve) => {
+      reader.onloadend = () => {
+        const thumbnailImgUrl = reader.result;
+        setThumbnailImg(thumbnailImgUrl);
+        resolve();
+      };
+    });
   };
 
   return (
@@ -56,9 +72,15 @@ const ProfileInfo = ({
           <UploadFileIconImg src={UPLOAD_FILE_ICON} alt='' />
         </WrapperImg>
       </label>
-      <input onChange={onChangeInputHandler} className='sr-only' type='file' id='profileImg' accept='image/*' />
-
-      {/* {thumbnailImg ? <Img src={thumbnailImg} alt='' /> : ''} */}
+      <input
+        onChange={(event) => {
+          onChangeInputHandler(event);
+        }}
+        className='sr-only'
+        type='file'
+        id='profileImg'
+        accept='image/*'
+      />
 
       <Form>
         <InputUserName
@@ -78,7 +100,6 @@ const ProfileInfo = ({
           placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
           maxLength='10'
           accountNameFunction={accountNameFunction}
-          // disabledButtonFunction={disabledButtonFunction}
           defaultAcconutName={defaultAcconutName}
           accountName={accountName}
         />
