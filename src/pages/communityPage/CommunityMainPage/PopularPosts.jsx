@@ -1,74 +1,120 @@
 import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useCallback } from 'react';
+import { useInView } from 'react-intersection-observer';
 import styled from 'styled-components';
-import Loading from '../../../components/common/Loading/Loading';
 import { AuthContextStore } from '../../../context/AuthContext';
 import Post from './../../../components/common/Post/Post';
 import EmptyPosts from './EmptyPosts';
 
-const PopularPosts = ({ isLoading, isEmpty, changeLoadingState, changeEmptyState }) => {
+const PopularPosts = ({ isEmpty, changeEmptyState }) => {
+  const [ref, inView] = useInView({
+    threshold: 0,
+  });
+  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+
   const { userToken, userAccountname } = useContext(AuthContextStore);
-  const [popularPosts, setPopularPosts] = useState([]);
+  const [emptyFeedPosts, setEmptyFeedPosts] = useState(false);
+  const [emptyMyPosts, setEmptyMyPosts] = useState(false);
+  const [recommendPosts, setRecommendPosts] = useState([]);
   const BASE_URL = 'https://mandarin.api.weniv.co.kr';
 
   useEffect(() => {
-    const getFeedPosts = async () => {
-      const header = { headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' } };
+    window.scrollTo(0, 0);
+  }, []);
 
-      await axios
-        .all([
-          axios.get(BASE_URL + '/post/feed', header),
-          axios.get(BASE_URL + `/post/${userAccountname}/userpost`, header),
-        ])
-        .then(
-          axios.spread((res1, res2) => {
-            const feedPosts = res1.data.posts;
-            const myPosts = res2.data.post;
-            const posts = [...feedPosts, ...myPosts];
+  const getFeedPosts = useCallback(async () => {
+    let feedPosts = [];
 
-            if (posts.length > 0) {
-              changeEmptyState(false);
-              sortPopularPosts(posts);
-            }
+    await axios
+      .get(BASE_URL + `/post/feed?limit=10&skip=${page}`, {
+        headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' },
+      })
+      .then((res) => {
+        feedPosts = res.data.posts;
 
-            changeLoadingState(false);
-          }),
-        );
+        if (feedPosts.length < 5) {
+          setEmptyFeedPosts(true);
+        }
+      });
+
+    return feedPosts;
+  }, [page]);
+
+  const getMyPosts = useCallback(async () => {
+    let myPosts = [];
+
+    await axios
+      .get(BASE_URL + `/post/${userAccountname}/userpost?limit=10&skip=${page}`, {
+        headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' },
+      })
+      .then((res) => {
+        myPosts = res.data.post;
+
+        if (myPosts.length < 5) {
+          setEmptyMyPosts(true);
+        }
+      });
+
+    return myPosts;
+  }, [page]);
+
+  useEffect(() => {
+    setIsLoading(true);
+
+    const getPopularPosts = async () => {
+      const feedPosts = !emptyFeedPosts ? await getFeedPosts() : [];
+      const myPosts = !emptyMyPosts ? await getMyPosts() : [];
+
+      const posts = [...feedPosts, ...myPosts];
+
+      if (posts.length > 0) {
+        changeEmptyState(false);
+
+        const sortPosts = sortingPosts(posts);
+        setRecommendPosts((prev) => prev.concat(sortPosts));
+      }
     };
 
-    const sortPopularPosts = (posts) => {
+    const sortingPosts = (posts) => {
       const sortPosts = posts.sort((a, b) => {
+        if (a.heartCount + a.commentCount > b.heartCount + b.commentCount) return -1;
+        if (a.heartCount + a.commentCount < b.heartCount + b.commentCount) return 1;
         if (a.heartCount > b.heartCount) return -1;
         if (a.heartCount < b.heartCount) return 1;
-        if (a.commentCount > b.commentCount) return -1;
-        if (a.commentCount < b.commentCount) return 1;
         if (a.createdAt > b.createdAt) return -1;
         if (a.createdAt < b.createdAt) return 1;
         return 0;
       });
 
-      setPopularPosts(sortPosts);
+      return sortPosts;
     };
 
-    getFeedPosts();
-  }, []);
+    getPopularPosts();
+    setIsLoading(false);
+  }, [getFeedPosts, getMyPosts]);
+
+  useEffect(() => {
+    if (!inView || isLoading) {
+      return;
+    }
+
+    setPage((prev) => prev + 10);
+  }, [inView, isLoading]);
 
   return (
     <PopularPostsSection>
       <Header>
-        <Title>실시간 인기글</Title>
+        <Title>오늘의 추천글</Title>
       </Header>
-      {isLoading ? (
-        <LoadingWrapper>
-          <Loading />
-        </LoadingWrapper>
-      ) : isEmpty ? (
+      {isEmpty ? (
         <EmptyPosts />
       ) : (
         <PostWrapper>
-          {popularPosts.map((post) => (
+          {recommendPosts.map((post) => (
             <Post key={post.id} post={post} />
           ))}
+          {emptyFeedPosts && emptyMyPosts ? <></> : <div ref={ref} />}
         </PostWrapper>
       )}
     </PopularPostsSection>
@@ -90,13 +136,6 @@ const Header = styled.header`
 const Title = styled.h2`
   padding: 1.6rem 0 1.6rem 1.6rem;
   font-size: var(--fs-lg);
-`;
-
-const LoadingWrapper = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const PostWrapper = styled.div`

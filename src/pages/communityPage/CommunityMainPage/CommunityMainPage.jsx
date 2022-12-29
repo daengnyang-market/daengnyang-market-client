@@ -10,7 +10,6 @@ import PopularPosts from './PopularPosts';
 import CommunityLayout from '../CommunityLayout';
 
 const CommunityMainPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [isEmpty, setIsEmpty] = useState(true);
 
   const advertisingImageList = [
@@ -20,23 +19,14 @@ const CommunityMainPage = () => {
     { id: 3, src: ADVERTISING4_IMAGE, alt: '현재 위치에서 가장 가까운 동물병원 찾기 서비스 오픈!' },
   ];
 
-  const changeLoadingState = (loadingState) => {
-    setIsLoading(loadingState);
-  };
-
   const changeEmptyState = (emptyState) => {
     setIsEmpty(emptyState);
   };
 
   return (
-    <CommunityLayout currentMenuId={0} fillHeight={isLoading ? true : isEmpty ? true : false}>
+    <CommunityLayout currentMenuId={0} fillHeight={isEmpty}>
       <PaginationCarousel itemList={advertisingImageList} />
-      <PopularPosts
-        isLoading={isLoading}
-        isEmpty={isEmpty}
-        changeLoadingState={changeLoadingState}
-        changeEmptyState={changeEmptyState}
-      />
+      <PopularPosts isEmpty={isEmpty} changeEmptyState={changeEmptyState} />
     </CommunityLayout>
   );
 };
