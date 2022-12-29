@@ -15,6 +15,7 @@ const ChatRoomPage = () => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [chatRoomData, setChatRoomData] = useState();
   const [chatCommentData, setChatCommentData] = useState();
+  const [userId, setUserId] = useState();
   // 가져온 포스트 id 값을 임의로 먼저 지정하였습니다.
   const chatRoomId = accountname;
   const getPostData = () => {
@@ -37,6 +38,12 @@ const ChatRoomPage = () => {
     getPostData();
   }, []);
 
+  useEffect(() => {
+    if (chatCommentData) {
+      setUserId(chatRoomData.content.split(','));
+    }
+  }, [chatRoomData]);
+  console.log(userId);
   const getCommentsData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/${chatRoomId}/comments`,
@@ -61,17 +68,18 @@ const ChatRoomPage = () => {
 
   return (
     <ContentsLayout isTabMenu={true} padding='0rem'>
-      <TopTitleNav title={'아이디'} />
       <ChatRoomContainer>
+        {userId &&
+          (userId[0] === userAccountname ? <TopTitleNav title={userId[1]} /> : <TopTitleNav title={userId[0]} />)}
         <h2 className='sr-only'>전체 채팅룸 컨텐츠</h2>
         <ChatWrapper>
           <h3 className='sr-only'>채팅</h3>
           {chatCommentData ? (
             chatCommentData.reverse().map((data) => {
               if (data.author.accountname === userAccountname) {
-                return <MyChat isImg={false} commentData={data} />;
+                return <MyChat key={data.id} isImg={false} commentData={data} />;
               } else {
-                return <UserChat isImg={false} commentData={data} />;
+                return <UserChat key={data.id} isImg={false} commentData={data} />;
               }
             })
           ) : (
