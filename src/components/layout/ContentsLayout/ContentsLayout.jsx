@@ -24,5 +24,5 @@ const ContentsWrapper = styled.main`
   padding: ${(props) => props.padding};
 
   /* 프로필 페이지를 위한 커스텀 */
-  ${(props) => (props.emptyProfileState === 'twice' ? 'height: calc(100vh - 110px);' : 'height: auto;')}
+  ${(props) => (props.emptyProfileState === 'twice' ? 'height: calc(100vh - 110px);' : 'post' ? 'height: auto;' : '')}
 `;
