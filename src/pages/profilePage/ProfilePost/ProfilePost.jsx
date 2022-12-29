@@ -147,8 +147,6 @@ const PostHeader = styled.section`
   border-bottom: 0.5px solid var(--border-color);
 `;
 
-const PostContents = styled.div``;
-
 const ListIcon = styled.button`
   background: no-repeat center / 20px;
   width: 26px;
@@ -196,6 +194,7 @@ const NoPost = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 60em;
   background-color: var(--chat-bg-color);
 
   & img {
