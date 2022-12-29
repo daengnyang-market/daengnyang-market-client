@@ -66,7 +66,7 @@ const ProfilePage = () => {
       ) : (
         <>
           <TopBasicNav />
-          <ContentsLayout padding='2rem 0 0 0' isFill={emptyPost}>
+          <ContentsLayout padding='2rem 0 0 0'>
             <ProfileHeader profileData={userProfileInfo} profileUserAccountname={accountname} />
             <ProfileProduct />
             <ProfilePost setEmptyPost={setEmptyPost} />
