@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 import { WALKING_EASY_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
 
 const UserChat = ({ isImg, commentData }) => {
+  const [dateData, setDateData] = useState({});
+  useEffect(() => {
+    if (commentData) {
+      setDateData(commentData.createdAt);
+    }
+  }, [commentData]);
+  const hour = new Date(dateData).getHours();
+  const minutes = new Date(dateData).getMinutes();
   return (
     <MessageItem>
       <Link to='/'>
         <ProfileImage src={PROFILE2_IMAGE} width='42' />
       </Link>
       {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
-      <MessageDate>12:50</MessageDate>
+      <MessageDate>
+        {hour}:{minutes}
+      </MessageDate>
     </MessageItem>
   );
 };
