@@ -1,21 +1,68 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios';
+import { AuthContextStore } from '../../context/AuthContext';
 import { PROFILE1_IMAGE } from '../../styles/CommonImages';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 
-const ChatList = ({ name, content, date }) => {
+const ChatList = ({ data }) => {
+  const [chatCommentData, setChatCommentData] = useState();
+  const [opponentId, setOpponentId] = useState();
+  const [opponentImg, setOpponentImg] = useState();
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  useEffect(() => {
+    const getCommentsData = () => {
+      axios({
+        url: `https://mandarin.api.weniv.co.kr/post/${data.id}/comments`,
+        method: 'get',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((response) => {
+          setChatCommentData(response.data.comments);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getCommentsData();
+  }, [data]);
+  useEffect(() => {
+    if (chatCommentData) {
+      for (let i = 0; i < chatCommentData.length; i++) {
+        if (chatCommentData[i].author.accountname !== userAccountname) {
+          setOpponentId(chatCommentData[i].author.accountname);
+          setOpponentImg(chatCommentData[i].author.image);
+          break;
+        }
+      }
+    }
+  }, [chatCommentData]);
   return (
     <>
-      <ChatLi>
-        <ProfileImage src={PROFILE1_IMAGE} alt='프로필사진' width='42' />
-        <NewMeassageAlert />
-        <ChatContents className='ellipsis'>
-          <strong>{name}</strong>
-          <span className='ellipsis'>{content}</span>
-        </ChatContents>
-        <ChatDate>{date}</ChatDate>
-      </ChatLi>
+      {chatCommentData ? (
+        <ChatLi>
+          <ProfileImage src={opponentImg} alt='프로필사진' width='42' />
+          <NewMeassageAlert />
+          <ChatContents className='ellipsis'>
+            <strong>{opponentId}</strong>
+            <span className='ellipsis'>{chatCommentData[0].content}</span>
+          </ChatContents>
+          <ChatDate>{}</ChatDate>
+        </ChatLi>
+      ) : (
+        <ChatLi>
+          <ProfileImage src={opponentImg} alt='프로필사진' width='42' />
+          <NewMeassageAlert />
+          <ChatContents className='ellipsis'>
+            <strong>{opponentId}</strong>
+            <span className='ellipsis'>{}</span>
+          </ChatContents>
+          <ChatDate>{}</ChatDate>
+        </ChatLi>
+      )}
     </>
   );
 };

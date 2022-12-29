@@ -4,13 +4,13 @@ import styled from 'styled-components';
 import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 import { WALKING_EASY_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
 
-const UserChat = ({ isImg }) => {
+const UserChat = ({ isImg, commentData }) => {
   return (
     <MessageItem>
       <Link to='/'>
         <ProfileImage src={PROFILE2_IMAGE} width='42' />
       </Link>
-      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
+      {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
       <MessageDate>12:50</MessageDate>
     </MessageItem>
   );

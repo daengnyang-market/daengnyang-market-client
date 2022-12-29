@@ -51,7 +51,7 @@ const ProfilePage = () => {
         .catch((err) => {
           setIsLoading(false);
           console.error(err);
-      });
+        });
     };
     getUserProfileInfo();
   }, [url, accountname, userAccountname, userToken]);
@@ -66,7 +66,7 @@ const ProfilePage = () => {
         <>
           <TopBasicNav />
           <ContentsLayout padding='2rem 0 0 0'>
-            <ProfileHeader profileData={userProfileInfo} />
+            <ProfileHeader profileData={userProfileInfo} profileUserAccountname={accountname} />
             <ProfileProduct />
             <ProfilePost postState={true} />
           </ContentsLayout>
