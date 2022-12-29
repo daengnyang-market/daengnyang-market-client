@@ -1,8 +1,9 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContext, AuthContextStore } from '../../context/AuthContext';
+import { useInView } from 'react-intersection-observer';
 
 import TopMainNav from '../.././components/common/TopNavBar/TopMainNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
@@ -15,45 +16,62 @@ import Loading from '../../components/common/Loading/Loading';
 const FeedPage = () => {
   const navigate = useNavigate();
   const [isFollowingPost, setIsFollowingPost] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const url = 'https://mandarin.api.weniv.co.kr';
-  // const tempToken = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzOWZiYWY0MTdhZTY2NjU4MWM3MzAyMSIsImV4cCI6MTY3NjU5NzIyMSwiaWF0IjoxNjcxNDEzMjIxfQ.H7gXKkMJDOyb0qO3_Zj-aDyFfzIWmVQdeCsyvQ9FEcY`;
   const { userToken } = useContext(AuthContextStore);
 
   const goSearch = () => {
     navigate('/search');
   };
 
+  // 무한 스크롤
+  const [numFeed, setNumFeed] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [ref, inView] = useInView();
+
+  // 서버에서 피드를 가져오는 함수
+  const getUserFeed = useCallback(async () => {
+    const url = 'https://mandarin.api.weniv.co.kr';
+    const option = {
+      url: url + `/post/feed/?limit=10&skip=${numFeed}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    };
+    setLoading(true);
+
+    await axios(option)
+      .then((res) => {
+        // 기존의 데이터와 새로운 데이터 배열 합치기
+        setIsFollowingPost(isFollowingPost.concat(res.data.posts));
+        setLoading(false);
+        setIsLoading(false);
+        if (res.data.posts.length < 10) {
+          setDone(true);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.error(err);
+      });
+  }, [numFeed]);
+
   useEffect(() => {
-    if (userToken) {
-      const getUserFeed = async () => {
-        const option = {
-          url: url + `/post/feed`,
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            'Content-type': 'application/json',
-          },
-        };
-
-        await axios(option)
-          .then((res) => {
-            setIsLoading(false);
-            setIsFollowingPost(res.data.posts);
-          })
-          .catch((err) => {
-            setIsLoading(false);
-            console.error(err);
-          });
-      };
-
+    // 새로 받아온 데이터 배열 개수가 10개 미만일때 스크롤 멈추기
+    if (!done) {
       getUserFeed();
-    } else {
-      navigate('/');
-      return;
     }
-  }, [userToken]);
+  }, [numFeed]);
+
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고있고(inview === true), 로딩중이 아니라면
+    if (inView && !loading) {
+      setNumFeed((current) => current + 10);
+    }
+  }, [inView, loading]);
 
   return (
     <>
@@ -67,13 +85,16 @@ const FeedPage = () => {
           {isFollowingPost.length > 0 ? (
             <ContentsLayout>
               <div>
-                {isFollowingPost.map((post) => {
-                  return (
+                {isFollowingPost.map((post, i) =>
+                  // isFollowingPost의 마지막 요소라면 ref추가
+                  isFollowingPost.length - 1 === i ? (
+                    <div key={post.id} ref={ref} />
+                  ) : (
                     <div key={post.id}>
                       <Post post={post} />
                     </div>
-                  );
-                })}
+                  ),
+                )}
               </div>
             </ContentsLayout>
           ) : (
