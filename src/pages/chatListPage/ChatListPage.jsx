@@ -41,15 +41,21 @@ const ChatListPage = () => {
         <ChatUl>
           {serverChat ? (
             <>
-              {serverChat.map((data) => (
-                <button
-                  onClick={() => {
-                    navigate(`/chat/${data.id}`);
-                  }}
-                >
-                  <ChatList key={data.id} data={data} />
-                </button>
-              ))}
+              {serverChat.map((data) => {
+                if (data.content.includes(userAccountname)) {
+                  return (
+                    <button
+                      onClick={() => {
+                        navigate(`/chat/${data.id}`);
+                      }}
+                    >
+                      <ChatList key={data.id} data={data} />
+                    </button>
+                  );
+                } else {
+                  return <></>;
+                }
+              })}
             </>
           ) : (
             <div>없습니다.</div>
