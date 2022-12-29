@@ -24,7 +24,12 @@ const ProductModificationPage = () => {
 
   const [linkMod, setLinkMod] = useState('');
   const linkModFunction = (value) => {
-    setLinkMod(value);
+    const urlRegex = /(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi;
+    if (urlRegex.test(value)) {
+      setLinkMod(value);
+    } else {
+      setLinkMod('');
+    }
   };
   // console.log(linkMod);
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // * 사용법 - 아래의 4가지 props를 전달해줘야 합니다 *
@@ -16,10 +16,16 @@ const ItemLinkInput = ({
   linkMod,
 }) => {
   const [inputValue, setInputValue] = useState('');
-  const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
 
-  const [LinkValid, setLinkValid] = useState(false);
+  const [value, setValue] = useState('');
+  useEffect(() => {
+    if (linkMod) {
+      setValue(linkMod);
+    } else {
+      setValue(inputValue);
+    }
+  }, [inputValue, linkMod]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -30,26 +36,10 @@ const ItemLinkInput = ({
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    const regex = /(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi;
-
-    if (regex.test(e.target.value)) {
-      setLinkValid(true);
-    } else {
-      setLinkValid(false);
-    }
-
     if (linkModFunction) {
-      if (LinkValid) {
-        linkModFunction(e.target.value);
-      } else {
-        linkModFunction('');
-      }
+      linkModFunction(e.target.value);
     } else {
-      if (LinkValid) {
-        linkFunction(e.target.value);
-      } else {
-        linkFunction('');
-      }
+      linkFunction(e.target.value);
     }
   };
 
@@ -60,12 +50,11 @@ const ItemLinkInput = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        // value={inputValue}
+        value={value}
         onChange={handleChange}
         ref={inputRef}
         autoComplete='off'
         spellCheck='false'
-        defaultValue={linkMod}
       />
     </InputWrapper>
   );

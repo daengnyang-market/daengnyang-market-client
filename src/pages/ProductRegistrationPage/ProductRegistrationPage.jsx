@@ -35,7 +35,12 @@ const ProductRegistrationPage = ({
 
   const [link, setLink] = useState('');
   const linkFunction = (value) => {
-    setLink(value);
+    const urlRegex = /(http(s)?:\/\/)([a-z0-9\w]+\.*)+[a-z0-9]{2,4}/gi;
+    if (urlRegex.test(value)) {
+      setLink(value);
+    } else {
+      setLink('');
+    }
   };
 
   const [itemImage, setItemImage] = useState('');
