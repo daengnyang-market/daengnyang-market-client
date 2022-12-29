@@ -9,6 +9,7 @@ const Button = ({
   borderColor = 'transparent',
   textColor = 'var(--main-bg-color)',
   onClickHandler,
+  isActive = true,
 }) => {
   return (
     <StyledButton
@@ -18,6 +19,7 @@ const Button = ({
       borderColor={borderColor}
       textColor={textColor}
       onClick={onClickHandler}
+      isActive={isActive}
     >
       {children}
     </StyledButton>
@@ -74,11 +76,15 @@ const sizeStyles = css`
           font-weight: 400;
           width: 5.6rem;
           border-radius: 2.6rem;
-          &:active {
-            border: 1px solid var(--border-color);
-            background: var(--main-bg-color);
-            color: var(--sub-text-color);
-          }
+          ${(props) =>
+            props.isActive &&
+            css`
+              &:active {
+                border: 1px solid var(--border-color);
+                background: var(--main-bg-color);
+                color: var(--sub-text-color);
+              }
+            `}
         `;
       default:
         return;

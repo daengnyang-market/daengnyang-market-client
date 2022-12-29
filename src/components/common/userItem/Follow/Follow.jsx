@@ -42,6 +42,7 @@ const Follow = ({ followUserInfo }) => {
           borderColor={isFollow ? 'var(--border-color)' : undefined}
           textColor={isFollow ? 'var(--sub-text-color)' : undefined}
           onClickHandler={switchFollow}
+          isActive={false}
         >
           {isFollow ? '취소' : '팔로우'}
         </Button>

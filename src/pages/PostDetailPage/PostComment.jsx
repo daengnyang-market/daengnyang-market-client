@@ -149,4 +149,5 @@ const MoreButton = styled.button`
 const ProfileImg = styled.img`
   width: 3.6rem;
   height: 3.6rem;
+  border-radius: 50%;
 `;

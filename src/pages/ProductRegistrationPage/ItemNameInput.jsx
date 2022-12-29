@@ -38,13 +38,13 @@ const ItemNameInput = ({
     }
 
     if (itemNameModFunction) {
-      if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+      if (e.target.value.length >= 2 && e.target.value.length <= 15) {
         itemNameModFunction(e.target.value);
       } else {
         itemNameModFunction('');
       }
     } else {
-      if (e.target.value.length >= 2 && e.target.value.length <= 10) {
+      if (e.target.value.length >= 2 && e.target.value.length <= 15) {
         itemNameFunction(e.target.value);
       } else {
         itemNameFunction('');

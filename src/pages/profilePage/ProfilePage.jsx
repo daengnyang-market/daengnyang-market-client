@@ -19,6 +19,7 @@ const ProfilePage = () => {
   // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountname } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [emptyPost, setEmptyPost] = useState(false);
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
@@ -68,7 +69,7 @@ const ProfilePage = () => {
           <ContentsLayout padding='2rem 0 0 0'>
             <ProfileHeader profileData={userProfileInfo} profileUserAccountname={accountname} />
             <ProfileProduct />
-            <ProfilePost postState={true} />
+            <ProfilePost setEmptyPost={setEmptyPost} />
           </ContentsLayout>
           <TabMenu currentMenuId={4} />
         </>
