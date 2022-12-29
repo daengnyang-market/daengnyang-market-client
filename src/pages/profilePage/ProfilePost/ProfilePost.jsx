@@ -14,7 +14,7 @@ import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 
-const ProfilePost = () => {
+const ProfilePost = ({ setEmptyPost }) => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -41,12 +41,16 @@ const ProfilePost = () => {
         .then((res) => {
           setIsLoading(false);
           setMyPost(res.data.post);
+
+          if (res.data.post.length === 0) {
+            setEmptyPost(true);
+          }
         })
         .catch((err) => {
           setIsLoading(false);
           console.log(err);
         });
-      };
+    };
     getMyPost();
   }, [userToken, accountname, userAccountname]);
 
@@ -183,11 +187,11 @@ const PostGrid = styled.ul`
 `;
 
 const NoPost = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 53em;
   background-color: var(--chat-bg-color);
 
   & img {
