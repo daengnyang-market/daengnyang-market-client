@@ -33,7 +33,7 @@ const FollowListPage = () => {
       }
 
       const option = {
-        url: `https://mandarin.api.weniv.co.kr/profile/${accountname}/${type}`,
+        url: `https://mandarin.api.weniv.co.kr/profile/${accountname}/${type}?limit=0`,
         method: 'GET',
         headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' },
       };
