@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -14,12 +14,9 @@ const InputAccountName = ({
   placeholder,
   maxLength,
   accountNameFunction,
-  // disabledButtonFunction,
+  defaultAcconutName,
   accountName,
 }) => {
-  const [inputValue, setInputValue] = useState(`${accountName ? accountName : ''}`);
-
-  const [isShowAlert, setIsShowAlert] = useState(false);
   const inputRef = useRef();
 
   // alert
@@ -27,8 +24,6 @@ const InputAccountName = ({
   const [alertID, setAlertID] = useState('');
 
   const handleChange = (e) => {
-    setInputValue(e.target.value);
-
     if (e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
     } else {
@@ -52,12 +47,8 @@ const InputAccountName = ({
 
     axios(option)
       .then((res) => {
-        // console.log(res);
-        // console.log(res.data.message);
-
         if (regex.test(e.target.value)) {
-          if (res.data.message === '이미 가입된 계정ID 입니다.') {
-            // disabledButtonFunction(true);
+          if (defaultAcconutName !== e.target.value && res.data.message === '이미 가입된 계정ID 입니다.') {
             accountNameFunction('');
             setAlertID('* 이미 사용 중인 ID입니다.');
           } else {
@@ -84,17 +75,14 @@ const InputAccountName = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
-        // value={inputValue}
         onChange={handleChange}
         ref={inputRef}
-        isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
         defaultValue={accountName}
       />
-      <InputAlert>{alertPattern}</InputAlert>
-      <InputAlert>{alertID}</InputAlert>
+      {alertPattern ? <InputAlert>{alertPattern}</InputAlert> : <InputAlert>{alertID}</InputAlert>}
     </InputWrapper>
   );
 };
