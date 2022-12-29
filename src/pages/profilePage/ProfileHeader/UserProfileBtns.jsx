@@ -15,7 +15,7 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
   const [opponentData, setOpponentData] = useState();
   const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
-
+  const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
@@ -60,7 +60,7 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${userToken}`,
+            Authorization: `Bearer ${CHAT_TOKEN}`,
             'Content-type': 'application/json',
           },
         },
