@@ -13,44 +13,24 @@ const ProfileModificationPage = () => {
   const [userName, setUserName] = useState('');
   const userNameFunction = (value) => {
     setUserName(value);
-    // // 버튼 활성화
-    // if (userName && accountName && intro) {
-    //   setDisabledButton(false);
-    // } else {
-    //   setDisabledButton(true);
-    // }
   };
-  // console.log(userName);
 
   const [accountName, setAccountName] = useState('');
   const accountNameFunction = (value) => {
     setAccountName(value);
-    // 버튼 활성화
-    // if (userName && accountName && intro) {
-    //   setDisabledButton(false);
-    // } else {
-    //   setDisabledButton(true);
-    // }
   };
-  // console.log(accountName);
+
+  const [defaultAcconutName, setDefaultAccountName] = useState('');
 
   const [intro, setIntro] = useState('');
   const introFunction = (value) => {
     setIntro(value);
-    // 버튼 활성화
-    // if (userName && accountName && intro) {
-    //   setDisabledButton(false);
-    // } else {
-    //   setDisabledButton(true);
-    // }
   };
-  // console.log(intro);
 
   const [image, setImage] = useState('');
   const imageFunction = (value) => {
     setImage(value);
   };
-  // console.log(image);
 
   const [disabledButton, setDisabledButton] = useState(false);
 
@@ -66,6 +46,7 @@ const ProfileModificationPage = () => {
         .then((res) => {
           // console.log(res.data.user);
           setUserName(res.data.user.username);
+          setDefaultAccountName(res.data.user.accountname);
           setAccountName(res.data.user.accountname);
           setIntro(res.data.user.intro);
           setImage(res.data.user.image);
@@ -110,7 +91,6 @@ const ProfileModificationPage = () => {
       setDisabledButton(true);
     }
     // console.log('render!!');
-    // console.log(link);
   }, [userName, accountName, intro]);
 
   return (
@@ -127,6 +107,7 @@ const ProfileModificationPage = () => {
             introFunction={introFunction}
             imageFunction={imageFunction}
             userName={userName}
+            defaultAcconutName={defaultAcconutName}
             accountName={accountName}
             intro={intro}
             image={image}
