@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
@@ -9,7 +9,7 @@ import { AuthContextStore } from '../../context/AuthContext';
 
 const ProfileModificationPage = () => {
   const { userToken } = useContext(AuthContextStore);
-
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const userNameFunction = (value) => {
     setUserName(value);
@@ -75,8 +75,8 @@ const ProfileModificationPage = () => {
 
     axios(option)
       .then((res) => {
-        console.log('프로필 수정 성공!!');
-        console.log(res);
+        // console.log('프로필 수정 성공!!');
+        navigate('/profile');
       })
       .catch((err) => {
         console.error(err);
@@ -95,9 +95,8 @@ const ProfileModificationPage = () => {
 
   return (
     <>
-      <Link to='/profile'>
-        <TopUploadNav activeButton={disabledButton} onClick={onClickSaveButtonHandler} />
-      </Link>
+      <TopUploadNav activeButton={disabledButton} onClick={onClickSaveButtonHandler} type={'submit'} />
+
       <ContentsLayout isTabMenu='false' padding='0'>
         <Section>
           <h2 className='sr-only'>프로필 정보 수정</h2>

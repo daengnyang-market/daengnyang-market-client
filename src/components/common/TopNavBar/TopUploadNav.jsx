@@ -5,7 +5,7 @@ import { TopNavBar, LeftArrow } from './Styled';
 import { LEFT_ARROW_ICON } from '../../../styles/CommonIcons';
 import Button from '../Button/Button';
 
-const TopUploadNav = ({ onClick, activeButton, activeModButton }) => {
+const TopUploadNav = ({ onClick, activeButton, activeModButton, type }) => {
   const navigate = useNavigate();
   const params = useParams();
 
@@ -19,7 +19,7 @@ const TopUploadNav = ({ onClick, activeButton, activeModButton }) => {
           저장
         </Button>
       ) : (
-        <Button disabled={activeButton} onClickHandler={onClick} size='MS'>
+        <Button disabled={activeButton} onClickHandler={onClick} type={type} size='MS'>
           저장
         </Button>
       )}

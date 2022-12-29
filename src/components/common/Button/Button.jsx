@@ -5,6 +5,7 @@ const Button = ({
   children,
   size,
   disabled,
+  type,
   backgroundColor = 'var(--login-bg-color)',
   borderColor = 'transparent',
   textColor = 'var(--main-bg-color)',
@@ -20,6 +21,7 @@ const Button = ({
       textColor={textColor}
       onClick={onClickHandler}
       isActive={isActive}
+      type={type}
     >
       {children}
     </StyledButton>
