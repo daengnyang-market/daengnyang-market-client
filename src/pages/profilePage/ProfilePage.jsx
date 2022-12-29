@@ -19,6 +19,7 @@ const ProfilePage = () => {
   // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountname } = useParams();
   const [isLoading, setIsLoading] = useState(true);
+  const [emptyPost, setEmptyPost] = useState(false);
 
   // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
@@ -51,7 +52,7 @@ const ProfilePage = () => {
         .catch((err) => {
           setIsLoading(false);
           console.error(err);
-      });
+        });
     };
     getUserProfileInfo();
   }, [url, accountname, userAccountname, userToken]);
@@ -65,10 +66,10 @@ const ProfilePage = () => {
       ) : (
         <>
           <TopBasicNav />
-          <ContentsLayout padding='2rem 0 0 0'>
+          <ContentsLayout padding='2rem 0 0 0' isFill={emptyPost}>
             <ProfileHeader profileData={userProfileInfo} />
             <ProfileProduct />
-            <ProfilePost postState={true} />
+            <ProfilePost setEmptyPost={setEmptyPost} />
           </ContentsLayout>
           <TabMenu currentMenuId={4} />
         </>
