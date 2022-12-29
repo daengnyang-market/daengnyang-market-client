@@ -48,7 +48,7 @@ const ChatList = ({ data }) => {
           <NewMeassageAlert />
           <ChatContents className='ellipsis'>
             <strong>{opponentId}</strong>
-            <span className='ellipsis'>{chatCommentData[0].content}</span>
+            {chatCommentData[0] && <span className='ellipsis'>{chatCommentData[0].content}</span>}
           </ChatContents>
           <ChatDate>{}</ChatDate>
         </ChatLi>
