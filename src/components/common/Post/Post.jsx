@@ -29,7 +29,9 @@ const Post = ({ post = {} }) => {
   useEffect(() => {
     if (data) {
       setDateData(data.createdAt);
-      setImageFile(data.image.split(','));
+      if (data.image) {
+        setImageFile(data.image.split(','));
+      }
     }
   }, [data]);
 
