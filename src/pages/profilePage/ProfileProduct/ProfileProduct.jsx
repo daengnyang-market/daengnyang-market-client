@@ -39,7 +39,7 @@ const ProfileProduct = () => {
   };
   useEffect(() => {
     getProduct();
-  }, [userToken, accountname, productList]);
+  }, [userToken, accountname]);
 
   return (
     <>
