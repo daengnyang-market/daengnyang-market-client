@@ -62,8 +62,6 @@ const InputAccountName = ({
           setAlertPattern('* 영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.');
           setAlertID('');
         }
-        if (defaultAcconutName !== e.target.value) {
-        }
       })
       .catch((err) => {
         console.error(err);
