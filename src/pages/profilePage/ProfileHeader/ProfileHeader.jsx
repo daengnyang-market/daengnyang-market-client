@@ -74,6 +74,8 @@ const ProfileWrapper = styled.header`
   flex-direction: column;
   position: relative;
   margin-top: 3em;
+  padding-left: 2em;
+  padding-right: 2em;
 `;
 
 const UserName = styled.strong`
