@@ -1,5 +1,9 @@
 .mySwiper {
-  height: 180px;
+  height: 170px;
+}
+
+.swiper-section {
+  padding-bottom: 0;
 }
 
 .swiper-pagination-bullet.swiper-pagination-bullet-active {
