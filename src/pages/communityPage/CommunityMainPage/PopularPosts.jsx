@@ -11,7 +11,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
     threshold: 0,
   });
   const [page, setPage] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [emptyFeedPosts, setEmptyFeedPosts] = useState(false);
@@ -60,7 +60,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
   }, [page]);
 
   useEffect(() => {
-    setLoading(true);
+    setIsLoading(true);
 
     const getPopularPosts = async () => {
       const feedPosts = !emptyFeedPosts ? await getFeedPosts() : [];
@@ -91,16 +91,16 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
     };
 
     getPopularPosts();
-    setLoading(false);
+    setIsLoading(false);
   }, [getFeedPosts, getMyPosts]);
 
   useEffect(() => {
-    if (!inView || loading) {
+    if (!inView || isLoading) {
       return;
     }
 
     setPage((prev) => prev + 10);
-  }, [inView, loading]);
+  }, [inView, isLoading]);
 
   return (
     <PopularPostsSection>
@@ -111,7 +111,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
         <EmptyPosts />
       ) : (
         <PostWrapper>
-          {recommendPosts.map((post, i) => (
+          {recommendPosts.map((post) => (
             <Post key={post.id} post={post} />
           ))}
           {emptyFeedPosts && emptyMyPosts ? <></> : <div ref={ref} />}
