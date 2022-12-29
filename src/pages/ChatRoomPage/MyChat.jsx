@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { WALKING_EASY_IMAGE } from '../../styles/CommonImages';
 
 const MyChat = ({ isImg, commentData }) => {
-  console.log('넘어온 채팅정보', commentData);
+  const [dateData, setDateData] = useState({});
+  useEffect(() => {
+    if (commentData) {
+      setDateData(commentData.createdAt);
+    }
+  }, [commentData]);
+  const hour = new Date(dateData).getHours();
+  const minutes = new Date(dateData).getMinutes();
+  console.log(commentData);
+  console.log(hour);
   return (
     <MessageItem>
-      <MessageDate>12:50</MessageDate>
+      <MessageDate>
+        {hour}:{minutes}
+      </MessageDate>
       {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
     </MessageItem>
   );

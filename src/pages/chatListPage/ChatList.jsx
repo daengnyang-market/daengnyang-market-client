@@ -7,9 +7,13 @@ import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
 
 const ChatList = ({ data }) => {
   const [chatCommentData, setChatCommentData] = useState();
+  const [copyData, setCopyData] = useState();
+  const [usersAccounName, setUsersAccounName] = useState();
+  const [profileData, setProfileData] = useState();
   const [opponentId, setOpponentId] = useState();
   const [opponentImg, setOpponentImg] = useState();
   const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [opponentAccountName, setOpponentAccountName] = useState('');
   useEffect(() => {
     const getCommentsData = () => {
       axios({
@@ -27,41 +31,62 @@ const ChatList = ({ data }) => {
           console.log(error);
         });
     };
+    setCopyData(data);
     getCommentsData();
   }, [data]);
+
   useEffect(() => {
-    if (chatCommentData) {
-      for (let i = 0; i < chatCommentData.length; i++) {
-        if (chatCommentData[i].author.accountname !== userAccountname) {
-          setOpponentId(chatCommentData[i].author.accountname);
-          setOpponentImg(chatCommentData[i].author.image);
-          break;
-        }
+    if (copyData) {
+      setUsersAccounName(copyData.content.split(','));
+    }
+  }, [copyData]);
+
+  useEffect(() => {
+    if (usersAccounName) {
+      if (usersAccounName[0] === userAccountname) {
+        setOpponentAccountName(usersAccounName[1]);
+      } else {
+        setOpponentAccountName(usersAccounName[0]);
       }
     }
-  }, [chatCommentData]);
+  }, [usersAccounName]);
+
+  useEffect(() => {
+    if (opponentAccountName) {
+      const getUserProfileData = () => {
+        axios({
+          url: `https://mandarin.api.weniv.co.kr/profile/${opponentAccountName}`,
+          method: 'get',
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-type': 'application/json',
+          },
+        })
+          .then((response) => {
+            setProfileData(response.data.profile);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
+      getUserProfileData();
+    }
+  }, [opponentAccountName]);
+
   return (
     <>
-      {chatCommentData ? (
+      {chatCommentData && profileData ? (
         <ChatLi>
-          <ProfileImage src={opponentImg} alt='프로필사진' width='42' />
+          <ProfileImage src={profileData.image} alt='프로필사진' width='42' />
           <NewMeassageAlert />
           <ChatContents className='ellipsis'>
-            <strong>{opponentId}</strong>
-            <span className='ellipsis'>{chatCommentData[0].content}</span>
+            <strong>{profileData.accountname}</strong>
+            {chatCommentData[0] && <span className='ellipsis'>{chatCommentData[0].content}</span>}
           </ChatContents>
           <ChatDate>{}</ChatDate>
         </ChatLi>
       ) : (
-        <ChatLi>
-          <ProfileImage src={opponentImg} alt='프로필사진' width='42' />
-          <NewMeassageAlert />
-          <ChatContents className='ellipsis'>
-            <strong>{opponentId}</strong>
-            <span className='ellipsis'>{}</span>
-          </ChatContents>
-          <ChatDate>{}</ChatDate>
-        </ChatLi>
+        <></>
       )}
     </>
   );
