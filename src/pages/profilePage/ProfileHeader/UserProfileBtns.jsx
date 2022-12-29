@@ -8,14 +8,13 @@ import { AuthContextStore } from '../../../context/AuthContext';
 import Button from '../../../components/common/Button/Button';
 import { CHAT_ICON, SHARE_ICON } from '../../../styles/CommonIcons';
 
-const UserProfileBtns = ({ profileData }) => {
+const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
   const [isFollowing, setIsFollowing] = useState(profileData.isfollow);
-  const { userToken } = useContext(AuthContextStore);
+  const { userToken, userAccountname } = useContext(AuthContextStore);
   const { accountname } = useParams();
+  const [opponentData, setOpponentData] = useState();
+  const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
-  const handleGoChat = () => {
-    navigate(`/chat/${accountname}`);
-  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -24,6 +23,53 @@ const UserProfileBtns = ({ profileData }) => {
     document.body.appendChild(script);
     return () => document.body.removeChild(script);
   });
+  useEffect(() => {
+    const getMyPost = () => {
+      const url = `https://mandarin.api.weniv.co.kr`;
+      axios({
+        url: url + `/post/aksidkvkc/userpost`,
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+          'Content-type': 'application/json',
+        },
+      })
+        .then((res) => {
+          setOpponentData(res.data.post);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getMyPost();
+  }, [userToken]);
+  // useEffect(()=>{
+
+  // },[opponentData])
+  console.log('확인', opponentData);
+
+  const createChatroom = () => {
+    axios
+      .post(
+        `https://mandarin.api.weniv.co.kr/post`,
+        {
+          post: {
+            content: `${userAccountname},${profileUserAccountname}`,
+            image: '',
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then((res) => {
+        console.log(userAccountname, profileUserAccountname);
+        navigate(`/chat/${res.data.post.id}`);
+      });
+  };
 
   const shareToKakaotalk = () => {
     const KAKAO_SHARE_API = process.env.REACT_APP_KAKAO_SHARE_API;
@@ -61,7 +107,36 @@ const UserProfileBtns = ({ profileData }) => {
         console.error(err);
       });
   };
+  const getUserContent = (opponentData, profileUserAccountname, userAccountname) => {
+    for (let i = 0; i < opponentData.length; i++) {
+      if (
+        opponentData[i].content === `${profileUserAccountname},${userAccountname}` ||
+        opponentData[i].content === `${userAccountname},${profileUserAccountname}`
+      ) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  };
+  useEffect(() => {
+    if (opponentData) {
+      setIsValidate(getUserContent(opponentData, profileUserAccountname, userAccountname));
+    }
+  }, [opponentData]);
 
+  const handleGoChat = (e) => {
+    e.preventDefault();
+    if (isValidate === true) {
+      createChatroom();
+    } else if (isValidate === false) {
+      alert('이미 존재하는 방입니다.');
+      console.log('false', isValidate);
+    }
+  };
+  // const test = getUserContent(opponentData, profileUserAccountname, accountname);
+  console.log('과연?데이터는', opponentData);
+  console.log('과연?', isValidate);
   return (
     <UserProfileBtnsStyle>
       <ChatBtn onClick={handleGoChat} />

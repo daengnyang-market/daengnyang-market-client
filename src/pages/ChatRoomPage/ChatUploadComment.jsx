@@ -1,16 +1,62 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { IMG_BUTTON_ICON } from '../../styles/CommonIcons';
+import { AuthContextStore } from '../../context/AuthContext';
+import axios from 'axios';
 
-const ChatUploadComment = () => {
+const ChatUploadComment = ({ chatRoomId }) => {
+  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const [commentData, setCommentData] = useState('');
+  const [isValidate, setIsValidate] = useState(true);
+  const sendCommentData = () => {
+    axios
+      .post(
+        `https://mandarin.api.weniv.co.kr/post/${chatRoomId}/comments`,
+        {
+          comment: {
+            content: `${commentData}`,
+          },
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            'Content-type': 'application/json',
+          },
+        },
+      )
+      .then(() => {
+        window.location.reload(false);
+      });
+  };
+
+  useEffect(() => {
+    if (commentData !== '') {
+      setIsValidate(false);
+    } else {
+      setIsValidate(true);
+    }
+  }, [commentData]);
+  // TODO : userData와 postData 가 존재한다면, 클릭이 발생하면 sendCommentData() 실행
+  const onClickUploadHandler = (e) => {
+    e.preventDefault();
+    sendCommentData();
+  };
   return (
     <CommentForm>
       <ImgUploadButton>
         <label htmlFor='imgUpload' />
         <input type='file' accept='image/*' id='imgUpload' className='sr-only' />
       </ImgUploadButton>
-      <input type='text' placeholder='메시지 입력하기...' />
-      <Button disabled={true}>전송</Button>
+      <input
+        type='text'
+        placeholder='메시지 입력하기...'
+        onChange={(e) => {
+          setCommentData(e.target.value);
+        }}
+      />
+      <Button disabled={isValidate} onClick={onClickUploadHandler}>
+        전송
+      </Button>
     </CommentForm>
   );
 };

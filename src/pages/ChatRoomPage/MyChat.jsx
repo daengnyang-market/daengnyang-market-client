@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { WALKING_EASY_IMAGE } from '../../styles/CommonImages';
 
-const MyChat = ({ isImg }) => {
+const MyChat = ({ isImg, commentData }) => {
+  console.log('넘어온 채팅정보', commentData);
   return (
     <MessageItem>
       <MessageDate>12:50</MessageDate>
-      {isImg === false ? <MessageText>asdfasdfasdfasdfasd</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
+      {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
     </MessageItem>
   );
 };

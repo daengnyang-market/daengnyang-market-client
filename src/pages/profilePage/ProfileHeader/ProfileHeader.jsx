@@ -10,9 +10,10 @@ import Loading from '../../../components/common/Loading/Loading';
 
 // profileData : 프로필 페이지에서 넘어오는 프로필 정보들
 
-const ProfileHeader = ({ profileData }) => {
+const ProfileHeader = ({ profileData, profileUserAccountname }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const profuserAccountname = profileUserAccountname;
   const { userAccountname, userToken } = useContext(AuthContextStore);
   const { accountname } = useParams();
 
@@ -46,7 +47,11 @@ const ProfileHeader = ({ profileData }) => {
             <strong>{profileData.followingCount}</strong>
             <span>followings</span>
           </Followings>
-          {location.pathname === '/profile' ? <MyProfileBtns /> : <UserProfileBtns profileData={profileData} />}
+          {location.pathname === '/profile' ? (
+            <MyProfileBtns />
+          ) : (
+            <UserProfileBtns profileUserAccountname={profuserAccountname} profileData={profileData} />
+          )}
         </ProfileWrapper>
         <SectionBorder />
       </>
