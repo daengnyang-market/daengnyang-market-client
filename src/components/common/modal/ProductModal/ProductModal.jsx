@@ -27,7 +27,6 @@ const ProductModal = ({ closeModal, productid, productLink }) => {
 
     axios(option)
       .then((res) => {
-        console.log(res);
         window.location.reload();
       })
       .catch((err) => {
