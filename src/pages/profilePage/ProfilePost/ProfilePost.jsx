@@ -15,8 +15,6 @@ import Loading from '../../../components/common/Loading/Loading';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
 
 const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
-  console.log(emptyProduct);
-
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
