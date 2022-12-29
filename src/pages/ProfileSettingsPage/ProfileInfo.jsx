@@ -15,6 +15,7 @@ const ProfileInfo = ({
   // disabledButtonFunction,
 
   userName,
+  defaultAcconutName,
   accountName,
   intro,
   image,
@@ -78,6 +79,7 @@ const ProfileInfo = ({
           maxLength='10'
           accountNameFunction={accountNameFunction}
           // disabledButtonFunction={disabledButtonFunction}
+          defaultAcconutName={defaultAcconutName}
           accountName={accountName}
         />
         <InputIntro
