@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContextStore } from '../../../context/AuthContext';
 import Post from '../../../components/common/Post/Post';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import {
   POST_ALBUM_OFF_ICON,
   POST_ALBUM_ON_ICON,
@@ -13,6 +13,7 @@ import {
 import { EMPTY_POST_IMAGE } from '../../../styles/CommonImages';
 import Loading from '../../../components/common/Loading/Loading';
 import { useParams, useNavigate, useLocation, Link } from 'react-router-dom';
+import { useInView } from 'react-intersection-observer';
 
 const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   let { accountname } = useParams();
@@ -23,40 +24,57 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   const [isLoading, setIsLoading] = useState(true);
   // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
-
   // 포스트 담기
-  const [myPostList, setMyPost] = useState([]);
+  const [myPostList, setMyPostList] = useState([]);
+  // 무한 스크롤
+  const [numPost, setNumPost] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [done, setDone] = useState(false);
+  const [ref, inView] = useInView();
+
+  const getPost = useCallback(async () => {
+    // TODO: 서버에서 포스트 가져오는 함수
+    const url = `https://mandarin.api.weniv.co.kr`;
+    const option = {
+      url: url + `/post/${accountname ? accountname : userAccountname}/userpost/?limit=10&skip=${numPost}`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${userToken}`,
+        'Content-type': 'application/json',
+      },
+    };
+    setLoading(true);
+
+    await axios(option)
+      .then((res) => {
+        setMyPostList(myPostList.concat(res.data.post));
+        setLoading(false);
+        setIsLoading(false);
+        if (res.data.post.length === 0) {
+          setEmptyPost(true);
+        } else if (res.data.post.length < 10) {
+          setDone(true);
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        console.log(err);
+      });
+  }, [numPost]);
 
   useEffect(() => {
-    const getMyPost = () => {
-      const url = `https://mandarin.api.weniv.co.kr`;
-      axios({
-        url: url + `/post/${accountname ? accountname : userAccountname}/userpost`,
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-          'Content-type': 'application/json',
-        },
-      })
-        .then((res) => {
-          setIsLoading(false);
-          setMyPost(res.data.post);
+    // TODO : 새로 받아온 포스트 배열 개수가 10개 미만일때 스크롤 멈추기
+    if (!done) {
+      getPost();
+    }
+  }, [numPost]);
 
-          if (res.data.post.length === 0) {
-            setEmptyPost(true);
-          }
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          console.log(err);
-        });
-    };
-    getMyPost();
-  }, [userToken, accountname, userAccountname]);
-
-  // useEffect(() => {
-  //   setTest(testFunction(myPostList));
-  // }, [myPostList]);
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고있고(inview === true), 로딩중이 아니라면
+    if (inView && !loading) {
+      setNumPost((current) => current + 10);
+    }
+  }, [inView, loading]);
 
   return (
     <>
@@ -79,9 +97,15 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
             listBtn === true ? (
               <PostUl>
                 <h3 className='sr-only'>리스트형 포스트 목록</h3>
-                {myPostList.map((post) => (
-                  <Post key={post.id} post={post} />
-                ))}
+                {myPostList.map((post, i) =>
+                  myPostList.length - 1 === i ? (
+                    <div key={post.id} ref={ref} />
+                  ) : (
+                    <div key={post.id}>
+                      <Post key={post.id} post={post} />
+                    </div>
+                  ),
+                )}
               </PostUl>
             ) : (
               <PostGrid>
