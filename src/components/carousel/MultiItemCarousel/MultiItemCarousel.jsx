@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { useContext } from 'react';
 
-export default function MultiItemCarousel({ itemList }) {
+export default function MultiItemCarousel({ itemList, updateProductList }) {
   const { userAccountname } = useContext(AuthContextStore);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyProduct, setIsMyProduct] = useState(itemList[0].author.accountname.indexOf(userAccountname) !== -1);
@@ -67,7 +67,16 @@ export default function MultiItemCarousel({ itemList }) {
           </SwiperSlide>
         ))}
       </Swiper>
-      {isOpenModal ? <ProductModal productid={productId} productLink={productLink} closeModal={closeModal} /> : <></>}
+      {isOpenModal ? (
+        <ProductModal
+          productid={productId}
+          productLink={productLink}
+          updateProductList={updateProductList}
+          closeModal={closeModal}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 }
