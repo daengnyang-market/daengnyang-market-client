@@ -6,7 +6,7 @@ import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
 import ChatRoomModal from '../modal/ChatRoomModal/ChatRoomModal';
 
-const TopTitleNav = ({ title, viewMoreBtn = true }) => {
+const TopTitleNav = ({ title, viewMoreBtn = true, isHospital = false }) => {
   const navigate = useNavigate();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -15,10 +15,18 @@ const TopTitleNav = ({ title, viewMoreBtn = true }) => {
     setIsOpenModal(false);
   };
 
+  const goBack = () => {
+    if (isHospital) {
+      sessionStorage.setItem('hospital_back', true);
+    }
+
+    navigate(-1);
+  };
+
   return (
     <>
       <TopNavBar>
-        <button onClick={() => navigate(-1)}>
+        <button onClick={goBack}>
           <LeftArrow src={LEFT_ARROW_ICON} alt='뒤로가기 버튼' />
         </button>
         <TopNavH2>{title}</TopNavH2>

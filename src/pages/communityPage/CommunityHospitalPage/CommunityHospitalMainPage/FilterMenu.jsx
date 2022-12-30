@@ -30,6 +30,7 @@ const FilterMenu = ({ onBackgroundClick, onClickFilter, itemList }) => {
   };
 
   const onClickFilterHandler = (id) => {
+    sessionStorage.setItem('hospital_filter', id);
     onClickFilter(id);
   };
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CommunityLayout from '../../CommunityLayout';
 import HospitalList from './HospitalList';
@@ -27,6 +27,18 @@ const CommunityHospitalMainPage = () => {
     setSelectFilterId(filterId);
     onClickBackgroundHandler();
   };
+
+  useEffect(() => {
+    const isBack = sessionStorage.getItem('hospital_back');
+
+    if (!isBack) {
+      sessionStorage.setItem('hospital_filter', 0);
+      return;
+    }
+
+    setSelectFilterId(sessionStorage.getItem('hospital_filter'));
+    sessionStorage.removeItem('hospital_back');
+  }, []);
 
   return (
     <CommunityLayout padding='0' currentMenuId={2}>
