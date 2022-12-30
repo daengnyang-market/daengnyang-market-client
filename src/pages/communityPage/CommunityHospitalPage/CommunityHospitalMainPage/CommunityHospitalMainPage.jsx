@@ -30,13 +30,20 @@ const CommunityHospitalMainPage = () => {
 
   useEffect(() => {
     const isBack = sessionStorage.getItem('hospital_back');
+    const filterId = sessionStorage.getItem('hospital_filter');
 
     if (!isBack) {
       sessionStorage.setItem('hospital_filter', 0);
       return;
     }
 
-    setSelectFilterId(sessionStorage.getItem('hospital_filter'));
+    if (isBack && !filterId) {
+      sessionStorage.removeItem('hospital_back');
+      sessionStorage.setItem('hospital_filter', 0);
+      return;
+    }
+
+    setSelectFilterId(filterId);
     sessionStorage.removeItem('hospital_back');
   }, []);
 
