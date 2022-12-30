@@ -87,9 +87,9 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
       kakao.Link.sendDefault({
         objectType: 'feed',
         content: {
-          title: '가져도댕냥',
-          description: '우리집 댕냥이를 위한 따뜻한 선물',
-          imageUrl: '',
+          title: `${profileData.username}님의 프로필 - 가져도댕냥`,
+          description: `우리집 댕냥이를 위한 따뜻한 선물! ${profileData.username}님의 프로필이 공유되었습니다. `,
+          imageUrl: 'https://mandarin.api.weniv.co.kr/1672125328324.png',
           link: {
             webUrl: 'http://localhost:3000/',
           },
