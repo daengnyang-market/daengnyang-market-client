@@ -44,7 +44,6 @@ const ProfileModificationPage = () => {
 
       axios(option)
         .then((res) => {
-          // console.log(res.data.user);
           setUserName(res.data.user.username);
           setDefaultAccountName(res.data.user.accountname);
           setAccountName(res.data.user.accountname);
@@ -75,7 +74,6 @@ const ProfileModificationPage = () => {
 
     axios(option)
       .then((res) => {
-        // console.log('프로필 수정 성공!!');
         navigate('/profile');
       })
       .catch((err) => {
@@ -90,7 +88,6 @@ const ProfileModificationPage = () => {
     } else {
       setDisabledButton(true);
     }
-    // console.log('render!!');
   }, [userName, accountName, intro]);
 
   return (
