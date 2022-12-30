@@ -14,10 +14,9 @@ const CommunityHospitalMainPage = () => {
     { id: 0, title: '1km 이내', radius: 1000 },
     { id: 1, title: '5km 이내', radius: 5000 },
     { id: 2, title: '10km 이내', radius: 10000 },
-    { id: 3, title: '20km 이내', radius: 20000 },
   ];
 
-  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
   const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   const onClickBackgroundHandler = () => {
