@@ -46,6 +46,10 @@ const ProfileProduct = ({ setEmptyProduct }) => {
     getProduct();
   }, [userToken, accountname]);
 
+  const updateProductList = () => {
+    getProduct();
+  };
+
   return (
     <>
       {isLoading ? (
@@ -56,7 +60,7 @@ const ProfileProduct = ({ setEmptyProduct }) => {
         <>
           <ProductWrapper>
             <h2>판매 중인 상품</h2>
-            <MultiItemCarousel itemList={productList} />
+            <MultiItemCarousel itemList={productList} updateProductList={updateProductList} />
           </ProductWrapper>
           <SectionBorder />
         </>

@@ -6,7 +6,7 @@ import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 import { AuthContextStore } from './../../../../context/AuthContext';
 
-const ProductModal = ({ closeModal, productid, productLink }) => {
+const ProductModal = ({ closeModal, productid, productLink, updateProductList }) => {
   const [isOpenAlert, setIsOpenAlert] = useState(false);
 
   const closeAlert = () => {
@@ -26,8 +26,8 @@ const ProductModal = ({ closeModal, productid, productLink }) => {
     };
 
     axios(option)
-      .then((res) => {
-        window.location.reload();
+      .then(() => {
+        updateProductList();
       })
       .catch((err) => {
         console.error(err);
