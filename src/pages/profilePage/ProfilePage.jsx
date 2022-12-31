@@ -51,6 +51,7 @@ const ProfilePage = () => {
           setUserProfileInfo(res.data.profile);
         })
         .catch((err) => {
+          window.location.reload();
           setIsLoading(false);
           console.error(err);
         });
