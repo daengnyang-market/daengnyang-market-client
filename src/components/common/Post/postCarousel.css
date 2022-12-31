@@ -1,3 +1,12 @@
 .mySwiper-post {
   height: 228px;
 }
+
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-horizontal > .swiper-pagination-bullets,
+.swiper-pagination-bullets.swiper-pagination-horizontal {
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+}

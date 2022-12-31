@@ -73,7 +73,7 @@ const Post = ({ post = {} }) => {
                         clickable: true,
                       }}
                       modules={[Pagination]}
-                      className='mySwiper'
+                      className='mySwiper-post'
                     >
                       {imageFile ? (
                         imageFile.map((img, i) => (
@@ -176,11 +176,11 @@ const ContentImg = styled.img`
   height: 22.8rem;
   border: 0.5px solid var(--border-color);
   border-radius: 10px;
-  margin-bottom: 1.2rem;
 `;
 
 const Div = styled.div`
   display: flex;
+  margin-top: 1.2rem;
   margin-bottom: 1.6rem;
 `;
 
