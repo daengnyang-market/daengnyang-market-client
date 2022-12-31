@@ -73,7 +73,8 @@ const ProfileModificationPage = () => {
     };
 
     axios(option)
-      .then((res) => {
+      .then(() => {
+        localStorage.setItem('accountname', accountName);
         navigate('/profile');
       })
       .catch((err) => {
