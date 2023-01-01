@@ -11,14 +11,13 @@ import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Loading from '../Loading/Loading';
+import LikeBtn from '../../LikeBtn/LikeBtn';
 
 const Post = ({ post = {} }) => {
-  const [like, setLike] = useState(false);
   const [data, setData] = useState('');
   const [dateData, setDateData] = useState({});
   const [imageFile, setImageFile] = useState([]);
-  const { userToken, userAccountname } = useContext(AuthContextStore);
-  const navigate = useNavigate();
+  const { userAccountname } = useContext(AuthContextStore);
 
   useEffect(() => {
     if (post) {
@@ -42,9 +41,6 @@ const Post = ({ post = {} }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isMyPost, setIsMyPost] = useState(post.author.accountname.indexOf(userAccountname) !== -1);
 
-  const onClickLikeButtonHandler = () => {
-    setLike(!like);
-  };
   const closeModal = () => {
     setIsOpenModal(false);
   };
@@ -95,10 +91,7 @@ const Post = ({ post = {} }) => {
                 )}
               </PostDetailLink>
               <Div>
-                <LikeButton like={like} onClick={onClickLikeButtonHandler}>
-                  <span className='sr-only'>{like ? '좋아요 취소' : '좋아요'}</span>
-                </LikeButton>
-                <LikeSpan>{data.heartCount}</LikeSpan>
+                <LikeBtn data={data} />
                 <PostDetailLink to={`/post/${post.id}`} type='comment'>
                   <ChatImg src={REPLY_ICON} alt='댓글 보기' />
                   <ChatSpan>{data.commentCount}</ChatSpan>
@@ -189,21 +182,6 @@ const ContentImg = styled.img`
 const Div = styled.div`
   display: flex;
   margin-bottom: 1.6rem;
-`;
-
-const LikeButton = styled.button`
-  width: 2rem;
-  height: 2rem;
-  cursor: pointer;
-  background-size: cover;
-  background-image: ${(props) => (props.like ? `url(${HEART_FILL_ICON})` : `url(${HEART_ICON})`)};
-`;
-
-const LikeSpan = styled.span`
-  margin: 0 1.6rem 0 0.6rem;
-  font-size: var(--fs-sm);
-  line-height: 1.8rem;
-  color: var(--sub-text-color);
 `;
 
 const PostDetailLink = styled(Link)`
