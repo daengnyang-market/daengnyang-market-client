@@ -13,18 +13,9 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const { accountname } = useParams();
   const [opponentData, setOpponentData] = useState();
-  const [isValidate, setIsValidate] = useState(false);
+  const [isValidate, setIsValidate] = useState(true);
   const navigate = useNavigate();
   const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;
-
-  const handleGoChat = () => {
-    if (isValidate === true) {
-      createChatroom();
-    } else if (isValidate === false) {
-      alert('이미 존재하는 방입니다.');
-      console.log('false', isValidate);
-    }
-  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -33,11 +24,12 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
     document.body.appendChild(script);
     return () => document.body.removeChild(script);
   });
+
   useEffect(() => {
     const getMyPost = () => {
       const url = `https://mandarin.api.weniv.co.kr`;
       axios({
-        url: url + `/post/aksidkvkc/userpost`,
+        url: url + `/post/aksidkvkc/userpost/?limit=Number`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -72,7 +64,6 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
         },
       )
       .then((res) => {
-        console.log(userAccountname, profileUserAccountname);
         navigate(`/chat/${res.data.post.id}`);
       });
   };
@@ -106,7 +97,7 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
     };
 
     await axios(option)
-      .then((res) => {
+      .then(() => {
         setIsFollowing(!isFollowing);
       })
       .catch((err) => {
@@ -121,7 +112,7 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
         opponentData[i].content === `${userAccountname},${profileUserAccountname}`
       ) {
         return false;
-      } else {
+      } else if (i === opponentData.length - 1) {
         return true;
       }
     }
@@ -131,7 +122,18 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
     if (opponentData) {
       setIsValidate(getUserContent(opponentData, profileUserAccountname, userAccountname));
     }
-  }, [opponentData]);
+  }, [opponentData, profileUserAccountname, userAccountname]);
+
+  const handleGoChat = async () => {
+    await setIsValidate(getUserContent(opponentData, profileUserAccountname, userAccountname));
+    if (isValidate === false) {
+      alert('이미 존재하는 방입니다.');
+      console.log('false', isValidate);
+    } else if (isValidate === true) {
+      createChatroom();
+      setIsValidate(false);
+    }
+  };
 
   return (
     <UserProfileBtnsStyle>
