@@ -36,7 +36,9 @@ const useCurrentLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
   };
 
   useEffect(() => {
-    getLocation();
+    if (isLocationUpdate) {
+      getLocation();
+    }
   }, [isLocationUpdate]);
 
   useEffect(() => {

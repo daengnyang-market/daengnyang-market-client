@@ -18,7 +18,7 @@ const CommunityLayout = ({
       {navType === 'mainNav' ? (
         <TopMainNav title='집사생활' viewSearchBtn={false} />
       ) : navType === 'titleNav' ? (
-        <TopTitleNav title={`${title} 상세 정보`} viewMoreBtn={false} />
+        <TopTitleNav title={`${title} 상세 정보`} viewMoreBtn={false} isHospital={true} />
       ) : (
         <></>
       )}

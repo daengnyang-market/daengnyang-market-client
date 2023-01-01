@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CommunityLayout from '../../CommunityLayout';
 import HospitalList from './HospitalList';
@@ -14,10 +14,9 @@ const CommunityHospitalMainPage = () => {
     { id: 0, title: '1km 이내', radius: 1000 },
     { id: 1, title: '5km 이내', radius: 5000 },
     { id: 2, title: '10km 이내', radius: 10000 },
-    { id: 3, title: '20km 이내', radius: 20000 },
   ];
 
-  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
   const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   const onClickBackgroundHandler = () => {
@@ -28,6 +27,25 @@ const CommunityHospitalMainPage = () => {
     setSelectFilterId(filterId);
     onClickBackgroundHandler();
   };
+
+  useEffect(() => {
+    const isBack = sessionStorage.getItem('hospital_back');
+    const filterId = sessionStorage.getItem('hospital_filter');
+
+    if (!isBack) {
+      sessionStorage.setItem('hospital_filter', 0);
+      return;
+    }
+
+    if (isBack && !filterId) {
+      sessionStorage.removeItem('hospital_back');
+      sessionStorage.setItem('hospital_filter', 0);
+      return;
+    }
+
+    setSelectFilterId(filterId);
+    sessionStorage.removeItem('hospital_back');
+  }, []);
 
   return (
     <CommunityLayout padding='0' currentMenuId={2}>

@@ -16,9 +16,9 @@ const CommunityWeatherPage = () => {
   const [dateInfo, setDateInfo] = useState({});
   const [weatherInfo, setWeatherInfo] = useState({});
   const [dustInfo, setDustInfo] = useState({});
-  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
   const [walkingScore, setWalkingScore] = useState(0);
 
+  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
   const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   useEffect(() => {
