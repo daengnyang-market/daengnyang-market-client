@@ -5,7 +5,7 @@ import { UserLocationContextStore } from '../../../context/UserLocationContext';
 import useCurrentLocation from '../../../hooks/useCurrentLocation';
 import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
-import NotFoundLocation from '../NotFoundLocation';
+import NotFound from '../NotFound';
 import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
 
@@ -146,7 +146,7 @@ const CommunityWeatherPage = () => {
       <WeatherSection>
         <h2 className='sr-only'>실시간 날씨 정보</h2>
         {error ? (
-          <NotFoundLocation error={error} />
+          <NotFound notFoundType={0} />
         ) : (
           <>
             <SummaryWeatherInfo

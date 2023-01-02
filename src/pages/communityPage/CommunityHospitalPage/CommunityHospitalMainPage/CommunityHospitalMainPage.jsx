@@ -6,7 +6,7 @@ import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
 import useCurrentLocation from '../../../../hooks/useCurrentLocation';
 import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
-import NotFoundLocation from '../../NotFoundLocation';
+import NotFound from '../../NotFound';
 import { UserLocationContextStore } from '../../../../context/UserLocationContext';
 
 const CommunityHospitalMainPage = () => {
@@ -56,7 +56,7 @@ const CommunityHospitalMainPage = () => {
       <section>
         <h2 className='sr-only'>내 근처 동물병원 찾기</h2>
         {error ? (
-          <NotFoundLocation error={error} />
+          <NotFound notFoundType={0} />
         ) : (
           <>
             <CurrentLocationBar locations={{ isLocationUpdate, setIsLocationUpdate }} />
