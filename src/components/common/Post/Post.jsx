@@ -170,6 +170,7 @@ const ContentText = styled.p`
   font-weight: 400;
   font-size: var(--fs-md);
   line-height: 1.8rem;
+  word-break: break-word;
 `;
 
 const ContentImg = styled.img`
