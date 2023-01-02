@@ -14,7 +14,7 @@ const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
     <UserLink to={`/profile/${accountname}`}>
       <ProfileImage src={image} alt={`${username}님의 프로필사진`} width='50' />
       <AccountInfoWrapper>
-        <UserName>
+        <UserName className='ellipsis'>
           {/* TODO : username은 keyword와 겹치는데 accountname은 겹지 않는다면, 그냥 username을 반환 / 그게 아니라면, keyword 만 색상 변경하여 출력 */}
           {!usernameValidate && accountnameValidate ? (
             <>{username}</>
@@ -26,7 +26,7 @@ const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
             </span>
           )}
         </UserName>
-        <UserId>{accountname}</UserId>
+        <UserId className='ellipsis'>{accountname}</UserId>
       </AccountInfoWrapper>
     </UserLink>
   );
@@ -49,6 +49,7 @@ const AccountInfoWrapper = styled.div`
 
 const UserName = styled.strong`
   display: block;
+  max-width: 20rem;
   margin-bottom: 0.6rem;
   font-size: var(--fs-md);
   font-weight: 500;
@@ -62,6 +63,7 @@ const Keyword = styled.span`
 
 const UserId = styled.strong`
   display: block;
+  max-width: 20rem;
   font-size: var(--fs-sm);
   color: var(--sub-text-color);
 
