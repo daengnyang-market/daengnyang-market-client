@@ -30,7 +30,7 @@ const InputAccountName = ({
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    const regex = /^[._a-zA-z0-9]{0,10}$/;
+    const regex = /^[a-z0-9A-Z_.]{0,}$/;
 
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/accountnamevalid',
