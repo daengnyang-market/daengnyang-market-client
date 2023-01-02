@@ -73,7 +73,8 @@ const Post = ({ post = {} }) => {
                         clickable: true,
                       }}
                       modules={[Pagination]}
-                      className='mySwiper-post'
+                      style={swiperStyle}
+                      className='mySwiper'
                     >
                       {imageFile ? (
                         imageFile.map((img, i) => (
@@ -170,6 +171,10 @@ const ContentText = styled.p`
   font-size: var(--fs-md);
   line-height: 1.8rem;
 `;
+
+const swiperStyle = {
+  height: '228px',
+};
 
 const ContentImg = styled.img`
   width: 30.4rem;
