@@ -68,6 +68,7 @@ const Post = ({ post = {} }) => {
                 {imageFile[0] ? (
                   <SwiperWrapper>
                     <Swiper
+                      style={swiperStyle}
                       spaceBetween={30}
                       pagination={{
                         clickable: true,
@@ -178,9 +179,13 @@ const ContentImg = styled.img`
   border-radius: 10px;
   margin-bottom: 1.2rem;
 `;
+const swiperStyle = {
+  height: '228px',
+};
 
 const Div = styled.div`
   display: flex;
+  margin-top: 1.2rem;
   margin-bottom: 1.6rem;
 `;
 
