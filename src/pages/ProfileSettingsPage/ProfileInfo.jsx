@@ -21,7 +21,7 @@ const ProfileInfo = ({
   intro,
   image,
 }) => {
-  const onChangeInputHandler = (event) => {
+  const onChangeImgInputHandler = (event) => {
     const [file] = event.target.files;
 
     imageCompression(file, {
@@ -62,9 +62,7 @@ const ProfileInfo = ({
 
   // enter 입력 확인
   const onCheckEnter = (e) => {
-    if (disabledButton === false && e.key === 'Enter') {
-      onClickStartButtonHandler();
-    }
+    disabledButton === false && e.key === 'Enter' && onClickStartButtonHandler();
   };
 
   return (
@@ -83,7 +81,7 @@ const ProfileInfo = ({
       </label>
       <input
         onChange={(event) => {
-          onChangeInputHandler(event);
+          onChangeImgInputHandler(event);
         }}
         className='sr-only'
         type='file'
@@ -106,7 +104,7 @@ const ProfileInfo = ({
           labelText='계정 ID'
           inputType='text'
           id='userIdInput'
-          placeholder='영문, 숫자, 특수문자(,), (_)만 사용 가능합니다.'
+          placeholder='영문, 숫자, 특수문자(.), (_)만 사용 가능합니다.'
           maxLength='10'
           accountNameFunction={accountNameFunction}
           defaultAcconutName={defaultAcconutName}
@@ -117,7 +115,7 @@ const ProfileInfo = ({
           inputType='text'
           id='userIntroInput'
           placeholder='자신과 판매할 상품에 대해 소개해 주세요.'
-          maxLength='25'
+          maxLength='100'
           introFunction={introFunction}
           intro={intro}
         ></InputIntro>
