@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CommunityLayout from '../../CommunityLayout';
 import HospitalList from './HospitalList';
@@ -6,6 +6,8 @@ import CurrentLocationBar from '../CurrentLocationBar';
 import FilterMenu from './FilterMenu';
 import useCurrentLocation from '../../../../hooks/useCurrentLocation';
 import { BOTTOM_ARROW_ICON } from '../../../../styles/CommonIcons';
+import NotFound from '../../NotFound';
+import { UserLocationContextStore } from '../../../../context/UserLocationContext';
 
 const CommunityHospitalMainPage = () => {
   const [isShowFilterMenu, setIsShowFilterMenu] = useState(false);
@@ -16,8 +18,10 @@ const CommunityHospitalMainPage = () => {
     { id: 2, title: '10km 이내', radius: 10000 },
   ];
 
-  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
-  const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
+  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+  const { error } = useContext(UserLocationContextStore);
+
+  useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   const onClickBackgroundHandler = () => {
     setIsShowFilterMenu(!isShowFilterMenu);
@@ -51,21 +55,27 @@ const CommunityHospitalMainPage = () => {
     <CommunityLayout padding='0' currentMenuId={2}>
       <section>
         <h2 className='sr-only'>내 근처 동물병원 찾기</h2>
-        <CurrentLocationBar locations={{ isLocationUpdate, setIsLocationUpdate }} />
+        {error ? (
+          <NotFound notFoundType={0} />
+        ) : (
+          <>
+            <CurrentLocationBar locations={{ isLocationUpdate, setIsLocationUpdate }} />
 
-        <HospitalInfoWrapper>
-          <FilterButton onClick={onClickBackgroundHandler}>{filterList[selectFilterId].title}</FilterButton>
-          {isShowFilterMenu ? (
-            <FilterMenu
-              onBackgroundClick={onClickBackgroundHandler}
-              onClickFilter={onClickFilterHandler}
-              itemList={filterList}
-            />
-          ) : (
-            <></>
-          )}
-          <HospitalList radius={filterList[selectFilterId].radius} />
-        </HospitalInfoWrapper>
+            <HospitalInfoWrapper>
+              <FilterButton onClick={onClickBackgroundHandler}>{filterList[selectFilterId].title}</FilterButton>
+              {isShowFilterMenu ? (
+                <FilterMenu
+                  onBackgroundClick={onClickBackgroundHandler}
+                  onClickFilter={onClickFilterHandler}
+                  itemList={filterList}
+                />
+              ) : (
+                <></>
+              )}
+              <HospitalList radius={filterList[selectFilterId].radius} />
+            </HospitalInfoWrapper>
+          </>
+        )}
       </section>
     </CommunityLayout>
   );

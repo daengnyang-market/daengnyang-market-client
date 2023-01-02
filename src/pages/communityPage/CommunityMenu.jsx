@@ -5,32 +5,18 @@ import styled from 'styled-components';
 const CommunityMenu = ({ currentMenuId }) => {
   const navigate = useNavigate();
   const menuList = [
-    { id: 0, title: '홈', to: '#' },
-    { id: 1, title: '산책 난이도', to: '#' },
-    { id: 2, title: '동물병원', to: '#' },
+    { id: 0, title: '홈', to: '/community' },
+    { id: 1, title: '산책 난이도', to: '/community/weather' },
+    { id: 2, title: '동물병원', to: '/community/hospital' },
   ];
 
   const changeMenu = (id) => {
-    switch (id) {
-      case 0:
-        navigate('/community');
-        break;
-
-      case 1:
-        navigate('/community/weather');
-        break;
-
-      case 2:
-        navigate('/community/hospital');
-        break;
-
-      default:
-    }
+    navigate(menuList[id].to);
   };
 
   return (
-    <MenuList>
-      {menuList.map(({ id, title, to }) => (
+    <MenuList currentMenuId={currentMenuId}>
+      {menuList.map(({ id, title }) => (
         <MenuItem key={id} id={id} currentMenuId={currentMenuId}>
           <MenuButton onClick={() => changeMenu(id)}>{title}</MenuButton>
         </MenuItem>
@@ -46,6 +32,7 @@ const MenuList = styled.ul`
   justify-content: space-around;
   align-items: center;
   height: 4.8rem;
+  border-bottom: ${(props) => (props.currentMenuId === 0 ? '' : '1px solid var(--border-color);')};
 `;
 
 const MenuItem = styled.li`

@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import CommunityLayout from '../../CommunityLayout';
 import Loading from '../../../../components/common/Loading/Loading';
 import HospitalDetail from './HospitalDetail';
+import NotFound from '../../NotFound';
 
 const CommunityHospitalDetailPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -50,7 +51,7 @@ const CommunityHospitalDetailPage = () => {
             <Loading />
           </>
         ) : hasNullData ? (
-          <>페이지 출력에 실패했습니다. 다시 접속해주세요.</>
+          <NotFound notFoundType={1} />
         ) : (
           <HospitalDetail hospitalInfo={hospitalInfo} />
         )}
