@@ -5,11 +5,12 @@ import { UserLocationContextStore } from '../../../context/UserLocationContext';
 import useCurrentLocation from '../../../hooks/useCurrentLocation';
 import WeatherDescription from '../../../utils/WeatherDescription';
 import CommunityLayout from '../CommunityLayout';
+import NotFoundLocation from '../NotFoundLocation';
 import DetailWeatherInfo from './DetailWeatherInfo';
 import SummaryWeatherInfo from './SummaryWeatherInfo';
 
 const CommunityWeatherPage = () => {
-  const { longitude, latitude } = useContext(UserLocationContextStore);
+  const { longitude, latitude, error } = useContext(UserLocationContextStore);
 
   const OPEN_WEATHER_MAP_API = process.env.REACT_APP_OPEN_WEATHER_MAP_API;
 
@@ -18,8 +19,9 @@ const CommunityWeatherPage = () => {
   const [dustInfo, setDustInfo] = useState({});
   const [walkingScore, setWalkingScore] = useState(0);
 
-  const [isLocationUpdate, setIsLocationUpdate] = useState(false);
-  const checkUserLocation = useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
+  const [isLocationUpdate, setIsLocationUpdate] = useState(true);
+
+  useCurrentLocation({ isLocationUpdate, setIsLocationUpdate });
 
   useEffect(() => {
     const getDate = () => {
@@ -34,6 +36,10 @@ const CommunityWeatherPage = () => {
   }, []);
 
   useEffect(() => {
+    if (error) {
+      return;
+    }
+
     if (!longitude || !latitude) {
       return;
     }
@@ -139,13 +145,19 @@ const CommunityWeatherPage = () => {
     <CommunityLayout currentMenuId={1}>
       <WeatherSection>
         <h2 className='sr-only'>실시간 날씨 정보</h2>
-        <SummaryWeatherInfo
-          walkingScore={walkingScore}
-          dateInfo={dateInfo}
-          weather={weatherInfo.weather}
-          locations={{ isLocationUpdate, setIsLocationUpdate }}
-        />
-        <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
+        {error ? (
+          <NotFoundLocation error={error} />
+        ) : (
+          <>
+            <SummaryWeatherInfo
+              walkingScore={walkingScore}
+              dateInfo={dateInfo}
+              weather={weatherInfo.weather}
+              locations={{ isLocationUpdate, setIsLocationUpdate }}
+            />
+            <DetailWeatherInfo weatherInfo={weatherInfo} dustInfo={dustInfo} />
+          </>
+        )}
       </WeatherSection>
     </CommunityLayout>
   );
@@ -155,5 +167,4 @@ export default CommunityWeatherPage;
 
 const WeatherSection = styled.section`
   position: relative;
-  border-top: 1px solid var(--border-color);
 `;
