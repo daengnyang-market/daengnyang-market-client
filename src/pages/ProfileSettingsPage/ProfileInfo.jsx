@@ -9,6 +9,8 @@ import InputIntro from './InputIntro';
 import imageCompression from 'browser-image-compression';
 
 const ProfileInfo = ({
+  onClickStartButtonHandler,
+  disabledButton,
   userNameFunction,
   accountNameFunction,
   introFunction,
@@ -58,6 +60,13 @@ const ProfileInfo = ({
     });
   };
 
+  // enter 입력 확인
+  const onCheckEnter = (e) => {
+    if (disabledButton === false && e.key === 'Enter') {
+      onClickStartButtonHandler();
+    }
+  };
+
   return (
     <>
       <label htmlFor='profileImg'>
@@ -82,7 +91,7 @@ const ProfileInfo = ({
         accept='image/*'
       />
 
-      <Form>
+      <Form onKeyDown={onCheckEnter}>
         <InputUserName
           labelText='사용자 이름'
           inputType='text'
