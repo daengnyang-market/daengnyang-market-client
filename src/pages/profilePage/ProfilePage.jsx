@@ -74,7 +74,7 @@ const ProfilePage = () => {
           >
             <ProfileHeader profileData={userProfileInfo} profileUserAccountname={accountname} />
             <ProfileProduct setEmptyProduct={setEmptyProduct} />
-            <ProfilePost setEmptyPost={setEmptyPost} emptyProduct={emptyProduct} />
+            <ProfilePost setEmptyPost={setEmptyPost} emptyProduct={emptyProduct} key={location.key} />
           </ContentsLayout>
           <TabMenu currentMenuId={4} />
         </>
