@@ -1,21 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const EmailLoginInput = ({ inputList, values, onFocusHandler, onBlurHandler, onChangeHandler, alertMessage }) => {
+const EmailLoginInput = ({ inputList, useInputData, alertMessage }) => {
   return (
     <LoginInputWrapper>
-      {inputList.map(({ id, label, type, inputId, name, ref }) => (
+      {inputList.map(({ id, label, type, inputId, name }) => (
         <LoginInput key={id}>
           <LoginInputLabel htmlFor={inputId}>{label}</LoginInputLabel>
           <LoginInputText
             type={type}
             id={inputId}
             name={name}
-            ref={ref}
-            value={values[name]}
-            onFocus={onFocusHandler}
-            onBlur={onBlurHandler}
-            onChange={onChangeHandler}
+            value={useInputData.values[name]}
+            onFocus={useInputData.onFocusHandler}
+            onBlur={useInputData.onBlurHandler}
+            onChange={useInputData.onChangeHandler}
             autoComplete='off'
             spellCheck='false'
           />

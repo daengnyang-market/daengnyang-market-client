@@ -12,8 +12,6 @@ const EmailLoginPage = () => {
   const { setUserToken, setUserAccountname } = useContext(AuthContextStore);
 
   const [loginFail, setLoginFail] = useState(false);
-  const emailInputRef = useRef();
-  const passwordInputRef = useRef();
 
   const inputList = [
     {
@@ -22,7 +20,6 @@ const EmailLoginPage = () => {
       type: 'email',
       inputId: 'emailInput',
       name: 'email',
-      ref: emailInputRef,
     },
     {
       id: 1,
@@ -30,7 +27,6 @@ const EmailLoginPage = () => {
       type: 'password',
       inputId: 'passwordInput',
       name: 'password',
-      ref: passwordInputRef,
     },
   ];
 
@@ -45,7 +41,7 @@ const EmailLoginPage = () => {
     setLoginFail(false);
   };
 
-  const { values, onBlurHandler, onFocusHandler, onChangeHandler, disabledSubmitButton } = useInput({
+  const { ...useInputData } = useInput({
     initailValues: { email: '', password: '' },
     inputsValidState,
     setInputsValidState,
@@ -63,8 +59,8 @@ const EmailLoginPage = () => {
       headers: { 'Content-type': 'application/json' },
       data: {
         user: {
-          email: values['email'],
-          password: values['password'],
+          email: useInputData.values['email'],
+          password: useInputData.values['password'],
         },
       },
     };
@@ -104,17 +100,10 @@ const EmailLoginPage = () => {
       <Title>로그인</Title>
 
       <form onSubmit={onSubmitHandler}>
-        <EmailLoginInput
-          inputList={inputList}
-          values={values}
-          onFocusHandler={onFocusHandler}
-          onBlurHandler={onBlurHandler}
-          onChangeHandler={onChangeHandler}
-          alertMessage={alertMessage}
-        />
+        <EmailLoginInput inputList={inputList} useInputData={useInputData} alertMessage={alertMessage} />
         {loginFail ? <LoginFailAlert>* 아이디, 비밀번호가 일치하지 않습니다.</LoginFailAlert> : <></>}
 
-        <Button size='L' disabled={disabledSubmitButton}>
+        <Button size='L' disabled={useInputData.disabledSubmitButton}>
           로그인
         </Button>
       </form>
