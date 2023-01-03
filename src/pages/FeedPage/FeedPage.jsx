@@ -88,7 +88,9 @@ const FeedPage = () => {
                 {isFollowingPost.map((post, i) =>
                   // isFollowingPost의 마지막 요소라면 ref추가
                   isFollowingPost.length - 1 === i ? (
-                    <div key={post.id} ref={ref} />
+                    <div key={post.id} ref={ref}>
+                      <Post post={post} />
+                    </div>
                   ) : (
                     <div key={post.id}>
                       <Post post={post} />

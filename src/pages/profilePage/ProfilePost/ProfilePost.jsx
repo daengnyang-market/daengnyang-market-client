@@ -99,9 +99,11 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
                 <h3 className='sr-only'>리스트형 포스트 목록</h3>
                 {myPostList.map((post, i) =>
                   myPostList.length - 1 === i ? (
-                    <div key={post.id} ref={ref} />
+                    <div key={i} ref={ref}>
+                      <Post key={post.id} post={post} />
+                    </div>
                   ) : (
-                    <div key={post.id}>
+                    <div key={i}>
                       <Post key={post.id} post={post} />
                     </div>
                   ),
