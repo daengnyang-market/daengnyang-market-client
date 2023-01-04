@@ -34,21 +34,20 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
   // 이미지 상대경로 저장
   const handleAddImages = (e) => {
     const Blob = e.target.files[0];
-
-    setImgfile((prevState) => [...prevState, Blob]);
-    if (Blob === undefined) {
-      return;
-    }
-    const reader = new FileReader();
-    reader.readAsDataURL(Blob);
-    e.target.value = '';
-    reader.onload = () => {
-      if (imageUrl.length > 2) {
-        alert('사진은 3장까지 업로드 가능합니다.');
-      } else {
-        setImageUrl((imageUrl) => [...imageUrl, reader.result]);
+    if (image.length < 3) {
+      setImgfile((prevState) => [...prevState, Blob]);
+      if (Blob === undefined) {
+        return;
       }
-    };
+      const reader = new FileReader();
+      reader.readAsDataURL(Blob);
+      e.target.value = '';
+      reader.onload = () => {
+        setImageUrl((imageUrl) => [...imageUrl, reader.result]);
+      };
+    } else {
+      alert('사진은 3장까지 업로드 가능합니다.');
+    }
   };
 
   console.log('url', imageUrl);
