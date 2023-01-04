@@ -43,7 +43,11 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
     reader.readAsDataURL(Blob);
     e.target.value = '';
     reader.onload = () => {
-      setImageUrl((imageUrl) => [...imageUrl, reader.result]);
+      if (imageUrl.length > 2) {
+        alert('사진은 3장까지 업로드 가능합니다.');
+      } else {
+        setImageUrl((imageUrl) => [...imageUrl, reader.result]);
+      }
     };
   };
 
