@@ -19,7 +19,6 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   let { accountname } = useParams();
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
-  const [test, setTest] = useState([]);
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
   const [listBtn, setListBtn] = useState(true);
@@ -139,16 +138,6 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
 };
 
 export default ProfilePost;
-
-const testFunction = (myPostList) => {
-  let arr = [];
-  for (let i = 0; i < myPostList.length; i++) {
-    for (let j = 0; j < myPostList[i].image.length; j++) {
-      arr[i] = myPostList[i].image.split(',');
-    }
-  }
-  return arr;
-};
 
 const LoadingWrapper = styled.div`
   margin-top: 30px;
