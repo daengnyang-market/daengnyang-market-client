@@ -8,6 +8,7 @@ import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import ChatList from './ChatList';
+import Loading from '../../components/common/Loading/Loading';
 
 const ChatListPage = () => {
   const [serverChat, setServerChat] = useState();
@@ -58,7 +59,7 @@ const ChatListPage = () => {
               })}
             </>
           ) : (
-            <div>없습니다.</div>
+            <Loading />
           )}
         </ChatUl>
       </ContentsLayout>

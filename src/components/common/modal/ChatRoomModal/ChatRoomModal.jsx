@@ -1,17 +1,37 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
 const ChatRoomModal = ({ closeModal }) => {
-  const [isOpenAlert, setIsOpenAlert] = useState(false);
-
+  const [isOpenAlert, setIsOpenAlert] = useState(true);
+  const chatId = useParams();
+  const navigate = useNavigate();
+  const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;
+  console.log(chatId);
   const closeAlert = () => {
     setIsOpenAlert(false);
   };
+  const deletePost = () => {
+    const url = `https://mandarin.api.weniv.co.kr`;
+    axios({
+      url: url + `/post/${chatId.accountname}`,
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${CHAT_TOKEN}`,
+        'Content-type': 'application/json',
+      },
+    })
+      .then(() => {
+        navigate('/chat');
+      })
+      .catch((err) => console.error(err));
+  };
 
   const leaveChatRoom = () => {
-    console.log('채팅방 나가기 로직이 들어갈 위치입니다. 구현시 이 콘솔 로그를 지우고 구현해주세요.');
+    deletePost();
     closeModal();
   };
 
