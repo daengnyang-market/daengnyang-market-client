@@ -57,7 +57,6 @@ const PostModal = ({ closeModal, isMyPost, postID }) => {
   const onClickPageHandler = () => {
     navigate(`/post/${postID}/edit`);
   };
-  console.log('내포스트', isMyPost);
   return (
     <>
       <ModalLayout closeModal={closeModal} isOpenAlert={isOpenAlert}>

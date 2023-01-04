@@ -39,7 +39,6 @@ const SplashScreen = () => {
     navigate('/home');
   };
   const handleCheckToken = () => {
-    // 토큰 검증
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/checktoken',
       method: 'GET',

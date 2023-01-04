@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import JoinMembershipInput from './JoinMembershipInput';
+
 const JoinMembershipPage = () => {
-  // 유효성 검사에 따른, 페이지 이동을 설정하기위해서, Link 가 아닌 useNavigate 를 사용하였습니다.
   return (
     <Main>
       <Title>이메일로 회원가입</Title>
       <JoinMembershipInput />
-      {/* disabled 상태를 관리하여, true 일 경우에는 버튼을 막고, false일 경우에는 활성화 한다. */}
     </Main>
   );
 };

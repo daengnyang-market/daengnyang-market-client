@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import DustBadge from './DustBadgeStyled';
 
 const DetailWeatherInfo = ({ weatherInfo, dustInfo }) => {
-  // TODO: 미세먼지 지수 가공
   const getDustIndex = (dustType, dustInfo) => {
     if (dustType === 'pm10') {
       if (dustInfo <= 30) {

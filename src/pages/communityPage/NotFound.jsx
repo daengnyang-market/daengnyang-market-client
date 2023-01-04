@@ -5,9 +5,8 @@ import Button from '../../components/common/Button/Button';
 import { UserLocationContextStore } from '../../context/UserLocationContext';
 import { EMPTY_POST_IMAGE } from '../../styles/CommonImages';
 
-// [notFoundType]
-// 0 - 위치 오류
-// 1 - URL 오류
+// * 사용법 *
+// notFoundType : 0 - 위치 오류, 1 - URL 오류
 const NotFound = ({ notFoundType }) => {
   const { errorCode } = useContext(UserLocationContextStore);
   const navigate = useNavigate();

@@ -82,7 +82,6 @@ const ProfileModificationPage = () => {
       });
   };
 
-  // 버튼 활성화
   useEffect(() => {
     if (userName && accountName && intro) {
       setDisabledButton(false);

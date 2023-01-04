@@ -51,7 +51,7 @@ const PostUploadDetail = ({ className }) => {
       setPostImages(postData.image);
     }
   }, [postid, postData]);
-  // TODO : 유저 이미지 저장
+
   useEffect(() => {
     if (userAccountname) {
       axios({
@@ -67,24 +67,20 @@ const PostUploadDetail = ({ className }) => {
     }
   }, [userAccountname, userToken]);
 
-  // 폼버튼 새로고침 방지
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
-  // TODO : 텍스트의 길이에 맞추어 박스크기 조정
   const textRef = useRef();
   const handleResizeHeight = useCallback(() => {
     textRef.current.style.height = textRef.current.scrollHeight + 'px';
   }, []);
 
-  // TODO : 게시글 텍스트 관리
   const handleChangeText = (e) => {
     setText(e.target.value);
     handleResizeHeight();
   };
 
-  // TODO : 업로드될 이미지, POST 요청받아 숫자로 이루어진 filename을 응답받을수있다.
   const uploadImgData = async () => {
     let formData = new FormData();
     let imgData = uploadImg;
@@ -111,12 +107,10 @@ const PostUploadDetail = ({ className }) => {
     }
   };
 
-  // TODO : 업로드 버튼이 클릭되면 POST 요청
   const onClickUploadHandler = async (e) => {
     e.preventDefault();
     const url = 'https://mandarin.api.weniv.co.kr';
     const resImage = await uploadImgData();
-    console.log(resImage);
     if (postid) {
       try {
         await axios
@@ -168,7 +162,6 @@ const PostUploadDetail = ({ className }) => {
     }
   };
 
-  // TODO : 텍스트,이미지 유무에 따른 버튼활성화
   useEffect(() => {
     if (text !== '') {
       setIsValidate(false);
@@ -230,7 +223,6 @@ const test = (uploadImg) => {
         index[i] = null;
       }
     }
-    console.log('테스트함수결과:', index.join());
     return index.join().replace(/,,/g, '').replace(/,$/, '');
   }
 };

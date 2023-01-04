@@ -3,23 +3,21 @@ import styled, { css } from 'styled-components';
 import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
 import ProfileImage from '../ProfileImage/ProfileImage';
-import { EffectFlip } from 'swiper';
 
-// 유저의 정보와, 댓글을 작성할 post의 정보를 props로 받는다.
 const Comment = ({ user, post }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentData, setCommentData] = useState('');
   const [isValidate, setIsValidate] = useState(true);
-  // TODO : props 의 정보를 받아오면, 상태변화
+
   useEffect(() => {
     if (post && user) {
       setUserData(user);
       setPostData(post);
     }
   }, []);
-  // TODO : POST 요청하여 댓글 데이터 전송
+
   const sendCommentData = () => {
     axios
       .post(
@@ -40,7 +38,7 @@ const Comment = ({ user, post }) => {
         window.location.reload(false);
       });
   };
-  // TODO : 댓글존재 여부에 따라, 버튼 활성화 상태변경
+
   useEffect(() => {
     if (commentData !== '') {
       setIsValidate(false);
@@ -48,7 +46,7 @@ const Comment = ({ user, post }) => {
       setIsValidate(true);
     }
   }, [commentData]);
-  // TODO : userData와 postData 가 존재한다면, 클릭이 발생하면 sendCommentData() 실행
+
   const onClickUploadHandler = (e) => {
     e.preventDefault();
     if ((userData, postData)) {

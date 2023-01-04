@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ProfileImage from '../../ProfileImage/ProfileImage';
 
-// 키워드를 설정안하면, 기본 username 이 뜨도록 설정해두었습니다.
 const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
   const usernameValidate = ~username.indexOf(keyword);
   const accountnameValidate = ~accountname.indexOf(keyword);
@@ -15,7 +14,6 @@ const UserAccountInfo = ({ keyword = '', accountname, username, image }) => {
       <ProfileImage src={image} alt={`${username}님의 프로필사진`} width='50' />
       <AccountInfoWrapper>
         <UserName className='ellipsis'>
-          {/* TODO : username은 keyword와 겹치는데 accountname은 겹지 않는다면, 그냥 username을 반환 / 그게 아니라면, keyword 만 색상 변경하여 출력 */}
           {!usernameValidate && accountnameValidate ? (
             <>{username}</>
           ) : (

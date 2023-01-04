@@ -22,18 +22,14 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   const [test, setTest] = useState([]);
   const location = useLocation();
   const [isLoading, setIsLoading] = useState(true);
-  // 리스트형 앨범형 전환 버튼
   const [listBtn, setListBtn] = useState(true);
-  // 포스트 담기
   const [myPostList, setMyPostList] = useState([]);
-  // 무한 스크롤
   const [numPost, setNumPost] = useState(0);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [ref, inView] = useInView();
 
   const getPost = useCallback(async () => {
-    // TODO: 서버에서 포스트 가져오는 함수
     const url = `https://mandarin.api.weniv.co.kr`;
     const option = {
       url: url + `/post/${accountname ? accountname : userAccountname}/userpost/?limit=10&skip=${numPost}`,
@@ -63,14 +59,12 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
   }, [numPost]);
 
   useEffect(() => {
-    // TODO : 새로 받아온 포스트 배열 개수가 10개 미만일때 스크롤 멈추기
     if (!done) {
       getPost();
     }
   }, [numPost]);
 
   useEffect(() => {
-    // 사용자가 마지막 요소를 보고있고(inview === true), 로딩중이 아니라면
     if (inView && !loading) {
       setNumPost((current) => current + 10);
     }
@@ -148,7 +142,6 @@ export default ProfilePost;
 
 const testFunction = (myPostList) => {
   let arr = [];
-  // let imgArr = myPostList[]
   for (let i = 0; i < myPostList.length; i++) {
     for (let j = 0; j < myPostList[i].image.length; j++) {
       arr[i] = myPostList[i].image.split(',');

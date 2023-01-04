@@ -64,7 +64,6 @@ const Post = ({ post = {} }) => {
             <ContentWrapperDiv>
               <PostDetailLink to={`/post/${data.id}`} type='content'>
                 <ContentText>{data.content}</ContentText>
-                {/* TODO : 이미지파일이 없으면 <></>대체한다. */}
                 {imageFile[0] ? (
                   <SwiperWrapper>
                     <Swiper

@@ -11,8 +11,6 @@ const MyChat = ({ isImg, commentData }) => {
   }, [commentData]);
   const hour = new Date(dateData).getHours();
   const minutes = new Date(dateData).getMinutes();
-  console.log(commentData);
-  console.log(hour);
   return (
     <MessageItem>
       <MessageDate>

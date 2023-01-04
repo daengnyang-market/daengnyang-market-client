@@ -39,7 +39,6 @@ const ProfileSettingsPage = () => {
 
   const [disabledButton, setDisabledButton] = useState(true);
 
-  // 버튼 활성화
   useEffect(() => {
     if (userName && accountName && intro) {
       setDisabledButton(false);
@@ -67,7 +66,6 @@ const ProfileSettingsPage = () => {
 
     axios(option)
       .then((res) => {
-        console.log(res);
         navigate('/');
       })
       .catch((err) => {

@@ -16,16 +16,13 @@ import Loading from '../../components/common/Loading/Loading';
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  // useParams() 사용해서 url 에 있는 파라미터 받아오기
   let { accountname } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [emptyPost, setEmptyPost] = useState(false);
   const [emptyProduct, setEmptyProduct] = useState(false);
 
-  // 유저의 프로필 정보 담기
   const [userProfileInfo, setUserProfileInfo] = useState('');
 
-  // 사용자 토큰,아이디 context 값
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const url = `https://mandarin.api.weniv.co.kr`;
 
@@ -36,7 +33,6 @@ const ProfilePage = () => {
   }, [location, userAccountname, navigate]);
 
   useEffect(() => {
-    // 유저 프로필 불러오기
     const getUserProfileInfo = () => {
       axios({
         url: url + `/profile/${accountname ? accountname : userAccountname}`,

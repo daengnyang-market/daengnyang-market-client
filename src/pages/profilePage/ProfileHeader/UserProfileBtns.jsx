@@ -128,7 +128,6 @@ const UserProfileBtns = ({ profileData, profileUserAccountname }) => {
     await setIsValidate(getUserContent(opponentData, profileUserAccountname, userAccountname));
     if (isValidate === false) {
       alert('이미 존재하는 방입니다.');
-      console.log('false', isValidate);
     } else if (isValidate === true) {
       createChatroom();
       setIsValidate(false);

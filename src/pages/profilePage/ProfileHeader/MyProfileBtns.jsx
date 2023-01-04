@@ -6,7 +6,6 @@ import Button from '../../../components/common/Button/Button';
 
 const MyProfileBtns = () => {
   const navigate = useNavigate();
-  // 프로필수정 버튼 클릭시 동작 기능
   const handleEditProfile = (e) => {
     e.preventDefault();
     navigate('/profile/edit');

@@ -14,11 +14,6 @@ const CommentModal = ({ closeModal, isMyComment, commentID }) => {
   const { userToken } = useContext(AuthContextStore);
   const navigate = useNavigate();
   const URL = `https://mandarin.api.weniv.co.kr`;
-  console.log('코멘트아이디', commentID);
-
-  // const onClickPageHandler = () => {
-  //   navigate(`/post/${postid}`);
-  // };
 
   const closeAlert = () => {
     setIsOpenAlert(false);
@@ -56,7 +51,6 @@ const CommentModal = ({ closeModal, isMyComment, commentID }) => {
       .then(() => {
         setIsReport(true);
         setIsReportSuccess(true);
-        console.log('성공!!');
       })
       .catch((err) => console.error(err));
   };

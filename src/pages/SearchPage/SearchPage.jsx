@@ -28,7 +28,7 @@ const SearchPage = () => {
     !searchKeyword ? setSearchData('') : getSearchData(searchKeyword);
     setKeywordData(searchKeyword);
   };
-  // TODO : 성능개선을 위해, 무한스크롤과 버추얼스크롤을 적용해 볼 예정이다.
+
   return (
     <ContentsLayout isTabMenu={true} padding='0rem'>
       <TopSearchNav onTyping={onTyping} />

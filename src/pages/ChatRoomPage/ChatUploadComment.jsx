@@ -36,7 +36,6 @@ const ChatUploadComment = ({ chatRoomId }) => {
       setIsValidate(true);
     }
   }, [commentData]);
-  // TODO : userData와 postData 가 존재한다면, 클릭이 발생하면 sendCommentData() 실행
   const onClickUploadHandler = (e) => {
     e.preventDefault();
     sendCommentData();

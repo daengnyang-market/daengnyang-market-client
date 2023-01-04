@@ -10,7 +10,6 @@ const ChatRoomModal = ({ closeModal }) => {
   const chatId = useParams();
   const navigate = useNavigate();
   const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;
-  console.log(chatId);
   const closeAlert = () => {
     setIsOpenAlert(false);
   };

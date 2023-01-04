@@ -23,7 +23,6 @@ export default function MultiItemCarousel({ itemList, updateProductList }) {
   };
 
   const [productId, setProductId] = useState();
-  // console.log(productId);
 
   const [productLink, setProductLink] = useState();
 
@@ -32,8 +31,6 @@ export default function MultiItemCarousel({ itemList, updateProductList }) {
   };
 
   const productIdFunction = (value) => {
-    // console.log('productIdFunction 입니다.');
-    // console.log(value);
     setProductId(value);
   };
 

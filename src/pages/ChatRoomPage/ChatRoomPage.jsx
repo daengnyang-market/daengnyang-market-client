@@ -9,7 +9,6 @@ import ChatUploadComment from './ChatUploadComment';
 import MyChat from './MyChat';
 import UserChat from './UserChat';
 
-// TODO : 채팅하기 버튼을 클릭하면, 포스트를 생성하고, 그 포스트의 id값을 가져온다.
 const ChatRoomPage = () => {
   const { accountname } = useParams();
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -17,7 +16,6 @@ const ChatRoomPage = () => {
   const [chatCommentData, setChatCommentData] = useState();
   const [copyChatCommentData, setCopyChatCommentData] = useState();
   const [userId, setUserId] = useState();
-  // 가져온 포스트 id 값을 임의로 먼저 지정하였습니다.
   const chatRoomId = accountname;
   const getPostData = () => {
     axios({
@@ -65,10 +63,8 @@ const ChatRoomPage = () => {
       setCopyChatCommentData(chatCommentData.reverse());
       setUserId(chatRoomData.content.split(','));
     }
-    console.log(userId);
   }, [chatCommentData]);
 
-  console.log('마지막', chatCommentData);
   return (
     <ContentsLayout isTabMenu={true} padding='0rem'>
       <ChatRoomContainer>

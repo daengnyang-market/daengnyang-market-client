@@ -9,7 +9,7 @@ import Loading from '../../components/common/Loading/Loading';
 
 const PostComment = ({ post }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [isMyComment, setIsMyComment] = useState(false); // 내 댓글인 경우 true, 다른 사람의 댓글인 경우 false가 들어갑니다. (true인 경우 - 삭제 출력, false인 경우 - 신고 출력)
+  const [isMyComment, setIsMyComment] = useState(false);
   const { userAccountname } = useContext(AuthContextStore);
   const [data, setData] = useState();
   const [commentId, SetCommentId] = useState('');
@@ -23,7 +23,6 @@ const PostComment = ({ post }) => {
     setIsOpenModal(false);
   };
 
-  // TODO : 내댓글인지 아닌지 판단하여, 각 상황에 맞게 모달 오픈
   const onClickButtonHandler = (data) => {
     SetCommentId(data.id);
     setIsOpenModal(true);
@@ -34,7 +33,6 @@ const PostComment = ({ post }) => {
     }
   };
 
-  // TODO : 댓글작성 시간 로직
   const calcTime = (value) => {
     const today = new Date();
     const timeValue = new Date(value);

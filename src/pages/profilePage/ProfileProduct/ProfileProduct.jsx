@@ -13,12 +13,10 @@ const ProfileProduct = ({ setEmptyProduct }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
 
   const [isLoading, setIsLoading] = useState(true);
-  // 상품 담기
   const [productList, setProductList] = useState([]);
 
   const url = `https://mandarin.api.weniv.co.kr`;
 
-  // 상품 리스트 불러오기
   const getProduct = () => {
     axios({
       url: url + `/product/${accountname ? accountname : userAccountname}`,

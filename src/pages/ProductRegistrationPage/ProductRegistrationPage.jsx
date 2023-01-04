@@ -45,7 +45,6 @@ const ProductRegistrationPage = ({
 
   const [itemImage, setItemImage] = useState('');
 
-  // 이미지 리사이징
   const onChangeInputHandler = (event) => {
     const [file] = event.target.files;
 
@@ -55,7 +54,6 @@ const ProductRegistrationPage = ({
     }).then((compressedFile) => {
       const newFile = new File([compressedFile], file.name, { type: file.type });
 
-      // Blob to Base64
       const readerBlob = new FileReader();
       readerBlob.readAsDataURL(compressedFile);
       readerBlob.onloadend = () => {
@@ -64,8 +62,6 @@ const ProductRegistrationPage = ({
         } else {
           setItemImage(readerBlob.result);
         }
-        // console.log(readerBlob.result);
-        // console.log(compressedFile);
       };
       encodeFile(newFile);
       setThumbnailImg(newFile);
@@ -95,15 +91,12 @@ const ProductRegistrationPage = ({
     };
 
     axios(option)
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => {
         console.error(err);
       });
   };
 
-  // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
 
   const encodeFile = (file) => {
@@ -118,7 +111,6 @@ const ProductRegistrationPage = ({
     });
   };
 
-  // 버튼 활성화
   useEffect(() => {
     if (itemName && price && link && thumbnailImg) {
       setDisabledButton(false);
@@ -236,7 +228,6 @@ const Label = styled.label`
   }
 `;
 
-// IE 미지원
 const Img = styled.img`
   object-fit: cover;
 `;

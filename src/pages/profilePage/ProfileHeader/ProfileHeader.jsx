@@ -8,8 +8,6 @@ import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import Loading from '../../../components/common/Loading/Loading';
 
-// profileData : 프로필 페이지에서 넘어오는 프로필 정보들
-
 const ProfileHeader = ({ profileData, profileUserAccountname }) => {
   const location = useLocation();
   const navigate = useNavigate();

@@ -24,13 +24,11 @@ const FeedPage = () => {
     navigate('/search');
   };
 
-  // 무한 스크롤
   const [numFeed, setNumFeed] = useState(0);
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
   const [ref, inView] = useInView();
 
-  // 서버에서 피드를 가져오는 함수
   const getUserFeed = useCallback(async () => {
     const url = 'https://mandarin.api.weniv.co.kr';
     const option = {
@@ -45,7 +43,6 @@ const FeedPage = () => {
 
     await axios(option)
       .then((res) => {
-        // 기존의 데이터와 새로운 데이터 배열 합치기
         setIsFollowingPost(isFollowingPost.concat(res.data.posts));
         setLoading(false);
         setIsLoading(false);
@@ -60,14 +57,12 @@ const FeedPage = () => {
   }, [numFeed]);
 
   useEffect(() => {
-    // 새로 받아온 데이터 배열 개수가 10개 미만일때 스크롤 멈추기
     if (!done) {
       getUserFeed();
     }
   }, [numFeed]);
 
   useEffect(() => {
-    // 사용자가 마지막 요소를 보고있고(inview === true), 로딩중이 아니라면
     if (inView && !loading) {
       setNumFeed((current) => current + 10);
     }
@@ -86,7 +81,6 @@ const FeedPage = () => {
             <ContentsLayout>
               <div>
                 {isFollowingPost.map((post, i) =>
-                  // isFollowingPost의 마지막 요소라면 ref추가
                   isFollowingPost.length - 1 === i ? (
                     <div key={post.id} ref={ref}>
                       <Post post={post} />

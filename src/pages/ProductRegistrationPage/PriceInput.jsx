@@ -1,11 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-// * 사용법 - 아래의 4가지 props를 전달해줘야 합니다 *
-// labelText : label에 들어갈 문구 (생략시 기본값: label)
-// inputType : input 태그의 타입 (생략시 기본값: text)
-// id : input 태그의 아이디
-// placeholder : input 태그에 적용할 placeholder
 const PriceInput = ({
   labelText = 'label',
   inputType = 'text',
@@ -18,7 +13,6 @@ const PriceInput = ({
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef();
 
-  // 콤마 찍기, 콤마 없애기
   const commaFunction = (value) => {
     const comma = (value) => {
       value = String(value);
@@ -31,7 +25,6 @@ const PriceInput = ({
     return comma(uncomma(value));
   };
 
-  // 상품 수정 페이지, 등록 페이지
   const [value, setValue] = useState('');
   useEffect(() => {
     if (priceMod) {
@@ -50,7 +43,6 @@ const PriceInput = ({
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    //상품 수정 페이지, 등록 페이지
     if (priceModFunction) {
       priceModFunction(e.target.value.replace(/[^0-9]/g, ''));
     } else {

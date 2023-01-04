@@ -72,7 +72,7 @@ const ChatList = ({ data }) => {
       getUserProfileData();
     }
   }, [opponentAccountName]);
-  console.log(profileData);
+
   return (
     <>
       {chatCommentData && profileData ? (
