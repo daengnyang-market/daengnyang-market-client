@@ -22,6 +22,7 @@ const HospitalMap = ({ x, y }) => {
 
     marker.setMap(map);
     map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

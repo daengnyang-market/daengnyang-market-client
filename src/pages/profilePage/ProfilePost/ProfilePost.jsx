@@ -55,12 +55,14 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
         setIsLoading(false);
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numPost]);
 
   useEffect(() => {
     if (!done) {
       getPost();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numPost]);
 
   useEffect(() => {

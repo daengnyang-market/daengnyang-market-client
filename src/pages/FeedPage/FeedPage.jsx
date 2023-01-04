@@ -54,12 +54,14 @@ const FeedPage = () => {
         setIsLoading(false);
         console.error(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numFeed]);
 
   useEffect(() => {
     if (!done) {
       getUserFeed();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [numFeed]);
 
   useEffect(() => {

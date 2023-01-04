@@ -74,6 +74,7 @@ const PostDetailPage = () => {
       getPostData();
       getUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken, userAccountname, postid]);
 
   return (

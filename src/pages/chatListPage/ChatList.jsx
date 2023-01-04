@@ -33,6 +33,7 @@ const ChatList = ({ data }) => {
     };
     setCopyData(data);
     getCommentsData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   useEffect(() => {
@@ -49,6 +50,7 @@ const ChatList = ({ data }) => {
         setOpponentAccountName(usersAccounName[0]);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usersAccounName]);
 
   useEffect(() => {
@@ -71,6 +73,7 @@ const ChatList = ({ data }) => {
       };
       getUserProfileData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [opponentAccountName]);
 
   return (

@@ -26,6 +26,7 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
       }
     }
     return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadImg]);
 
   const handleAddImages = (e) => {

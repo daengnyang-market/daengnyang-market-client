@@ -16,6 +16,7 @@ const Comment = ({ user, post }) => {
       setUserData(user);
       setPostData(post);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const sendCommentData = () => {

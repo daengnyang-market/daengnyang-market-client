@@ -20,6 +20,7 @@ const CommunityHospitalDetailPage = () => {
       x: searchParams.get('x'),
       y: searchParams.get('y'),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

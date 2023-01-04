@@ -33,6 +33,7 @@ const HospitalList = ({ radius }) => {
       .catch((err) => {
         console.log(err);
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [longitude, latitude, radius, page]);
 
   useEffect(() => {
@@ -41,6 +42,7 @@ const HospitalList = ({ radius }) => {
     }
 
     getHospital();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [longitude, latitude, radius, page]);
 
   const getNextPageData = () => {

@@ -35,6 +35,7 @@ const ChatRoomPage = () => {
   };
   useEffect(() => {
     getPostData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getCommentsData = () => {
@@ -57,12 +58,14 @@ const ChatRoomPage = () => {
     if (chatRoomData) {
       getCommentsData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomData]);
   useEffect(() => {
     if (chatCommentData) {
       setCopyChatCommentData(chatCommentData.reverse());
       setUserId(chatRoomData.content.split(','));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatCommentData]);
 
   return (

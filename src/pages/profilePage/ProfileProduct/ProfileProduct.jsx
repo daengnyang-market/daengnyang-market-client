@@ -42,6 +42,7 @@ const ProfileProduct = ({ setEmptyProduct }) => {
   };
   useEffect(() => {
     getProduct();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken, accountname]);
 
   const updateProductList = () => {

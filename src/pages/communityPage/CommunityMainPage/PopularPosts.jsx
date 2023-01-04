@@ -39,6 +39,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
       });
 
     return feedPosts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const getMyPosts = useCallback(async () => {
@@ -57,6 +58,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
       });
 
     return myPosts;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   useEffect(() => {

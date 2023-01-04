@@ -52,6 +52,7 @@ const useCurrentLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
     }
 
     getLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLocationUpdate]);
 
   useEffect(() => {
@@ -60,6 +61,7 @@ const useCurrentLocation = ({ isLocationUpdate, setIsLocationUpdate }) => {
     }
 
     getDistrict();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [longitude, latitude]);
 };
 
