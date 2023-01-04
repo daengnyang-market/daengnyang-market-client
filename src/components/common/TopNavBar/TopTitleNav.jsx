@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
-import ChatRoomModal from '../modal/ChatRoomModal/ChatRoomModal';
+import ChatRoomModal from '../Modal/ChatRoomModal/ChatRoomModal';
 
 const TopTitleNav = ({ title, viewMoreBtn = true, isHospital = false }) => {
   const navigate = useNavigate();

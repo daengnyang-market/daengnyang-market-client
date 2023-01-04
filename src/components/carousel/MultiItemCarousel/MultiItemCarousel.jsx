@@ -4,7 +4,7 @@ import 'swiper/css';
 import { Pagination } from 'swiper';
 import './multiItemCarousel.css';
 import { useState } from 'react';
-import ProductModal from '../../common/modal/ProductModal/ProductModal';
+import ProductModal from '../../common/Modal/ProductModal/ProductModal';
 import { useNavigate } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { useContext } from 'react';

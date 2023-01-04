@@ -4,7 +4,7 @@ import TopSearchNav from '../../components/common/TopNavBar/TopSearchNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
 import axios from 'axios';
-import Search from '../../components/common/userItem/Search/Search';
+import Search from '../../components/common/UserItem/Search/Search';
 import { AuthContextStore } from '../../context/AuthContext';
 const SearchPage = () => {
   const [searchData, setSearchData] = useState([]);

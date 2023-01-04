@@ -6,8 +6,6 @@ import AuthRoute from './AuthRoute';
 import NonAuthRoute from './NonAuthRoute';
 
 import ChatRoomPage from '../pages/ChatRoomPage/ChatRoomPage';
-import CommunityMainPage from '../pages/communityPage/CommunityMainPage/CommunityMainPage';
-import CommunityWeatherPage from '../pages/communityPage/CommunityWeatherPage/CommunityWeatherPage';
 import EmailLoginPage from '../pages/EmailLoginPage/EmailLoginPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
@@ -17,13 +15,15 @@ import PostUploadPage from '../pages/PostUploadPage/PostUploadPage';
 import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
 import ProductModificationPage from '../pages/ProductModificationPage/ProductModificationPage';
 import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileModificationPage';
-import ProfilePage from '../pages/profilePage/ProfilePage';
+import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
-import ChatListPage from '../pages/chatListPage/ChatListPage';
+import ChatListPage from '../pages/ChatListPage/ChatListPage';
 import ProfileSettingsPage from '../pages/ProfileSettingsPage/ProfileSettingsPage';
 import Error404Page from '../pages/Error404Page/Error404Page';
-import CommunityHospitalPage from '../pages/communityPage/CommunityHospitalPage/CommunityHospitalPage';
+import CommunityMainPage from '../pages/CommunityPage/CommunityMainPage/CommunityMainPage';
+import CommunityWeatherPage from '../pages/CommunityPage/CommunityWeatherPage/CommunityWeatherPage';
+import CommunityHospitalPage from '../pages/CommunityPage/CommunityHospitalPage/CommunityHospitalPage';
 
 const Router = () => {
   const { userToken } = useContext(AuthContextStore);

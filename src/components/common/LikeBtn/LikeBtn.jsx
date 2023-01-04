@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { HEART_FILL_ICON, HEART_ICON } from '../../styles/CommonIcons';
-import { AuthContextStore } from '../../context/AuthContext';
+import { HEART_FILL_ICON, HEART_ICON } from '../../../styles/CommonIcons';
+import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
 
 const LikeBtn = ({ data }) => {
