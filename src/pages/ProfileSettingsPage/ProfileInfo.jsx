@@ -30,7 +30,6 @@ const ProfileInfo = ({
     }).then((compressedFile) => {
       const newFile = new File([compressedFile], file.name, { type: file.type });
 
-      // Blob to Base64
       const readerBlob = new FileReader();
       readerBlob.readAsDataURL(compressedFile);
       readerBlob.onloadend = () => {
@@ -45,7 +44,6 @@ const ProfileInfo = ({
     });
   };
 
-  // 업로드 이미지 섬네일
   const [thumbnailImg, setThumbnailImg] = useState('');
 
   const encodeFile = (file) => {
@@ -60,7 +58,6 @@ const ProfileInfo = ({
     });
   };
 
-  // enter 입력 확인
   const onCheckEnter = (e) => {
     disabledButton === false && e.key === 'Enter' && onClickStartButtonHandler();
   };

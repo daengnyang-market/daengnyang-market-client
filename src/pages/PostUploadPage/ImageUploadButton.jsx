@@ -12,7 +12,6 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
   const [imageUrl, setImageUrl] = useState('');
   const [copyUploadImg, setCopyUploadImg] = useState([]);
 
-  console.log('처음', uploadImg);
   useEffect(() => {
     if (uploadImg) {
       const newUploadImg = testFunction(uploadImg);
@@ -26,12 +25,10 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
         setImgfile(newUploadImg);
       }
     }
-    return () => {
-      console.log('끝');
-    };
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadImg]);
 
-  // 이미지 상대경로 저장
   const handleAddImages = (e) => {
     const Blob = e.target.files[0];
     if (image.length < 3) {
@@ -50,21 +47,16 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
     }
   };
 
-  console.log('url', imageUrl);
-  console.log('image', image);
-
-  // X버튼 클릭 시 이미지 삭제
   const handleDeleteImage = (index) => {
     const imgArr = image.filter((image, i) => i !== index);
     const imgNameArr = imageUrl.filter((image, i) => i !== index);
 
     setImgfile([...imgArr]);
     setImageUrl([...imgNameArr]);
-    // setUploadImg([...imgArr]);
   };
 
-  // 부모요소에 이미지 전달
   setUploadImg(image);
+
   return (
     <>
       {imageUrl.length === 0 ? null : (

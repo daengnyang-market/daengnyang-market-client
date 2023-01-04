@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TopNavBar, LeftArrow, MoreBtn } from './Styled';
 
 import { LEFT_ARROW_ICON, MORE_ICON } from '../../../styles/CommonIcons';
-import ProfileModal from '../modal/ProfileModal/ProfileModal';
+import ProfileModal from '../Modal/ProfileModal/ProfileModal';
 
 const TopBasicNav = () => {
   const navigate = useNavigate();

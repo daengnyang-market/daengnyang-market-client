@@ -2,11 +2,6 @@ import React, { useRef, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-// * 사용법 - 아래의 4가지 props를 전달해줘야 합니다 *
-// labelText : label에 들어갈 문구 (생략시 기본값: label)
-// inputType : input 태그의 타입 (생략시 기본값: text)
-// id : input 태그의 아이디
-// placeholder : input 태그에 적용할 placeholder
 const InputAccountName = ({
   labelText = 'label',
   inputType = 'text',
@@ -19,7 +14,6 @@ const InputAccountName = ({
 }) => {
   const inputRef = useRef();
 
-  // alert
   const [alertPattern, setAlertPattern] = useState('');
   const [alertID, setAlertID] = useState('');
 

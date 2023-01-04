@@ -33,13 +33,13 @@ const SplashScreen = () => {
     return () => {
       clearTimeout(timer);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isValid]);
 
   const goHome = () => {
     navigate('/home');
   };
   const handleCheckToken = () => {
-    // 토큰 검증
     const option = {
       url: 'https://mandarin.api.weniv.co.kr/user/checktoken',
       method: 'GET',

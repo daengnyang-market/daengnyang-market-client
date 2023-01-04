@@ -83,7 +83,6 @@ const LoginSection = styled.section`
   color: var(--sub-txt-color);
 `;
 
-// 버튼 공통 스타일
 const CommonStyleButton = styled.button`
   position: relative;
   width: 32.2rem;
@@ -107,7 +106,6 @@ const FacebookButton = styled(CommonStyleButton)`
   margin-bottom: 2rem;
 `;
 
-// 이미지 공통 스타일
 const CommonStyleImg = styled.img`
   display: block;
   position: absolute;
@@ -116,16 +114,9 @@ const CommonStyleImg = styled.img`
   transform: translateY(-50%);
   width: 24px;
   height: 24px;
-
-  // props
   background-image: ${(props) => `url(${props.src})`};
   background-size: cover;
 `;
-
-// 상속
-// const KakaoImg = styled(CommonStyleImg)``;
-// const GoogleImg = styled(CommonStyleImg)``;
-// const FacebookImg = styled(CommonStyleImg)``;
 
 const Ul = styled.ul`
   display: flex;

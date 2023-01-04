@@ -14,7 +14,6 @@ const useInput = ({
   const [isPassValidation, setIsPassValidation] = useState(false);
 
   useEffect(() => {
-    // TODO: 모든 항목이 유효성 검사를 통과했다면 로그인 버튼 활성화 처리
     const checkDisabledSubmitButton = () => {
       let inputValues = Object.values(inputsValidState);
       let sum = inputValues.reduce((sum, cur) => (sum += cur), 0);
@@ -30,14 +29,12 @@ const useInput = ({
     checkDisabledSubmitButton();
   }, [isPassValidation, inputsValidState]);
 
-  // TODO: 인풋이 포커스를 잃었을 때
   const onBlurHandler = (e) => {
     e.currentTarget.style.borderBottom = '1px solid var(--border-color)';
   };
 
-  // TODO: 인풋이 포커스를 얻었을 때
   const onFocusHandler = (e) => {
-    // *참고* 41~43 라인은 로그인 페이지 한정 - 로그인 실패 메시지 컨트롤을 위한 코드. 기본값(null)인 경우에는 41~43 라인 코드를 실행하지 않음
+    // * 주의 * ChangeLoginFailStateToFail이 기본값(null)인 경우에는 아래 조건문을 실행하지 않음. 로그인 실패 메시지 컨트롤을 위한 코드임.
     if (ChangeLoginFailStateToFail) {
       ChangeLoginFailStateToFail();
     }
@@ -45,12 +42,10 @@ const useInput = ({
     e.currentTarget.style.borderBottom = '1px solid var(--main-color)';
   };
 
-  // TODO: 인풋 밸류가 바뀌었을 때
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
 
-    // TODO: 이메일 유효성 검사
     if (name === 'email') {
       if (!checkEmailValidation(value)) {
         setIsPassValidation(false);
@@ -58,7 +53,6 @@ const useInput = ({
       }
     }
 
-    // TODO: 비밀번호 유효성 검사
     if (name === 'password') {
       if (!checkPasswordValidation(value)) {
         setIsPassValidation(false);
@@ -69,8 +63,6 @@ const useInput = ({
     setIsPassValidation(true);
   };
 
-  // 유효성 검사 함수들
-  // TODO: 이메일 밸리데이션 함수
   const checkEmailValidation = (value) => {
     setInputsValidState({ ...inputsValidState, email: false });
 
@@ -89,7 +81,6 @@ const useInput = ({
     return true;
   };
 
-  // TODO: 비밀번호 밸리데이션 함수
   const checkPasswordValidation = (value) => {
     setInputsValidState({ ...inputsValidState, password: false });
 

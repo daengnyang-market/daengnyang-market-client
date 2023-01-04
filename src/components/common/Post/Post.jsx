@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ProfileImage from '../ProfileImage/ProfileImage';
 import { Link, useNavigate } from 'react-router-dom';
-import PostModal from '../modal/PostModal/PostModal';
+import PostModal from '../Modal/PostModal/PostModal';
 import { AuthContextStore } from '../../../context/AuthContext';
 import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import { MORE_SMALL_ICON, HEART_ICON, HEART_FILL_ICON, REPLY_ICON } from '../../../styles/CommonIcons';
@@ -11,7 +11,7 @@ import { Pagination } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Loading from '../Loading/Loading';
-import LikeBtn from '../../LikeBtn/LikeBtn';
+import LikeBtn from '../LikeBtn/LikeBtn';
 
 const Post = ({ post = {} }) => {
   const [data, setData] = useState('');
@@ -64,7 +64,6 @@ const Post = ({ post = {} }) => {
             <ContentWrapperDiv>
               <PostDetailLink to={`/post/${data.id}`} type='content'>
                 <ContentText>{data.content}</ContentText>
-                {/* TODO : 이미지파일이 없으면 <></>대체한다. */}
                 {imageFile[0] ? (
                   <SwiperWrapper>
                     <Swiper

@@ -95,7 +95,6 @@ const sizeStyles = css`
 `;
 
 const StyledButton = styled.button`
-  /* 공통 스타일 */
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -107,8 +106,6 @@ const StyledButton = styled.button`
   font-size: 1.4rem;
   font-weight: 500;
   cursor: pointer;
-  /* 크기 */
   ${sizeStyles}
-  /* 색상 */
   background: ${(props) => props.backgroundColor};
 `;

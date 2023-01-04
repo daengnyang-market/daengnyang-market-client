@@ -9,39 +9,13 @@ import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayou
 import styled from 'styled-components';
 import PostComment from './PostComment';
 import Post from '../../components/common/Post/Post';
+
 const PostDetailPage = () => {
-  // TODO : useParams 사용 가능하게 되면 변경
   const { postid } = useParams();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentsData, setCommentsData] = useState();
-  //TODO : 멀티블 axios 한번 다뤄보기
-  // const BASE_URL = 'https://mandarin.api.weniv.co.kr/';
-  // useEffect(() => {
-  //   if ((userToken, userAccountname)) {
-  //     const getData = async () => {
-  //       const header = { headers: { Authorization: `Bearer ${userToken}`, 'Content-type': 'application/json' } };
-
-  //       await axios
-  //         .all(
-  //           [axios.get(BASE_URL + `/profile/${userAccountname}`, header)][
-  //             axios.get(BASE_URL + 'post/63a2a5f317ae666581dc8f51', header)
-  //           ][axios.get(BASE_URL + 'post/63a2a5f317ae666581dc8f51/comments', header)],
-  //         )
-  //         .then(
-  //           axios.spread((res1, res2, res3) => {
-  //             setUserData(res1.data.profile);
-  //             setPostData(res2.data.post);
-  //             setCommentsData(res3.data.comments);
-  //           }),
-  //           console.log('pass'),
-  //         )
-  //         .catch((err) => console.log(err));
-  //     };
-  //     getData();
-  //   }
-  // }, [userToken, userAccountname]);
 
   const getUserData = () => {
     axios({
@@ -93,15 +67,16 @@ const PostDetailPage = () => {
         console.log(error);
       });
   };
-  // TODO : 세개의 get 요청을 상태관리
+
   useEffect(() => {
     if ((userToken, userAccountname, postid)) {
       getCommentsData();
       getPostData();
       getUserData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userToken, userAccountname, postid]);
-  console.log(postid);
+
   return (
     <>
       {commentsData && userData && postData ? (

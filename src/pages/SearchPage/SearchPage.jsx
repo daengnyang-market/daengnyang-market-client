@@ -4,7 +4,7 @@ import TopSearchNav from '../../components/common/TopNavBar/TopSearchNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
 import axios from 'axios';
-import Search from '../../components/common/userItem/Search/Search';
+import Search from '../../components/common/UserItem/Search/Search';
 import { AuthContextStore } from '../../context/AuthContext';
 const SearchPage = () => {
   const [searchData, setSearchData] = useState([]);
@@ -28,7 +28,7 @@ const SearchPage = () => {
     !searchKeyword ? setSearchData('') : getSearchData(searchKeyword);
     setKeywordData(searchKeyword);
   };
-  // TODO : 성능개선을 위해, 무한스크롤과 버추얼스크롤을 적용해 볼 예정이다.
+
   return (
     <ContentsLayout isTabMenu={true} padding='0rem'>
       <TopSearchNav onTyping={onTyping} />

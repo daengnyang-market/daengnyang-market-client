@@ -5,7 +5,7 @@ import { AuthContextStore } from '../../context/AuthContext';
 import TopTitleNav from '../../components/common/TopNavBar/TopTitleNav';
 import TabMenu from '../../components/common/TabMenu/TabMenu';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
-import Follow from '../../components/common/userItem/Follow/Follow';
+import Follow from '../../components/common/UserItem/Follow/Follow';
 import styled from 'styled-components';
 import EmptyFollowList from './EmptyFollowList';
 import Loading from '../../components/common/Loading/Loading';
@@ -56,6 +56,7 @@ const FollowListPage = () => {
     };
 
     getFollowList();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

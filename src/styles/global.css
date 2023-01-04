@@ -19,14 +19,12 @@
   --alert-color: #eb5757;
 }
 
-/* 텍스트가 길어질 경우 말 줄임 */
 .ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-/* 스크린리더 전용 */
 .sr-only {
   position: absolute;
   width: 1px;
