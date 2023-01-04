@@ -88,31 +88,25 @@ const PostUploadDetail = ({ className }) => {
   const uploadImgData = async () => {
     let formData = new FormData();
     let imgData = uploadImg;
-    // test(imgData);
     for (let i = 0; i < imgData.length; i++) {
       const file = imgData[i];
       if (String(file).indexOf('http') === -1) {
         formData.append('image', file);
       }
-      console.log('뭘까', file);
-      console.log('폼데이터', formData);
     }
     const res = await axios({
       method: 'post',
       url: 'https://mandarin.api.weniv.co.kr/image/uploadfiles',
       data: formData,
     });
-    console.log('test:', test(imgData));
     if (test(imgData) !== '') {
       let imgUrls = res.data
         .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
         .concat([String(test(imgData))])
         .join();
-      console.log('imgUrls:', imgUrls);
       return imgUrls;
     } else {
       let imgUrls = res.data.map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename).join();
-      console.log('imgUrls:', imgUrls);
       return imgUrls;
     }
   };
