@@ -5,16 +5,16 @@ import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
 
 const ChatUploadComment = ({ chatRoomId }) => {
-  const { userToken, userAccountname } = useContext(AuthContextStore);
-  const [commentData, setCommentData] = useState('');
+  const { userToken } = useContext(AuthContextStore);
+  const [chatCommentData, setChatCommentData] = useState('');
   const [isValidate, setIsValidate] = useState(true);
-  const sendCommentData = () => {
+  const sendChatCommentData = () => {
     axios
       .post(
         `https://mandarin.api.weniv.co.kr/post/${chatRoomId}/comments`,
         {
           comment: {
-            content: `${commentData}`,
+            content: `${chatCommentData}`,
           },
         },
         {
@@ -30,15 +30,15 @@ const ChatUploadComment = ({ chatRoomId }) => {
   };
 
   useEffect(() => {
-    if (commentData !== '') {
+    if (chatCommentData !== '') {
       setIsValidate(false);
     } else {
       setIsValidate(true);
     }
-  }, [commentData]);
+  }, [chatCommentData]);
   const onClickUploadHandler = (e) => {
     e.preventDefault();
-    sendCommentData();
+    sendChatCommentData();
   };
   return (
     <CommentForm>
@@ -50,7 +50,7 @@ const ChatUploadComment = ({ chatRoomId }) => {
         type='text'
         placeholder='메시지 입력하기...'
         onChange={(e) => {
-          setCommentData(e.target.value);
+          setChatCommentData(e.target.value);
         }}
       />
       <Button disabled={isValidate} onClick={onClickUploadHandler}>
