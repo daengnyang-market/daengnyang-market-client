@@ -15,7 +15,6 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
     if (uploadImg) {
       const newUploadImg = splitByComma(uploadImg);
       setImageUrl(newUploadImg);
-      setUploadImg(newUploadImg);
       setImgfile(newUploadImg);
     }
     return () => {};
@@ -47,8 +46,10 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
     setImgfile([...imgArr]);
     setImageUrl([...imgNameArr]);
   };
-
-  setUploadImg(image);
+  useEffect(() => {
+    setUploadImg(image);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image]);
 
   return (
     <>
