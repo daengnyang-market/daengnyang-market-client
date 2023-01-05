@@ -110,18 +110,18 @@ const ProfilePost = ({ setEmptyPost, emptyProduct }) => {
                 {myPostList.map((post, i) => {
                   return post.image ? (
                     post.image.includes(',') ? (
-                      <li>
+                      <li key={post.id}>
                         <Link to={`/post/${post.id}`}>
-                          <img key={post.id} src={post.image.split(',')[0]} alt='썸네일 이미지' />
+                          <img src={post.image.split(',')[0]} alt='썸네일 이미지' />
                           <img className='layer-icon' src={LAYERS_ICON} alt='레이어 아이콘' />
                         </Link>
                       </li>
                     ) : (
-                      <>
+                      <li key={post.id}>
                         <Link to={`/post/${post.id}`}>
                           <img key={post.id} src={post.image} alt='썸네일 이미지'></img>
                         </Link>
-                      </>
+                      </li>
                     )
                   ) : null;
                 })}
