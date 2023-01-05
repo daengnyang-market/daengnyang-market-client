@@ -4,7 +4,7 @@ import Button from '../../components/common/Button/Button';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
-const Error404Page = () => {
+const NotFoundPage = () => {
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1);
@@ -22,7 +22,7 @@ const Error404Page = () => {
   );
 };
 
-export default Error404Page;
+export default NotFoundPage;
 
 const ErrorPage = styled.div`
   margin: 50vh auto 0;

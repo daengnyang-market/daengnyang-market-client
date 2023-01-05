@@ -10,6 +10,7 @@ import ChatRoomPage from '../pages/ChatPage/ChatRoomPage/ChatRoomPage';
 import EmailLoginPage from '../pages/LoginPage/EmailLoginPage/EmailLoginPage';
 import JoinMembershipPage from '../pages/JoinPage/JoinMembershipPage/JoinMembershipPage';
 import ProfileSettingsPage from '../pages/JoinPage/ProfileSettingsPage/ProfileSettingsPage';
+import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
@@ -22,7 +23,6 @@ import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
 
-import Error404Page from '../pages/Error404Page/Error404Page';
 import CommunityMainPage from '../pages/CommunityPage/CommunityMainPage/CommunityMainPage';
 import CommunityWeatherPage from '../pages/CommunityPage/CommunityWeatherPage/CommunityWeatherPage';
 import CommunityHospitalPage from '../pages/CommunityPage/CommunityHospitalPage/CommunityHospitalPage';
@@ -32,8 +32,8 @@ const Router = () => {
 
   return (
     <Routes>
-      <Route path='*' element={<Error404Page />} />
-      <Route path='/notfound' element={<Error404Page />} />
+      <Route path='*' element={<NotFoundPage />} />
+      <Route path='/notfound' element={<NotFoundPage />} />
 
       <Route element={<NonAuthRoute authenticated={userToken} />}>
         <Route path='/' element={<SplashScreen />} />
