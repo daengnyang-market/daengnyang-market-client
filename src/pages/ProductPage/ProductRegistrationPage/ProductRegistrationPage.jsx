@@ -2,13 +2,13 @@ import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
-import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
-import ContentsLayout from './../../components/layout/ContentsLayout/ContentsLayout';
-import { IMG_BUTTON_ICON } from '../../styles/CommonIcons';
+import TopUploadNav from '../../../components/common/TopNavBar/TopUploadNav';
+import ContentsLayout from './../../../components/layout/ContentsLayout/ContentsLayout';
+import { IMG_BUTTON_ICON } from '../../../styles/CommonIcons';
 import ItemNameInput from './ItemNameInput';
 import PriceInput from './PriceInput';
 import ItemLinkInput from './ItemLinkInput';
-import { AuthContextStore } from '../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 import imageCompression from 'browser-image-compression';
 
 const ProductRegistrationPage = ({

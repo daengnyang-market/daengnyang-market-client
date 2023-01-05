@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { AuthContextStore } from '../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 import ProductRegistrationPage from '../ProductRegistrationPage/ProductRegistrationPage';
 
 const ProductModificationPage = () => {

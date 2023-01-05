@@ -13,11 +13,11 @@ import ProfileSettingsPage from '../pages/JoinPage/ProfileSettingsPage/ProfileSe
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import PostDetailPage from '../pages/PostPage/PostDetailPage/PostDetailPage';
 import PostUploadPage from '../pages/PostPage/PostUploadPage/PostUploadPage';
+import ProductRegistrationPage from '../pages/ProductPage/ProductRegistrationPage/ProductRegistrationPage';
+import ProductModificationPage from '../pages/ProductPage/ProductModificationPage/ProductModificationPage';
 
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
-import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
-import ProductModificationPage from '../pages/ProductModificationPage/ProductModificationPage';
 import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileModificationPage';
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
