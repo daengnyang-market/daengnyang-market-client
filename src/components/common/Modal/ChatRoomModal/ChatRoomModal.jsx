@@ -6,7 +6,7 @@ import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
 
 const ChatRoomModal = ({ closeModal }) => {
-  const [isOpenAlert, setIsOpenAlert] = useState(true);
+  const [isOpenAlert, setIsOpenAlert] = useState(false);
   const chatId = useParams();
   const navigate = useNavigate();
   const CHAT_TOKEN = process.env.REACT_APP_CHAT_SERVER_TOKEN;

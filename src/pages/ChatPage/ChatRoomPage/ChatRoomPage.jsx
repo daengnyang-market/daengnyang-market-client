@@ -16,6 +16,7 @@ const ChatRoomPage = () => {
   const [chatCommentData, setChatCommentData] = useState();
   const [copyChatCommentData, setCopyChatCommentData] = useState();
   const [userId, setUserId] = useState();
+  const [isClickedHamburgerBtn, SetIsClickedHamburgerBtn] = useState(false);
   const chatRoomId = accountname;
 
   const getChatroomData = () => {
@@ -73,7 +74,11 @@ const ChatRoomPage = () => {
     <ContentsLayout isTabMenu={true} padding='0rem'>
       <ChatRoomContainer>
         {userId &&
-          (userId[0] === userAccountname ? <TopTitleNav title={userId[1]} /> : <TopTitleNav title={userId[0]} />)}
+          (userId[0] === userAccountname ? (
+            <TopTitleNav setIsClickedHamburgerBtn={SetIsClickedHamburgerBtn} title={userId[1]} />
+          ) : (
+            <TopTitleNav setIsClickedHamburgerBtn={SetIsClickedHamburgerBtn} title={userId[0]} />
+          ))}
         <h2 className='sr-only'>전체 채팅룸 컨텐츠</h2>
         <ChatWrapper>
           <h3 className='sr-only'>채팅</h3>
@@ -90,7 +95,7 @@ const ChatRoomPage = () => {
           )}
         </ChatWrapper>
       </ChatRoomContainer>
-      <ChatUploadComment chatRoomId={chatRoomId} />
+      {isClickedHamburgerBtn === false ? <ChatUploadComment chatRoomId={chatRoomId} /> : <></>}
     </ContentsLayout>
   );
 };
