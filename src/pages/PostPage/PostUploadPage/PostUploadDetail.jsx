@@ -7,6 +7,7 @@ import TopUploadNav from '../../../components/common/TopNavBar/TopUploadNav';
 import styled from 'styled-components';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import ImageUploadButton from './ImageUploadButton';
+import Loading from '../../../components/common/Loading/Loading';
 
 const PostUploadDetail = ({ className }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -219,7 +220,7 @@ const PostUploadDetail = ({ className }) => {
           </UploadMain>
         </>
       ) : (
-        <div>로딩중</div>
+        <Loading />
       )}
     </>
   );
