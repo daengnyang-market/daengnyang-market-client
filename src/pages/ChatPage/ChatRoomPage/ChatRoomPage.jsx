@@ -77,7 +77,7 @@ const ChatRoomPage = () => {
           (userId[0] === userAccountname ? (
             <TopTitleNav setIsClickedHamburgerBtn={SetIsClickedHamburgerBtn} title={userId[1]} />
           ) : (
-            <TopTitleNav title={userId[0]} />
+            <TopTitleNav setIsClickedHamburgerBtn={SetIsClickedHamburgerBtn} title={userId[0]} />
           ))}
         <h2 className='sr-only'>전체 채팅룸 컨텐츠</h2>
         <ChatWrapper>

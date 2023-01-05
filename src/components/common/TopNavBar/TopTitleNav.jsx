@@ -10,11 +10,10 @@ const TopTitleNav = ({ title, viewMoreBtn = true, isHospital = false, setIsClick
   const navigate = useNavigate();
 
   const [isOpenModal, setIsOpenModal] = useState(false);
-
   const closeModal = () => {
     setIsOpenModal(false);
+    setIsClickedHamburgerBtn(false);
   };
-
   const goBack = () => {
     if (isHospital) {
       sessionStorage.setItem('hospital_back', true);
@@ -32,8 +31,8 @@ const TopTitleNav = ({ title, viewMoreBtn = true, isHospital = false, setIsClick
         {viewMoreBtn ? (
           <MoreBtn
             onClick={() => {
-              setIsOpenModal(true);
               setIsClickedHamburgerBtn(true);
+              setIsOpenModal(true);
             }}
           >
             <img src={MORE_ICON} alt='더보기 버튼' />
@@ -46,9 +45,7 @@ const TopTitleNav = ({ title, viewMoreBtn = true, isHospital = false, setIsClick
     </>
   );
 };
-
 export default TopTitleNav;
-
 const TopNavH2 = styled.h2`
   font-size: var(--fs-md);
   flex-grow: 1;
