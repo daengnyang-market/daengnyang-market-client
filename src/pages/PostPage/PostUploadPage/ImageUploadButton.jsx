@@ -2,19 +2,19 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CLOSE_ICON } from '../../../styles/CommonIcons';
 
-const testFunction = (postImages) => {
-  const newPostImages = postImages.split(',');
-  return newPostImages;
-};
-
 const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => {
   const [image, setImgfile] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
   const [copyUploadImg, setCopyUploadImg] = useState([]);
 
+  const splitByComma = (postImages) => {
+    const newPostImages = postImages.split(',');
+    return newPostImages;
+  };
+
   useEffect(() => {
     if (uploadImg) {
-      const newUploadImg = testFunction(uploadImg);
+      const newUploadImg = splitByComma(uploadImg);
       if (newUploadImg.length > 1) {
         setImageUrl(newUploadImg);
         setUploadImg(newUploadImg);
