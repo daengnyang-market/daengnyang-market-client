@@ -188,40 +188,40 @@ const PostUploadDetail = ({ className }) => {
     }
   }, [text]);
 
+  const setUploadImage = (image) => {
+    setUploadImg(image);
+  };
+
   return (
     <>
-      {uploadImg ? (
-        <>
-          <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
-          <UploadMain>
-            <h2 className='sr-only'>게시글 작성 메인화면</h2>
-            <ProfileImage src={userImg} width='42' />
-            <PostWrite>
-              <h3 className='sr-only'>게시글 작성</h3>
-              <PostForm onSubmit={handleSubmit}>
-                <PostTextInput
-                  name='text'
-                  placeholder='게시글 입력하기...'
-                  data-value='0'
-                  autoComplete='off'
-                  ref={textRef}
-                  defaultValue={text}
-                  onChange={handleChangeText}
-                  maxLength='200'
-                />
-                <ImgUploadButton
-                  uploadImg={postImages}
-                  setUploadImg={setUploadImg}
-                  className={className}
-                  inputRef={inputRef}
-                />
-              </PostForm>
-            </PostWrite>
-          </UploadMain>
-        </>
-      ) : (
-        <Loading />
-      )}
+      <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
+      <UploadMain>
+        <h2 className='sr-only'>게시글 작성 메인화면</h2>
+        <ProfileImage src={userImg} width='42' />
+        <PostWrite>
+          <h3 className='sr-only'>게시글 작성</h3>
+          <PostForm onSubmit={handleSubmit}>
+            <PostTextInput
+              name='text'
+              placeholder='게시글 입력하기...'
+              data-value='0'
+              autoComplete='off'
+              ref={textRef}
+              defaultValue={text}
+              onChange={handleChangeText}
+              maxLength='200'
+            />
+            {uploadImg && (
+              <ImgUploadButton
+                uploadImg={postImages}
+                setUploadImg={setUploadImage}
+                className={className}
+                inputRef={inputRef}
+              />
+            )}
+          </PostForm>
+        </PostWrite>
+      </UploadMain>
     </>
   );
 };
