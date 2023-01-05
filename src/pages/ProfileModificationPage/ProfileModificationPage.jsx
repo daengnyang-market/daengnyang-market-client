@@ -4,7 +4,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
-import ProfileInfo from '../ProfileSettingsPage/ProfileInfo';
+import ProfileInfo from '../JoinPage/ProfileSettingsPage/ProfileInfo';
 import { AuthContextStore } from '../../context/AuthContext';
 
 const ProfileModificationPage = () => {

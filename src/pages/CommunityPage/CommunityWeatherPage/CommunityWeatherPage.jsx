@@ -87,6 +87,7 @@ const CommunityWeatherPage = () => {
     };
 
     getFetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [longitude, latitude]);
 
   useEffect(() => {
