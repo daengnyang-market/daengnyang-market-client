@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
 import { AuthContextStore } from '../../../context/AuthContext';
 import TopBasicNav from '../../../components/common/TopNavBar/TopBasicNav';
 import TabMenu from '../../../components/common/TabMenu/TabMenu';
@@ -15,7 +14,7 @@ const ChatListPage = () => {
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   useEffect(() => {
-    const getMyPost = () => {
+    const getMyChatroom = () => {
       const url = `https://mandarin.api.weniv.co.kr`;
       axios({
         url: url + `/post/aksidkvkc/userpost/?limit=0`,
@@ -32,7 +31,7 @@ const ChatListPage = () => {
           console.log(err);
         });
     };
-    getMyPost();
+    getMyChatroom();
   }, [userToken]);
 
   return (

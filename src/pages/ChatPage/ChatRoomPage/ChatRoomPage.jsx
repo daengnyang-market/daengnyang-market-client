@@ -17,7 +17,8 @@ const ChatRoomPage = () => {
   const [copyChatCommentData, setCopyChatCommentData] = useState();
   const [userId, setUserId] = useState();
   const chatRoomId = accountname;
-  const getPostData = () => {
+
+  const getChatroomData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/${chatRoomId}`,
       method: 'get',
@@ -34,11 +35,11 @@ const ChatRoomPage = () => {
       });
   };
   useEffect(() => {
-    getPostData();
+    getChatroomData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getCommentsData = () => {
+  const getChatCommentsData = () => {
     axios({
       url: `https://mandarin.api.weniv.co.kr/post/${chatRoomId}/comments`,
       method: 'get',
@@ -56,7 +57,7 @@ const ChatRoomPage = () => {
   };
   useEffect(() => {
     if (chatRoomData) {
-      getCommentsData();
+      getChatCommentsData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatRoomData]);

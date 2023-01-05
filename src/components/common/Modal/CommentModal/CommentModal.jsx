@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { AuthContextStore } from '../../../../context/AuthContext';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
@@ -12,7 +12,6 @@ const CommentModal = ({ closeModal, isMyComment, commentID }) => {
   const [isReportSuccess, setIsReportSuccess] = useState(null);
   const { postid } = useParams();
   const { userToken } = useContext(AuthContextStore);
-  const navigate = useNavigate();
   const URL = `https://mandarin.api.weniv.co.kr`;
 
   const closeAlert = () => {

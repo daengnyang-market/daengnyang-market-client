@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContextStore } from '../../../context/AuthContext';
-import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 
 const ChatList = ({ data }) => {
@@ -10,8 +9,6 @@ const ChatList = ({ data }) => {
   const [copyData, setCopyData] = useState();
   const [usersAccounName, setUsersAccounName] = useState();
   const [profileData, setProfileData] = useState();
-  const [opponentId, setOpponentId] = useState();
-  const [opponentImg, setOpponentImg] = useState();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   const [opponentAccountName, setOpponentAccountName] = useState('');
   useEffect(() => {

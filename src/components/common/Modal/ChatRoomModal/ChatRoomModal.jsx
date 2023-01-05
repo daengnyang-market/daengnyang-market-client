@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Alert from '../Alert';
 import ModalLayout from './../ModalLayout';
 import { MenuList, MenuItem } from './../Styled';
@@ -13,7 +13,7 @@ const ChatRoomModal = ({ closeModal }) => {
   const closeAlert = () => {
     setIsOpenAlert(false);
   };
-  const deletePost = () => {
+  const deleteChatroom = () => {
     const url = `https://mandarin.api.weniv.co.kr`;
     axios({
       url: url + `/post/${chatId.accountname}`,
@@ -30,7 +30,7 @@ const ChatRoomModal = ({ closeModal }) => {
   };
 
   const leaveChatRoom = () => {
-    deletePost();
+    deleteChatroom();
     closeModal();
   };
 

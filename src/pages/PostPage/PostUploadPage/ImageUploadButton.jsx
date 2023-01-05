@@ -2,28 +2,20 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CLOSE_ICON } from '../../../styles/CommonIcons';
 
-const testFunction = (postImages) => {
-  const newPostImages = postImages.split(',');
-  return newPostImages;
-};
-
 const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => {
   const [image, setImgfile] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
-  const [copyUploadImg, setCopyUploadImg] = useState([]);
+
+  const splitByComma = (postImages) => {
+    const newPostImages = postImages.split(',');
+    return newPostImages;
+  };
 
   useEffect(() => {
     if (uploadImg) {
-      const newUploadImg = testFunction(uploadImg);
-      if (newUploadImg.length > 1) {
-        setImageUrl(newUploadImg);
-        setUploadImg(newUploadImg);
-        setImgfile(newUploadImg);
-      } else {
-        setImageUrl(newUploadImg);
-        setUploadImg(newUploadImg);
-        setImgfile(newUploadImg);
-      }
+      const newUploadImg = splitByComma(uploadImg);
+      setImageUrl(newUploadImg);
+      setImgfile(newUploadImg);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -54,8 +46,10 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
     setImgfile([...imgArr]);
     setImageUrl([...imgNameArr]);
   };
-
-  setUploadImg(image);
+  useEffect(() => {
+    setUploadImg(image);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [image]);
 
   return (
     <>

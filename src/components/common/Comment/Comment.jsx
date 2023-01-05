@@ -5,7 +5,7 @@ import axios from 'axios';
 import ProfileImage from '../ProfileImage/ProfileImage';
 
 const Comment = ({ user, post }) => {
-  const { userToken, userAccountname } = useContext(AuthContextStore);
+  const { userToken } = useContext(AuthContextStore);
   const [userData, setUserData] = useState();
   const [postData, setPostData] = useState();
   const [commentData, setCommentData] = useState('');

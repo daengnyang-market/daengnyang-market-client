@@ -7,6 +7,7 @@ import TopUploadNav from '../../../components/common/TopNavBar/TopUploadNav';
 import styled from 'styled-components';
 import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import ImageUploadButton from './ImageUploadButton';
+import Loading from '../../../components/common/Loading/Loading';
 
 const PostUploadDetail = ({ className }) => {
   const { userToken, userAccountname } = useContext(AuthContextStore);
@@ -82,6 +83,22 @@ const PostUploadDetail = ({ className }) => {
     handleResizeHeight();
   };
 
+  const CheckImgModified = (uploadImg) => {
+    let index = [];
+    if (!uploadImg.length) {
+      return '';
+    } else {
+      for (let i = 0; i < uploadImg.length; i++) {
+        if (String(uploadImg[i]).indexOf('http') !== -1) {
+          index[i] = uploadImg[i];
+        } else {
+          index[i] = null;
+        }
+      }
+      return index.join().replace(/,,/g, '').replace(/,$/, '');
+    }
+  };
+
   const uploadImgData = async () => {
     let formData = new FormData();
     let imgData = uploadImg;
@@ -96,10 +113,10 @@ const PostUploadDetail = ({ className }) => {
       url: 'https://mandarin.api.weniv.co.kr/image/uploadfiles',
       data: formData,
     });
-    if (test(imgData) !== '') {
+    if (CheckImgModified(imgData) !== '') {
       let imgUrls = res.data
         .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
-        .concat([String(test(imgData))])
+        .concat([String(CheckImgModified(imgData))])
         .join();
       return imgUrls;
     } else {
@@ -171,62 +188,45 @@ const PostUploadDetail = ({ className }) => {
     }
   }, [text]);
 
+  const setUploadImage = (image) => {
+    setUploadImg(image);
+  };
+
   return (
     <>
-      {uploadImg ? (
-        <>
-          <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
-          <UploadMain>
-            <h2 className='sr-only'>게시글 작성 메인화면</h2>
-            <ProfileImage src={userImg} width='42' />
-            <PostWrite>
-              <h3 className='sr-only'>게시글 작성</h3>
-              <PostForm onSubmit={handleSubmit}>
-                <PostTextInput
-                  name='text'
-                  placeholder='게시글 입력하기...'
-                  data-value='0'
-                  autoComplete='off'
-                  ref={textRef}
-                  defaultValue={text}
-                  onChange={handleChangeText}
-                  maxLength='200'
-                />
-                <ImgUploadButton
-                  uploadImg={postImages}
-                  setUploadImg={setUploadImg}
-                  className={className}
-                  inputRef={inputRef}
-                />
-              </PostForm>
-            </PostWrite>
-          </UploadMain>
-        </>
-      ) : (
-        <div>로딩중</div>
-      )}
+      <TopUploadNav activeButton={isValidate} children={'업로드'} onClick={onClickUploadHandler} />
+      <UploadMain>
+        <h2 className='sr-only'>게시글 작성 메인화면</h2>
+        <ProfileImage src={userImg} width='42' />
+        <PostWrite>
+          <h3 className='sr-only'>게시글 작성</h3>
+          <PostForm onSubmit={handleSubmit}>
+            <PostTextInput
+              name='text'
+              placeholder='게시글 입력하기...'
+              data-value='0'
+              autoComplete='off'
+              ref={textRef}
+              defaultValue={text}
+              onChange={handleChangeText}
+              maxLength='200'
+            />
+            {uploadImg && (
+              <ImgUploadButton
+                uploadImg={postImages}
+                setUploadImg={setUploadImage}
+                className={className}
+                inputRef={inputRef}
+              />
+            )}
+          </PostForm>
+        </PostWrite>
+      </UploadMain>
     </>
   );
 };
 
 export default PostUploadDetail;
-
-const test = (uploadImg) => {
-  let test = uploadImg;
-  let index = [];
-  if (!test.length) {
-    return '';
-  } else {
-    for (let i = 0; i < test.length; i++) {
-      if (String(test[i]).indexOf('http') !== -1) {
-        index[i] = test[i];
-      } else {
-        index[i] = null;
-      }
-    }
-    return index.join().replace(/,,/g, '').replace(/,$/, '');
-  }
-};
 
 const ImgUploadButton = styled(ImageUploadButton)`
   position: fixed;
