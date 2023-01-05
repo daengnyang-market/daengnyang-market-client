@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { AuthContextStore } from '../../context/AuthContext';
-import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
-import TabMenu from '../../components/common/TabMenu/TabMenu';
-import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
+import { AuthContextStore } from '../../../context/AuthContext';
+import TopBasicNav from '../../../components/common/TopNavBar/TopBasicNav';
+import TabMenu from '../../../components/common/TabMenu/TabMenu';
+import ContentsLayout from '../../../components/layout/ContentsLayout/ContentsLayout';
 import ChatList from './ChatList';
-import Loading from '../../components/common/Loading/Loading';
+import Loading from '../../../components/common/Loading/Loading';
 
 const ChatListPage = () => {
   const [serverChat, setServerChat] = useState();

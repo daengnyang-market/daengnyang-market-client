@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
-import { AuthContextStore } from '../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 import styled from 'styled-components';
-import TopTitleNav from '../../components/common/TopNavBar/TopTitleNav';
-import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
+import TopTitleNav from '../../../components/common/TopNavBar/TopTitleNav';
+import ContentsLayout from '../../../components/layout/ContentsLayout/ContentsLayout';
 import ChatUploadComment from './ChatUploadComment';
 import MyChat from './MyChat';
 import UserChat from './UserChat';

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { IMG_BUTTON_ICON } from '../../styles/CommonIcons';
-import { AuthContextStore } from '../../context/AuthContext';
+import { IMG_BUTTON_ICON } from '../../../styles/CommonIcons';
+import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
 
 const ChatUploadComment = ({ chatRoomId }) => {

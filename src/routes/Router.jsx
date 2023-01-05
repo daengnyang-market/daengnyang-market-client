@@ -5,7 +5,9 @@ import { AuthContextStore } from '../context/AuthContext';
 import AuthRoute from './AuthRoute';
 import NonAuthRoute from './NonAuthRoute';
 
-import ChatRoomPage from '../pages/ChatRoomPage/ChatRoomPage';
+import ChatListPage from '../pages/ChatPage/ChatListPage/ChatListPage';
+import ChatRoomPage from '../pages/ChatPage/ChatRoomPage/ChatRoomPage';
+
 import EmailLoginPage from '../pages/EmailLoginPage/EmailLoginPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
@@ -18,7 +20,7 @@ import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileMod
 import ProfilePage from '../pages/ProfilePage/ProfilePage';
 import SearchPage from '../pages/SearchPage/SearchPage';
 import SplashScreen from '../pages/SplashScreen/SplashScreen';
-import ChatListPage from '../pages/ChatListPage/ChatListPage';
+
 import ProfileSettingsPage from '../pages/ProfileSettingsPage/ProfileSettingsPage';
 import Error404Page from '../pages/Error404Page/Error404Page';
 import CommunityMainPage from '../pages/CommunityPage/CommunityMainPage/CommunityMainPage';

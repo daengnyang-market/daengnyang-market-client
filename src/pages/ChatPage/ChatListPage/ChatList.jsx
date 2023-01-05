@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-import { AuthContextStore } from '../../context/AuthContext';
-import { PROFILE1_IMAGE } from '../../styles/CommonImages';
-import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
+import { AuthContextStore } from '../../../context/AuthContext';
+import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
+import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 
 const ChatList = ({ data }) => {
   const [chatCommentData, setChatCommentData] = useState();

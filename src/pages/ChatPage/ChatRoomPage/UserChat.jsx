@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { WALKING_EASY_IMAGE } from '../../styles/CommonImages';
+import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
+import { WALKING_EASY_IMAGE, PROFILE2_IMAGE } from '../../../styles/CommonImages';
 
-const MyChat = ({ isImg, commentData }) => {
+const UserChat = ({ isImg, commentData }) => {
   const [dateData, setDateData] = useState({});
   useEffect(() => {
     if (commentData) {
@@ -13,36 +15,36 @@ const MyChat = ({ isImg, commentData }) => {
   const minutes = new Date(dateData).getMinutes();
   return (
     <MessageItem>
+      <Link to='/'>
+        <ProfileImage src={PROFILE2_IMAGE} width='42' />
+      </Link>
+      {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
       <MessageDate>
         {hour}:{minutes}
       </MessageDate>
-      {isImg === false ? <MessageText>{commentData.content}</MessageText> : <MessageImg src={WALKING_EASY_IMAGE} />}
     </MessageItem>
   );
 };
 
-export default MyChat;
+export default UserChat;
 
 const MessageItem = styled.section`
-  & {
-    align-self: flex-end;
-  }
-  gap: 0.6rem;
   position: relative;
   display: flex;
   align-items: flex-end;
   margin-bottom: 0.9rem;
+  gap: 0.6rem;
 `;
 
 const MessageText = styled.p`
   border: none;
-  color: #fff;
+  color: var(--text-color);
   max-width: 24rem;
   padding: 1.2rem;
-  background-color: var(--main-color);
+  background-color: var(--main-bg-color);
   border: 1px solid #c4c4c4;
   border-radius: 10px;
-  border-top-right-radius: 0;
+  border-top-left-radius: 0;
   font-weight: 400;
   font-size: var(--fs-md);
   line-height: 18px;
