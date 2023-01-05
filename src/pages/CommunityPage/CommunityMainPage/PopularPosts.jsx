@@ -94,6 +94,7 @@ const PopularPosts = ({ isEmpty, changeEmptyState }) => {
 
     getPopularPosts();
     setIsLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getFeedPosts, getMyPosts]);
 
   useEffect(() => {
