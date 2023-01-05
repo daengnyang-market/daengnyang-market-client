@@ -14,7 +14,7 @@ const ChatListPage = () => {
   const navigate = useNavigate();
   const { userToken, userAccountname } = useContext(AuthContextStore);
   useEffect(() => {
-    const getMyPost = () => {
+    const getMyChatroom = () => {
       const url = `https://mandarin.api.weniv.co.kr`;
       axios({
         url: url + `/post/aksidkvkc/userpost/?limit=0`,
@@ -31,7 +31,7 @@ const ChatListPage = () => {
           console.log(err);
         });
     };
-    getMyPost();
+    getMyChatroom();
   }, [userToken]);
 
   return (
