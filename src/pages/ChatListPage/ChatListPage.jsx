@@ -46,15 +46,16 @@ const ChatListPage = () => {
                 if (data.content.includes(userAccountname)) {
                   return (
                     <button
+                      key={data.id}
                       onClick={() => {
                         navigate(`/chat/${data.id}`);
                       }}
                     >
-                      <ChatList key={data.id} data={data} />
+                      <ChatList data={data} />
                     </button>
                   );
                 } else {
-                  return <></>;
+                  return <React.Fragment key={data.id}></React.Fragment>;
                 }
               })}
             </>
