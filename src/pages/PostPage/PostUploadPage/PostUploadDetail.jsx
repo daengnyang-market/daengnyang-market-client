@@ -82,6 +82,22 @@ const PostUploadDetail = ({ className }) => {
     handleResizeHeight();
   };
 
+  const CheckImgModified = (uploadImg) => {
+    let index = [];
+    if (!uploadImg.length) {
+      return '';
+    } else {
+      for (let i = 0; i < uploadImg.length; i++) {
+        if (String(uploadImg[i]).indexOf('http') !== -1) {
+          index[i] = uploadImg[i];
+        } else {
+          index[i] = null;
+        }
+      }
+      return index.join().replace(/,,/g, '').replace(/,$/, '');
+    }
+  };
+
   const uploadImgData = async () => {
     let formData = new FormData();
     let imgData = uploadImg;
@@ -96,10 +112,10 @@ const PostUploadDetail = ({ className }) => {
       url: 'https://mandarin.api.weniv.co.kr/image/uploadfiles',
       data: formData,
     });
-    if (test(imgData) !== '') {
+    if (CheckImgModified(imgData) !== '') {
       let imgUrls = res.data
         .map((file) => 'https://mandarin.api.weniv.co.kr/' + file.filename)
-        .concat([String(test(imgData))])
+        .concat([String(CheckImgModified(imgData))])
         .join();
       return imgUrls;
     } else {
@@ -210,23 +226,6 @@ const PostUploadDetail = ({ className }) => {
 };
 
 export default PostUploadDetail;
-
-const test = (uploadImg) => {
-  let test = uploadImg;
-  let index = [];
-  if (!test.length) {
-    return '';
-  } else {
-    for (let i = 0; i < test.length; i++) {
-      if (String(test[i]).indexOf('http') !== -1) {
-        index[i] = test[i];
-      } else {
-        index[i] = null;
-      }
-    }
-    return index.join().replace(/,,/g, '').replace(/,$/, '');
-  }
-};
 
 const ImgUploadButton = styled(ImageUploadButton)`
   position: fixed;
