@@ -5,7 +5,6 @@ import { CLOSE_ICON } from '../../../styles/CommonIcons';
 const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => {
   const [image, setImgfile] = useState([]);
   const [imageUrl, setImageUrl] = useState('');
-  const [copyUploadImg, setCopyUploadImg] = useState([]);
 
   const splitByComma = (postImages) => {
     const newPostImages = postImages.split(',');
@@ -15,15 +14,9 @@ const ImageUploadButton = ({ className, setUploadImg, uploadImg, inputRef }) => 
   useEffect(() => {
     if (uploadImg) {
       const newUploadImg = splitByComma(uploadImg);
-      if (newUploadImg.length > 1) {
-        setImageUrl(newUploadImg);
-        setUploadImg(newUploadImg);
-        setImgfile(newUploadImg);
-      } else {
-        setImageUrl(newUploadImg);
-        setUploadImg(newUploadImg);
-        setImgfile(newUploadImg);
-      }
+      setImageUrl(newUploadImg);
+      setUploadImg(newUploadImg);
+      setImgfile(newUploadImg);
     }
     return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
