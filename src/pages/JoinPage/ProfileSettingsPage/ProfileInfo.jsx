@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
-import { PROFILE1_IMAGE } from '../../styles/CommonImages';
-import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
+import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
+import { PROFILE1_IMAGE } from '../../../styles/CommonImages';
+import { UPLOAD_FILE_ICON } from '../../../styles/CommonIcons';
 import InputUserName from './InputUserName';
 import InputAccountName from './InputAccountName';
 import InputIntro from './InputIntro';
