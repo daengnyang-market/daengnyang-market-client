@@ -7,8 +7,8 @@ import NonAuthRoute from './NonAuthRoute';
 
 import ChatListPage from '../pages/ChatPage/ChatListPage/ChatListPage';
 import ChatRoomPage from '../pages/ChatPage/ChatRoomPage/ChatRoomPage';
+import EmailLoginPage from '../pages/LoginPage/EmailLoginPage/EmailLoginPage';
 
-import EmailLoginPage from '../pages/EmailLoginPage/EmailLoginPage';
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
 import JoinMembershipPage from '../pages/JoinMembershipPage/JoinMembershipPage';

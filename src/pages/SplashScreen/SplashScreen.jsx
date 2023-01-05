@@ -6,7 +6,7 @@ import { fadeOut } from '../../components/common/Animation/Animation';
 import { AuthContextStore } from '../../context/AuthContext';
 
 import { LOGO_IMAGE, MAIN_TITLE_IMAGE, SUB_TITLE_IMAGE } from '../../styles/CommonImages';
-import LoginMainPage from '../LoginMainPage/LoginMainPage';
+import LoginMainPage from '../LoginPage/LoginMainPage/LoginMainPage';
 
 const SplashScreen = () => {
   const [isLoading, setIsLoading] = useState(true);

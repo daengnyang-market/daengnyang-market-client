@@ -1,11 +1,11 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import useInput from '../../hooks/useInput';
-import Button from '../../components/common/Button/Button';
+import useInput from '../../../hooks/useInput';
+import Button from '../../../components/common/Button/Button';
 import EmailLoginInput from './EmailLoginInput';
 import styled from 'styled-components';
-import { AuthContextStore } from '../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 
 const EmailLoginPage = () => {
   const navigate = useNavigate();

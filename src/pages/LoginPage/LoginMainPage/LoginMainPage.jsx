@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { LOGO_WHITE_IMAGE } from '../../styles/CommonImages';
-import { KAKAO_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../styles/CommonIcons';
-import { fadeIn } from '../../components/common/Animation/Animation';
+import { LOGO_WHITE_IMAGE } from '../../../styles/CommonImages';
+import { KAKAO_ICON, GOOGLE_ICON, FACEBOOK_ICON } from '../../../styles/CommonIcons';
+import { fadeIn } from '../../../components/common/Animation/Animation';
 import { Link } from 'react-router-dom';
 
 const LoginMainPage = () => {
