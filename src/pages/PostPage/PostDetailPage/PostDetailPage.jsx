@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { AuthContextStore } from '../../context/AuthContext';
+import { AuthContextStore } from '../../../context/AuthContext';
 import axios from 'axios';
-import TopBasicNav from '../../components/common/TopNavBar/TopBasicNav';
-import Comment from '../../components/common/Comment/Comment';
-import Loading from '../../components/common/Loading/Loading';
-import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
+import TopBasicNav from '../../../components/common/TopNavBar/TopBasicNav';
+import Comment from '../../../components/common/Comment/Comment';
+import Loading from '../../../components/common/Loading/Loading';
+import ContentsLayout from '../../../components/layout/ContentsLayout/ContentsLayout';
 import styled from 'styled-components';
 import PostComment from './PostComment';
-import Post from '../../components/common/Post/Post';
+import Post from '../../../components/common/Post/Post';
 
 const PostDetailPage = () => {
   const { postid } = useParams();

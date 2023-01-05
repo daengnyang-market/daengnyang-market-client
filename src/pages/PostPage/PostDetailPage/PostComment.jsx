@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { AuthContextStore } from '../../context/AuthContext';
-import { PROFILE1_IMAGE, PROFILE2_IMAGE } from '../../styles/CommonImages';
-import { MORE_SMALL_ICON } from '../../styles/CommonIcons';
-import CommentModal from '../../components/common/Modal/CommentModal/CommentModal';
-import Loading from '../../components/common/Loading/Loading';
+import { AuthContextStore } from '../../../context/AuthContext';
+import { MORE_SMALL_ICON } from '../../../styles/CommonIcons';
+import CommentModal from '../../../components/common/Modal/CommentModal/CommentModal';
+import Loading from '../../../components/common/Loading/Loading';
 
 const PostComment = ({ post }) => {
   const [isOpenModal, setIsOpenModal] = useState(false);

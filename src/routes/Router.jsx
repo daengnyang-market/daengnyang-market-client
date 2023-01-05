@@ -11,11 +11,11 @@ import EmailLoginPage from '../pages/LoginPage/EmailLoginPage/EmailLoginPage';
 import JoinMembershipPage from '../pages/JoinPage/JoinMembershipPage/JoinMembershipPage';
 import ProfileSettingsPage from '../pages/JoinPage/ProfileSettingsPage/ProfileSettingsPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import PostDetailPage from '../pages/PostPage/PostDetailPage/PostDetailPage';
+import PostUploadPage from '../pages/PostPage/PostUploadPage/PostUploadPage';
 
 import FeedPage from '../pages/FeedPage/FeedPage';
 import FollowListPage from '../pages/FollowListPage/FollowListPage';
-import PostDetailPage from '../pages/PostDetailPage/PostDetailPage';
-import PostUploadPage from '../pages/PostUploadPage/PostUploadPage';
 import ProductRegistrationPage from '../pages/ProductRegistrationPage/ProductRegistrationPage';
 import ProductModificationPage from '../pages/ProductModificationPage/ProductModificationPage';
 import ProfileModificationPage from '../pages/ProfileModificationPage/ProfileModificationPage';

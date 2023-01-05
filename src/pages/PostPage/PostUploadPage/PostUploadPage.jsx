@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
+import ContentsLayout from '../../../components/layout/ContentsLayout/ContentsLayout';
 import PostUploadDetail from './PostUploadDetail';
 const PostUploadPage = () => {
   return (

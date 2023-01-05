@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { AuthContextStore } from '../../context/AuthContext';
-import { UPLOAD_FILE_ICON } from '../../styles/CommonIcons';
+import { AuthContextStore } from '../../../context/AuthContext';
+import { UPLOAD_FILE_ICON } from '../../../styles/CommonIcons';
 import { useNavigate, useParams } from 'react-router-dom';
-import TopUploadNav from '../../components/common/TopNavBar/TopUploadNav';
+import TopUploadNav from '../../../components/common/TopNavBar/TopUploadNav';
 import styled from 'styled-components';
-import ProfileImage from '../../components/common/ProfileImage/ProfileImage';
+import ProfileImage from '../../../components/common/ProfileImage/ProfileImage';
 import ImageUploadButton from './ImageUploadButton';
 
 const PostUploadDetail = ({ className }) => {

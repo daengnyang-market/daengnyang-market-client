@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { CLOSE_ICON } from '../../styles/CommonIcons';
+import { CLOSE_ICON } from '../../../styles/CommonIcons';
 
 const testFunction = (postImages) => {
   const newPostImages = postImages.split(',');
