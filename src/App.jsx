@@ -1,6 +1,6 @@
 import Router from './routes/Router';
 import GlobalStyle from './styles/GlobalStyle';
-import MainLayout from './components/layout/ContentsLayout/MainLayout';
+import MainLayout from './components/layout/MainLayout/MainLayout';
 import AuthContext from './context/AuthContext';
 import UserLocationContext from './context/UserLocationContext';
 
