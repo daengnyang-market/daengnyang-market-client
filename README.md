@@ -1,4 +1,4 @@
-# 🐾 가져도댕냥
+# <span id='top'>🐾 가져도댕냥</span>
 <img src="https://user-images.githubusercontent.com/105365737/210221033-fe61128b-b5eb-4da2-97ca-7e9d162baad2.png" width="1000" />
 
 > 📎 <a href='https://daengnyang.netlify.app'>배포 URL</a> <br/>
@@ -17,7 +17,11 @@
 - 상품을 판매/구매하지 않아도 일상을 공유하며 즐거운 SNS 활동을 할 수 있습니다. <br/>
 - 반려동물 커뮤니티 서비스를 이용할 수 있습니다. <br/>
 
-<br/><br/>
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
 
 ## 2. 팀원 소개
 
@@ -26,7 +30,12 @@
 | <img src="https://avatars.githubusercontent.com/rosamondkim" height=180 width=180> | <img src="https://user-images.githubusercontent.com/105365737/210505937-b42b42ea-2b1f-4b4b-ad39-1cc363a9f7fd.jpg" height=180 width=180> | <img src="https://avatars.githubusercontent.com/sypear" height=180 width=180> | <img src="https://avatars.githubusercontent.com/yedol1" height=180 width=180> |
 |                        [🔗 GitHub](https://github.com/rosamondkim)<br/> 디자인 리더                         |                        [🔗 GitHub](https://github.com/euihokim)<br/> 기획 리더                         |           [🔗 GitHub](https://github.com/sypear)<br/> 프로젝트 매니저          |                        [🔗 GitHub](https://github.com/yedol1)<br/> 개발 리더                         |
 
-<br/><br/>
+
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
 
 ## 3. 개발 환경 및 기술 스택
 ### 3-1. 개발 환경
@@ -47,15 +56,77 @@
 ### 3-4. 테스트 툴
 - API 테스트 : Postman
 
-<br/><br/>
+<br/>
 
-## 4. Git Branch 전략
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 4. 프로젝트 구조
+* `public/favicon/` : 파비콘
+* `src/assets/` : 서비스에서 사용하는 에셋 파일 (폰트, 아이콘, 이미지)
+* `src/components/` : 서비스에서 사용하는 컴포넌트 (캐러셀, 공통 컴포넌트, 공통 레이아웃)
+* `src/context/` : 전역 데이터를 공유하기 위해 정의한 Context 파일
+* `src/hooks/` : 재사용을 위해 분리한 Custom Hook
+* `src/pages/` : 공통 컴포넌트를 사용해 만든 페이지
+* `src/routes/` : 페이지 라우팅을 위한 파일
+* `src/styles/` : 전역 스타일 파일
+* `src/utils/` : 재사용을 위해 분리한 유틸 파일
+
+```
+📦 가져도댕냥
+├─ 📦 public
+│  ├─ 📂 favicon
+│  └─ 📜 index.html
+└─ 📦 src
+   ├─ 📂 assets
+   │  ├─ 📂 fonts
+   │  ├─ 📂 icons
+   │  └─ 📂 images
+   ├─ 📂 components
+   │  ├─ 📂 carousel
+   │  ├─ 📂 common
+   │  └─ 📂 layout
+   ├─ 📂 context
+   ├─ 📂 hooks
+   ├─ 📂 pages
+   │  ├─ 📂 ChatPage
+   │  ├─ 📂 CommunityPage
+   │  ├─ 📂 FeedPage
+   │  ├─ 📂 FollowListPage
+   │  ├─ 📂 JoinPage
+   │  ├─ 📂 LoginPage
+   │  ├─ 📂 NotFoundPage
+   │  ├─ 📂 PostPage
+   │  ├─ 📂 ProductPage
+   │  ├─ 📂 ProfileModificationPage
+   │  ├─ 📂 ProfilePage
+   │  ├─ 📂 SearchPage
+   │  └─ 📂 SplashScreen
+   ├─ 📂 routes
+   ├─ 📂 styles
+   ├─ 📂 utils
+   ├─ 📜 App.jsx
+   └─ 📜 index.jsx
+```
+
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 5. Git Branch 전략
 ![스크린샷 2023-01-04 오후 3 50 02](https://user-images.githubusercontent.com/105365737/210499534-bbab397d-9446-4859-812a-ca14662ba54a.png)
 * 소규모 프로젝트에 맞게 Main, Develop, Feature 세 Branch를 사용하는 전략 사용
 
-<br/><br/>
+<br/>
 
-## 5. 개발 일정
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 6. 개발 일정
 #### 🔥 2022-12-09 ~ 2023-01-05
 <img width="1874" alt="표" src="https://user-images.githubusercontent.com/105365737/210504168-43b9f888-eb95-46a1-9fe4-0580a7c5cf0e.png">
 
@@ -65,9 +136,13 @@
   - 기능 개발 : 2022-12-16 ~ 2022-12-27
   - 버그 수정 및 유지보수 : 2022-12-26 ~ 2023-01-05
 
-<br/><br/>
+<br/>
 
-## 6. 협업 문화
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 7. 협업 문화
 ### 💪 팀워크 강화
 #### - 설문지 작성
 - 프로젝트 시작 전, 공통된 팀 목표를 세우고 시너지를 강화하기 위해 <a href='https://form.office.naver.com/form/responseView.cmd?formkey=YTJkYzQzNDItMGMwMC00YzdmLWJhMzQtZWVhODUxMjEwZjE0&sourceId=urlshare'>네이버폼 설문</a> 진행
@@ -140,14 +215,22 @@
     - 승인 : 버그
 3. 승인된 버그는 개발 담당자가 이슈 등록 후 버그 수정 진행
 
-<br/><br/>
+<br/>
 
-## 7. 구현 기능 및 담당자
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 8. 구현 기능 및 담당자
 <img src="https://user-images.githubusercontent.com/105365737/210319126-76c4fed6-b4f9-4d07-a95e-9f908fbba796.png" width="1000" />
 
-<br/><br/>
+<br/>
 
-## 8. 구체적인 담당 업무
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 9. 구체적인 담당 업무
 ## 🤍 공통
 ### 컨벤션 설립
 - 커밋 메시지 컨벤션, 코드 컨벤션, 네이밍 컨벤션, 디렉토리 구조 컨벤션 설립
@@ -283,9 +366,9 @@
 - 로그인 기능 구현 (API 명세에 따름)
     - 이메일 및 비밀번호 유효성 검증
     - 유효성 검증을 통과해야 로그인 버튼 활성화
-    - localStorage에 토큰 저장
+    - 로컬 스토리지에 토큰 저장
 - 로그아웃 기능 구현
-    - localStorage에 저장된 토큰 삭제
+    - 로컬 스토리지에 저장된 토큰 삭제
 - 팔로우 기능 구현
     - 팔로워 / 팔로잉 목록 데이터를 받아 화면에 표시하는 기능 구현 (API 명세에 따름)
     - 팔로우 / 언팔로우 기능 구현 (API 명세에 따름)
@@ -402,10 +485,13 @@
 	    < 채팅 >
 
 	    - 채팅방에 입장하면, 채팅방으로 사용된 게시물에 댓글 형식으로 데이터를 전송한다.
+<br/>
 
-<br/><br/>
+<p align="right"><a href="#top">(Top)</a></p>
 
-## 9. 페이지 캡쳐
+<br/>
+
+## 10. 페이지 캡쳐
 ### 1) 홈
 |시작 화면|회원가입 페이지|로그인 페이지|
 |---|---|---|
@@ -450,10 +536,14 @@
 |![메인](https://user-images.githubusercontent.com/105365737/210323985-41e486ed-afb0-41a4-a37f-be300894360a.gif)|![산책 난이도 메인](https://user-images.githubusercontent.com/105365737/210324801-30095b20-6a74-43f6-940a-4170197db760.gif)|![동물병원](https://user-images.githubusercontent.com/105365737/210325566-58991115-4e9e-489e-9706-9b4290ef72bc.gif)|
 
 
-<br/><br/>
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
 
 
-## 10. 핵심 기능 및 코드 설명
+## 11. 핵심 기능 및 코드 설명
 ## 🐰 김민승
 
 <details>
@@ -1538,9 +1628,13 @@ const arrayKeyword = COMMA_APPEND_USERNAME.split(',');
   
 </details>
 
-<br/><br/>
+<br/>
 
-## 11. 느낀점
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
+
+## 12. 느낀점
 ## 🐰 김민승
 이번 팀프로젝트는 제게는 너무 행복하고 귀한 경험이었습니다. 경험 많은 팀장님이 팀원들을 위해 제가 생각치도 못하는 부분을 미리 준비해주시는 모습도 너무 인상깊었고 개발하면서 그것을 정말 편하게 활용했습니다. 미래에 프로젝트 팀장을 맡게 된다면 배우고 싶었던 부분이 많았습니다. 능력있는 팀원분들의 코드를 보며 동기부여도 많이 됐고 제가 잘 알지 못하는점을 캐치하고 센스있게 알려주는 모습에도 큰 용기를 얻었습니다. 팀원들과 부족한 부분을 채워주며 프로젝트를 잘 마무리한것 같아 기쁩니다. 긍정적인 팀의 분위기에 안좋은 영향을 끼치지 않으려고 평소보다 몇배로 더 열심히 할 수 있었으며 그로인해 개인적으로도 큰 성장을 이룬 것 같습니다. 이번 팀프로젝트를 통해 제가 어떤 방향으로 나아가는지, 개발과 프로젝트는 어떤식으로 해야하는지에 대한 큰 영감을 얻었습니다. 함께 고생한 팀원들께 너무너무 감사합니다!!
 
@@ -1566,7 +1660,17 @@ const arrayKeyword = COMMA_APPEND_USERNAME.split(',');
 
 다른 복은 몰라도 항상 주변 인복은 많다고 생각하면서 살아왔는데, 이번 프로젝트 역시 타고난 인복 덕분에 좋은 팀원분들과 따듯한 분위기 속에 서로 성장하고 좋은 시간을 보냈습니다! 이 소중했던 시간을 꼭 기억하여, 혼자 성장하는 개발자가 아닌 함께 성장하는 개발자가 되도록 노력하겠습니다! 그동안 함께 고생해준 팀원들 너무 감사합니다~!!!🌸
 
-<br/><br/>
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
   
-## 12. 프로젝트 발표 자료 및 시연 영상
+## 13. 프로젝트 발표 자료 및 시연 영상
 * <a href='https://www.notion.so/likelion/b87bda7d7fb34aefba6de2c75a27c21d'>발표 노션 링크</a>
+	    
+<br/>
+
+<p align="right"><a href="#top">(Top)</a></p>
+
+<br/>
