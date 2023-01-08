@@ -28,7 +28,6 @@ const ItemNameInput = ({
     }
 
     if (e.target.value !== ' ' && e.target.value.length < 2 && !(e.target.value.length === 0)) {
-      console.log(e.target.value);
       setNameValid(false);
     } else {
       setNameValid(true);
