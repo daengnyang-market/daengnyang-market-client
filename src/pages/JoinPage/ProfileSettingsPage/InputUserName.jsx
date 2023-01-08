@@ -17,16 +17,18 @@ const InputUserName = ({
   const inputRef = useRef();
 
   const handleChange = (e) => {
-    setInputValue(e.target.value);
+    const blockWhiteSpace = e.target.value.replace(/(^\s*)|(\s*$)/, '');
 
-    if (e.target.value) {
+    setInputValue(blockWhiteSpace);
+
+    if (e.target.value !== ' ' && e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
     if (e.target.value.length >= 2 && e.target.value.length <= 10) {
-      userNameFunction(e.target.value);
+      userNameFunction(blockWhiteSpace);
     } else {
       userNameFunction('');
     }
@@ -39,13 +41,13 @@ const InputUserName = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
+        value={userName ? userName : inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
-        defaultValue={userName}
       />
       {!(inputValue.length === 0) && inputValue.length < 2 && <InputAlert>{children}</InputAlert>}
     </InputWrapper>

@@ -8,15 +8,17 @@ const InputIntro = ({ labelText = 'label', inputType = 'text', id, placeholder, 
   const inputRef = useRef();
 
   const handleChange = (e) => {
-    setInputValue(e.target.value);
+    const blockWhiteSpace = e.target.value.replace(/(^\s*)|(\s*$)/, '');
 
-    if (e.target.value) {
+    setInputValue(blockWhiteSpace);
+
+    if (e.target.value !== ' ' && e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    introFunction(e.target.value);
+    introFunction(blockWhiteSpace);
   };
 
   return (
@@ -26,13 +28,13 @@ const InputIntro = ({ labelText = 'label', inputType = 'text', id, placeholder, 
         type={inputType}
         id={id}
         placeholder={placeholder}
+        value={intro ? intro : inputValue}
         onChange={handleChange}
         ref={inputRef}
         isShowAlert={isShowAlert}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
-        defaultValue={intro}
       />
     </InputWrapper>
   );

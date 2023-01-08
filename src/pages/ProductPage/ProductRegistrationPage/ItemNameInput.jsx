@@ -18,15 +18,16 @@ const ItemNameInput = ({
   const inputRef = useRef();
 
   const handleChange = (e) => {
-    setInputValue(e.target.value);
+    const blockWhiteSpace = e.target.value.replace(/(^\s*)|(\s*$)/, '');
+    setInputValue(blockWhiteSpace);
 
-    if (e.target.value) {
+    if (e.target.value !== ' ' && e.target.value) {
       inputRef.current.style.borderBottom = '1px solid var(--main-color)';
     } else {
       inputRef.current.style.borderBottom = '1px solid var(--border-color)';
     }
 
-    if (e.target.value.length < 2 && !(e.target.value.length === 0)) {
+    if (e.target.value !== ' ' && e.target.value.length < 2 && !(e.target.value.length === 0)) {
       setNameValid(false);
     } else {
       setNameValid(true);
@@ -34,13 +35,13 @@ const ItemNameInput = ({
 
     if (itemNameModFunction) {
       if (e.target.value.length >= 2 && e.target.value.length <= 15) {
-        itemNameModFunction(e.target.value);
+        itemNameModFunction(blockWhiteSpace);
       } else {
         itemNameModFunction('');
       }
     } else {
       if (e.target.value.length >= 2 && e.target.value.length <= 15) {
-        itemNameFunction(e.target.value);
+        itemNameFunction(blockWhiteSpace);
       } else {
         itemNameFunction('');
       }
@@ -54,12 +55,12 @@ const ItemNameInput = ({
         type={inputType}
         id={id}
         placeholder={placeholder}
+        value={itemNameMod ? itemNameMod : inputValue}
         onChange={handleChange}
         ref={inputRef}
         autoComplete='off'
         spellCheck='false'
         maxLength={maxLength}
-        defaultValue={itemNameMod}
       />
       {nameValid ? '' : <InputAlert>{children}</InputAlert>}
     </InputWrapper>
