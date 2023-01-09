@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 import TopUploadNav from '../../../components/common/TopNavBar/TopUploadNav';
@@ -23,6 +23,8 @@ const ProductRegistrationPage = ({
   linkMod,
   itemImageMod,
 }) => {
+  const navigate = useNavigate();
+
   const [itemName, setItemName] = useState('');
   const itemNameFunction = (value) => {
     setItemName(value);
@@ -91,7 +93,9 @@ const ProductRegistrationPage = ({
     };
 
     axios(option)
-      .then((res) => {})
+      .then(() => {
+        navigate('/profile');
+      })
       .catch((err) => {
         console.error(err);
       });
@@ -121,19 +125,17 @@ const ProductRegistrationPage = ({
 
   return (
     <>
-      <Link to='/profile'>
-        <TopUploadNav
-          activeModButton={activeModButton}
-          activeButton={disabledButton}
-          onClick={() => {
-            if (onClickProductModificationHandler) {
-              onClickProductModificationHandler();
-            } else {
-              onClickProductRegistrationHandler();
-            }
-          }}
-        />
-      </Link>
+      <TopUploadNav
+        activeModButton={activeModButton}
+        activeButton={disabledButton}
+        onClick={() => {
+          if (onClickProductModificationHandler) {
+            onClickProductModificationHandler();
+          } else {
+            onClickProductRegistrationHandler();
+          }
+        }}
+      />
 
       <ContentsLayout isTabMenu='false' padding='0'>
         <Section>
