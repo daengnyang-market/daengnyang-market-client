@@ -10,6 +10,7 @@ import PriceInput from './PriceInput';
 import ItemLinkInput from './ItemLinkInput';
 import { AuthContextStore } from '../../../context/AuthContext';
 import imageCompression from 'browser-image-compression';
+import Loading from '../../../components/common/Loading/Loading';
 
 const ProductRegistrationPage = ({
   activeModButton,
@@ -24,6 +25,8 @@ const ProductRegistrationPage = ({
   itemImageMod,
 }) => {
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [itemName, setItemName] = useState('');
   const itemNameFunction = (value) => {
@@ -48,12 +51,14 @@ const ProductRegistrationPage = ({
   const [itemImage, setItemImage] = useState('');
 
   const onChangeInputHandler = (event) => {
+    setIsLoading(false);
     const [file] = event.target.files;
 
     imageCompression(file, {
       maxSizeMB: 0.08,
       maxWidthOrHeight: 320,
     }).then((compressedFile) => {
+      setIsLoading(true);
       const newFile = new File([compressedFile], file.name, { type: file.type });
 
       const readerBlob = new FileReader();
@@ -142,7 +147,19 @@ const ProductRegistrationPage = ({
           <h2 className='sr-only'>상품 정보</h2>
           <P>이미지 등록</P>
           <Label htmlFor='productImg'>
-            {thumbnailImg ? <Img src={thumbnailImg} alt='' /> : itemImageMod ? <Img src={itemImageMod} alt='' /> : ''}
+            {isLoading ? (
+              thumbnailImg ? (
+                <Img src={thumbnailImg} alt='' />
+              ) : itemImageMod ? (
+                <Img src={itemImageMod} alt='' />
+              ) : (
+                ''
+              )
+            ) : (
+              <LoadingWrapper>
+                <Loading />
+              </LoadingWrapper>
+            )}
           </Label>
           <input
             onChange={(event) => {
@@ -240,4 +257,11 @@ const Form = styled.form`
   gap: 1.6rem;
   width: 100%;
   margin-bottom: 3rem;
+`;
+
+const LoadingWrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
