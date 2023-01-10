@@ -1,11 +1,13 @@
 import { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContextStore } from '../../../context/AuthContext';
 import ProductRegistrationPage from '../ProductRegistrationPage/ProductRegistrationPage';
 
 const ProductModificationPage = () => {
   const { userToken } = useContext(AuthContextStore);
+
+  const navigate = useNavigate();
 
   const params = useParams();
 
@@ -77,7 +79,9 @@ const ProductModificationPage = () => {
     };
 
     axios(option)
-      .then((res) => {})
+      .then(() => {
+        navigate('/profile');
+      })
       .catch((err) => {
         console.error(err);
       });
