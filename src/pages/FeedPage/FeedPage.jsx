@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { AuthContext, AuthContextStore } from '../../context/AuthContext';
 import { useInView } from 'react-intersection-observer';
+import TopButton from '../../components/common/Button/TopButton';
 
 import TopMainNav from '../.././components/common/TopNavBar/TopMainNav';
 import ContentsLayout from '../../components/layout/ContentsLayout/ContentsLayout';
@@ -94,6 +95,7 @@ const FeedPage = () => {
                   ),
                 )}
               </div>
+              <TopButton />
             </ContentsLayout>
           ) : (
             <EmptyFeedStyle>
