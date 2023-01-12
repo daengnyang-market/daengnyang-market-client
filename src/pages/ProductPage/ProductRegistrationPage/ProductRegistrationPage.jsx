@@ -51,6 +51,8 @@ const ProductRegistrationPage = ({
   const [itemImage, setItemImage] = useState('');
 
   const onChangeInputHandler = (event) => {
+    setItemImage(''); // (등록) 이미지 로딩 중 버튼 활성화 방지
+
     setIsLoading(false);
     const [file] = event.target.files;
 
@@ -73,6 +75,7 @@ const ProductRegistrationPage = ({
       encodeFile(newFile);
       setThumbnailImg(newFile);
     });
+    itemImageModFunction(''); // (수정) 이미지 로딩 중 버튼 활성화 방지
   };
 
   const { userToken } = useContext(AuthContextStore);
@@ -121,12 +124,12 @@ const ProductRegistrationPage = ({
   };
 
   useEffect(() => {
-    if (itemName && price && link && thumbnailImg) {
+    if (itemName && price && link && itemImage) {
       setDisabledButton(false);
     } else {
       setDisabledButton(true);
     }
-  }, [thumbnailImg, itemName, price, link]);
+  }, [itemName, price, link, itemImage]);
 
   return (
     <>
