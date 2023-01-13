@@ -51,6 +51,8 @@ const ProductRegistrationPage = ({
   const [itemImage, setItemImage] = useState('');
 
   const onChangeInputHandler = (event) => {
+    setItemImage('');
+
     setIsLoading(false);
     const [file] = event.target.files;
 
@@ -73,6 +75,7 @@ const ProductRegistrationPage = ({
       encodeFile(newFile);
       setThumbnailImg(newFile);
     });
+    itemImageModFunction('');
   };
 
   const { userToken } = useContext(AuthContextStore);
@@ -121,12 +124,12 @@ const ProductRegistrationPage = ({
   };
 
   useEffect(() => {
-    if (itemName && price && link && thumbnailImg) {
+    if (itemName && price && link && itemImage) {
       setDisabledButton(false);
     } else {
       setDisabledButton(true);
     }
-  }, [thumbnailImg, itemName, price, link]);
+  }, [itemName, price, link, itemImage]);
 
   return (
     <>
