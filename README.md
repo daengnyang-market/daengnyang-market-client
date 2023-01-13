@@ -193,7 +193,7 @@
 <br/>
 
 ### 📆 작업 진행 상황 관리
-#### - 노션 <a href='https://www.notion.so/eb82b41d94c54fd383af2f972ea546c9?v=1e5888737d514f388d2080df636d89e9'>기능별 작업 상황 관리</a> 페이지를 작성해 작업 진행 상황 관리
+#### - 노션 <a href='https://www.notion.so/likelion/fc1621eb783b4853b14dffa793d1ad04'>기능별 작업 상황 관리</a> 페이지를 작성해 작업 진행 상황 관리
 
 ![스크린샷 2023-01-05 오전 11 56 42](https://user-images.githubusercontent.com/105365737/210691316-07774031-3ac1-4d98-9c02-d432e2cae5fc.png)
 
